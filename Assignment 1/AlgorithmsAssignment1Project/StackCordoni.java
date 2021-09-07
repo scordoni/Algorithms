@@ -1,4 +1,4 @@
-/**
+/** 
  * 
  * Assignment 1 <br>
  * Due Date and Time: 9/24/21 before 12:00am <br>
@@ -12,21 +12,21 @@
  * @author Shannon Cordoni <br>
  * 
  */
-public class Stack {
+public class StackCordoni {
 
 	public static final int MAXSIZE = 100;
-	private AlgorithmsAssignment1[] myWord;
+	private MainCordoni[] myWord;
 	private int myTop;
 	
-	public Stack()
+	public StackCordoni()
 	{
-		myWord = new AlgorithmsAssignment1[MAXSIZE];
+		myWord = new MainCordoni[MAXSIZE];
 		for (int i = 0; i < MAXSIZE;i++)
 			myWord[i]=null;
 		myTop = -1;
 	}//StackCordoni
 	
-	public boolean push(AlgorithmsAssignment1 newword)
+	public boolean push(MainCordoni newword)
 	{
 		boolean success = false;
 		if(!isFull())
@@ -39,9 +39,9 @@ public class Stack {
 		return success;		
 	}//push
 	
-	public AlgorithmsAssignment1 pop()
+	public MainCordoni pop()
 	{
-		AlgorithmsAssignment1 answer = null;
+		MainCordoni answer = null;
 		if(!isEmpty())
 		{
 			answer = myWord[myTop];

@@ -1,5 +1,4 @@
 
-
 /**
  * 
  * Assignment 1 <br>
@@ -7,7 +6,7 @@
  * 
  * Purpose: To see if a word is a palindrome <br>
  * 
- * Input: The user will be inputting a list of words.<br>
+ * Input: The user will be inputting a file containing a list of words/statements .<br>
  * 
  * Output: The program will output the palindromes. <br>
  *
@@ -15,7 +14,7 @@
  * 
  */
 
-public class AlgorithmsAssignment1 {
+public class MainCordoni {
 
 
 	public static void main(String[] args) {
@@ -25,7 +24,7 @@ public class AlgorithmsAssignment1 {
 	 * 
 	 */
 		
-		Stack theStack = new Stack();
+		StackCordoni theStack = new StackCordoni();
 		
 	/**
 	 * Develop and test a singly linked list
