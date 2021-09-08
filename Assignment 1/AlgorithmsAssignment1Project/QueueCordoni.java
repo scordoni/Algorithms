@@ -14,13 +14,65 @@
  */
 public class QueueCordoni {
 
-	public QueueCordoni() {
-		// TODO Auto-generated constructor stub
-	}
+	public static final int MAXSIZE = 100;
+	private MainCordoni[] myWord;
+	private int myTop;
+	
+	public QueueCordoni()
+	{
+		myWord = new MainCordoni[MAXSIZE];
+		for (int i = 0; i < MAXSIZE;i++)
+			myWord[i]=null;
+		myTop = -1;
+	}//StackCordoni
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+	public boolean enqueue(MainCordoni newword)
+	{
+		boolean success = false;
+		if(!isFull())
+		{
+			success = true;
+			myTop++;
+			myWord[myTop]=newword;
+		}//if
+		
+		return success;		
+	}//enqueue
+	
+	public MainCordoni dequeue()
+	{
+		MainCordoni answer = null;
+		
+		if(!isEmpty())
+		{
+			int i = 0;
+			answer = myWord[i];
+			myTop++;
+		}//if
+		return answer;
+	}//dequeue
+	
+	public boolean isEmpty()
+	{
+		boolean empty = false;
+		
+		if(myTop == -1)
+			{
+			empty = true;
+			}//if
+		return empty;
+	}//empty
+	
+	public boolean isFull()
+	{
+		boolean full = false;
+		
+		if(myTop == myWord.length)
+			{
+			full = true;
+			}//if 
+		
+		return full;
+	}//full
 
-	}
-
-}
+}//QueueCordoni

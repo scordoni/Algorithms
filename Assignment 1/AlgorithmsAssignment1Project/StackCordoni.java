@@ -15,18 +15,18 @@
 public class StackCordoni {
 
 	public static final int MAXSIZE = 100;
-	private MainCordoni[] myWord;
+	private WordCordoni[] myWord;
 	private int myTop;
 	
 	public StackCordoni()
 	{
-		myWord = new MainCordoni[MAXSIZE];
+		myWord = new WordCordoni[MAXSIZE];
 		for (int i = 0; i < MAXSIZE;i++)
 			myWord[i]=null;
 		myTop = -1;
 	}//StackCordoni
 	
-	public boolean push(MainCordoni newword)
+	public boolean push(WordCordoni newword)
 	{
 		boolean success = false;
 		if(!isFull())
@@ -39,9 +39,9 @@ public class StackCordoni {
 		return success;		
 	}//push
 	
-	public MainCordoni pop()
+	public WordCordoni pop()
 	{
-		MainCordoni answer = null;
+		WordCordoni answer = null;
 		if(!isEmpty())
 		{
 			answer = myWord[myTop];
@@ -73,4 +73,4 @@ public class StackCordoni {
 		return full;
 	}//full
 
-}
+}//Stackcordoni
