@@ -44,8 +44,8 @@ public class MainCordoni {
 		String line;
 		String statement;
 		String noSpaceStatement;
-		WordCordoni word = null;
-		StackCordoni stack = new StackCordoni();
+		NodeCordoni word = null;
+		QueueCordoni queue = new QueueCordoni();
 		String[] wordarray = new String[666];
 			
 
@@ -77,13 +77,13 @@ public class MainCordoni {
 			int i = 0;
 		    while(input.hasNext())
 		     {	
+				
 				/**
 				 * Input into array 
 				 */
 
-				statement = input.next();
-
-				wordarray[i] = statement;
+				wordarray[i] = input.nextLine();
+				
 				i++;
 
 		     }//while
@@ -113,36 +113,63 @@ public class MainCordoni {
 	      ex.printStackTrace();
 	    }//catch
 		
-		System.out.println(wordarray);
+		for(int i = 0; i < wordarray.length; i++){
+			System.out.println(wordarray[i]);
+			correctLine(wordarray[i]);
+		}//for
 		
-		splitPush(wordarray);
+		//splitPush(wordarray);
 		
 		}//main
 	
 		//split and push/enqueue
-		public static void splitPush(String[] array)
+
+		//this method takes in one element of the array and make all letters
+		//the same case and gets rid of spaces
+		public static void correctLine(String line)
 		{
 			String statement = "none";
 			String noSpaceStatement;
-			WordCordoni word = null;
-			StackCordoni stack = new StackCordoni();
-			int num = 0;
 
-			for(int i = 0; i < array.length; i++){
-				
-				array[num] = statement;
+				statement = line.toLowerCase();
 				noSpaceStatement = statement.replaceAll("\\s", "");
 				System.out.println(noSpaceStatement);
+				String[] charArray = noSpaceStatement.split("");
+				//System.out.println(charArray);
+				pushStack(charArray);
+
+		}//correctline
+
+		public static void pushStack(String[] chararray){
+
+			StackCordoni theStack = new StackCordoni();
+
+			for(int i = 0; i < chararray.length; i++){
 			
+				theStack.push(new NodeCordoni(chararray[i]));
+				//System.out.println(theStack.push(new NodeCordoni(chararray[i])));
 			}//for
 			
+		}//pushStack
+
+		public static void enqueueQueue(String[] chararray){
+
+			QueueCordoni theQueue = new QueueCordoni();
+
+			for(int i = 0; i < chararray.length; i++){
 			
-			//String[] letters = noSpaceStatement.split("");
-			//word = new WordCordoni();
-			//stack.push(word);
+				theQueue.enqueue(new NodeCordoni(chararray[i]));
+				//System.out.println(theQueue.push(new NodeCordoni(chararray[i])));
+			}//for
+			
+		}//pushStack
 
+		public static void compare(){
 
-		}//split and push
+			
 
-		
+			
+			
+		}//pushStack
+
 }//MainCordoni

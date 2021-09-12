@@ -15,18 +15,18 @@
 public class QueueCordoni {
 
 	public static final int MAXSIZE = 100;
-	private MainCordoni[] myWord;
+	private NodeCordoni[] myWord;
 	private int myTop;
 	
 	public QueueCordoni()
 	{
-		myWord = new MainCordoni[MAXSIZE];
+		myWord = new NodeCordoni[MAXSIZE];
 		for (int i = 0; i < MAXSIZE;i++)
 			myWord[i]=null;
 		myTop = -1;
 	}//StackCordoni
 
-	public boolean enqueue(MainCordoni newword)
+	public boolean enqueue(NodeCordoni newword)
 	{
 		boolean success = false;
 		if(!isFull())
@@ -39,9 +39,9 @@ public class QueueCordoni {
 		return success;		
 	}//enqueue
 	
-	public MainCordoni dequeue()
+	public NodeCordoni dequeue()
 	{
-		MainCordoni answer = null;
+		NodeCordoni answer = null;
 		
 		if(!isEmpty())
 		{

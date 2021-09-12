@@ -15,7 +15,7 @@ public class NodeCordoni
    /**
     * Instance Variable for word data and node <br>
     */
-   private WordCordoni myData;
+   private String myData;
    private NodeCordoni myNext;
 
    
@@ -24,7 +24,7 @@ public class NodeCordoni
     */
    public NodeCordoni()
        {
-       myData = new WordCordoni();
+       myData = new String();
        myNext= null;
        }//Node Cordoni
    
@@ -32,7 +32,7 @@ public class NodeCordoni
     * The full constructor for NodeCordoni
     * @param newData the incoming data of the item
     */
-   public NodeCordoni(WordCordoni newData)
+   public NodeCordoni(String newData)
        {
        myData = newData;
        myNext = null;
@@ -42,14 +42,14 @@ public class NodeCordoni
     * the setter for the item data
     * @param newData the incoming data of the item
     */
-   public void setData(WordCordoni newData)
+   public void setData(String newData)
        {myData = newData;} //set data
    
    /**
     * The getter for the item data
     * @return the incoming data of the item
     */
-   public WordCordoni getData()
+   public String getData()
        {return myData;}//get data
    
    /**
