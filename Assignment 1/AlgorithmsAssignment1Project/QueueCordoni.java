@@ -36,6 +36,7 @@ public class QueueCordoni {
 		
 		NodeCordoni oldTail = new NodeCordoni(newword);
 		
+		
 		if (!isEmpty()){
 			myTail.setNext(oldTail);
 			myTail = oldTail;

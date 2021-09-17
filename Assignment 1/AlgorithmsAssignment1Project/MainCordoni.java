@@ -26,8 +26,8 @@ public class MainCordoni {
 	 */
 	static Scanner keyboard = new Scanner(System.in);
 
-	static StackCordoni theStack = new StackCordoni();
-	static QueueCordoni theQueue = new QueueCordoni();
+	//static StackCordoni theStack = new StackCordoni();
+	//static QueueCordoni theQueue = new QueueCordoni();
 	
 	
 	public static void main(String[] args) {
@@ -47,18 +47,10 @@ public class MainCordoni {
 		String[] wordarray = new String[666];
 			
 
-
-	
-		/**
-		 * ask user to enter file name
-		 */
-		System.out.println("Please enter a file name containing your deck:");
-		filename = keyboard.next();
-		
 		/**
 		 * create new file object
 		 */
-		File myFile = new File(filename);
+		File myFile = new File("magicitems.txt");
 		
 		try
 		{
@@ -90,6 +82,7 @@ public class MainCordoni {
 	    {
 	      System.out.println("Failed to find file: " + myFile.getAbsolutePath()); 
 	    }//catch
+
 	    catch(InputMismatchException ex)
 	    {
 	    	System.out.println("Type mismatch for the number I just tried to read.");
@@ -101,6 +94,7 @@ public class MainCordoni {
 	      	System.out.println("Null pointer exception.");
 	      	System.out.println(ex.getMessage());
 	    }//catch
+
 	    catch(Exception ex)
 	    {
 	    	System.out.println("Something went wrong");
@@ -112,11 +106,8 @@ public class MainCordoni {
 			correctLine(wordarray);
 		//}//for
 		
-		
-		
 		}//main
 	
-		//split and push/enqueue
 
 		//this method takes in one element of the array and make all letters
 		//the same case and gets rid of spaces
@@ -131,6 +122,9 @@ public class MainCordoni {
 			
 			for(int i = 0; i<wordarray.length; i++){
 
+				StackCordoni theStack = new StackCordoni();
+				QueueCordoni theQueue = new QueueCordoni();
+
 				//System.out.println(wordarray[i]);
 				line = wordarray[i];
 				statement = line.toLowerCase();
@@ -139,65 +133,65 @@ public class MainCordoni {
 				String[] charArray = noSpaceStatement.split("");
 				//System.out.println(charArray);
 
-				pushStack(charArray);
-				enqueueQueue(charArray);
-				compare(charArray);
+				pushStack(charArray, theStack);
+				enqueueQueue(charArray, theQueue);
+				compare(line, theStack, theQueue);
 				
 			}//for
 
 		}//correctline
 
-		public static void pushStack(String[] chararray){
+		public static void pushStack(String[] chararray, StackCordoni stack){
 
 			for(int i = 0; i < chararray.length; i++){
 			
-				theStack.push(chararray[i]);
+				stack.push(chararray[i]);
 				//System.out.println(chararray[i]);
 			}//for
 			
 		}//pushStack
 
-		public static void enqueueQueue(String[] chararray){
+		public static void enqueueQueue(String[] chararray, QueueCordoni queue){
 
 			for(int i = 0; i < chararray.length; i++){
 			
-				theQueue.enqueue(chararray[i]);
+				queue.enqueue(chararray[i]);
 				//System.out.println(chararray[i]);
 			}//for
 			
 		}//enqueueQueue
 
-		public static void compare(String[] chararray){
+		public static void compare(String chararray, StackCordoni stack, QueueCordoni queue){
 
 			NodeCordoni popVal;
 			NodeCordoni dequeueVal;
+			String valPop;
+			String valDequeue;
 
 			//pop
-			popVal = theStack.pop();
+			popVal = stack.pop();
+			valPop = popVal.getData();
 
 			//dequeue
-			dequeueVal = theQueue.dequeue();
+			dequeueVal = queue.dequeue();
+			valDequeue = dequeueVal.getData();
 
-			//compare
+			
+			if(valPop.equals(valDequeue)){
 
-			if(popVal==dequeueVal){
-
-				do{
-					popVal = theStack.pop();
-					dequeueVal = theQueue.dequeue();
-
-				}
-				while(popVal==dequeueVal);
-
-				for(int i = 0; i < chararray.length; i++){
-					System.out.println(chararray[i]);
-				}//for
+				while((valPop.equals(valDequeue))&&(!(stack.isEmpty()))){
+					popVal = stack.pop();
+					valPop = popVal.getData();
+					dequeueVal = queue.dequeue();
+					valDequeue = dequeueVal.getData();
+				}//while
+				
+				if(stack.isEmpty()){
+					System.out.println(chararray);
+				}//if
+				
 			}//if
 
-			else{
-				//System.out.println("This word is not a palindrone.");
-			}//else
-			
 		}//compare
 
 }//MainCordoni
