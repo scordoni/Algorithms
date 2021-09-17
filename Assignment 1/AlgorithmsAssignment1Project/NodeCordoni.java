@@ -1,3 +1,5 @@
+import javafx.scene.Node;
+
 /** 
  * 
  * Assignment 1 <br>
@@ -17,7 +19,6 @@ public class NodeCordoni
     */
    private String myData;
    private NodeCordoni myNext;
-
    
    /**
     * The default Constructor for ItemCordoni

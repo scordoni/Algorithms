@@ -14,10 +14,12 @@
  */
 public class StackCordoni {
 
-	public static final int MAXSIZE = 100;
-	private NodeCordoni[] myWord;
-	private int myTop;
+	//public static final int MAXSIZE = 100;
+	//private NodeCordoni[] myWord;
+	private NodeCordoni myTop = null;
+	private String myData;
 	
+	/*
 	public StackCordoni()
 	{
 		myWord = new NodeCordoni[MAXSIZE];
@@ -25,18 +27,15 @@ public class StackCordoni {
 			myWord[i]=null;
 		myTop = -1;
 	}//StackCordoni
-	
-	public boolean push(NodeCordoni newword)
+	*/
+
+	public  void push(String newword)
 	{
-		boolean success = false;
-		if(!isFull())
-		{
-			success = true;
-			myTop++;
-			myWord[myTop]=newword;
-		}//if
-		
-		return success;		
+		NodeCordoni oldTop = myTop;
+		myTop = new NodeCordoni();
+		myTop.setData(newword);
+		myTop.setNext(oldTop);
+	
 	}//push
 	
 	public NodeCordoni pop()
@@ -44,9 +43,14 @@ public class StackCordoni {
 		NodeCordoni answer = null;
 		if(!isEmpty())
 		{
-			answer = myWord[myTop];
-			myTop--;
+			answer = myTop;
+			myTop = myTop.getNext();
 		}//if
+
+		else{
+			System.out.println("The stack is empty");
+		}
+
 		return answer;
 	}//pop
 	
@@ -54,23 +58,11 @@ public class StackCordoni {
 	{
 		boolean empty = false;
 		
-		if(myTop == -1)
+		if(myTop == null)
 			{
 			empty = true;
 			}//if
 		return empty;
 	}//empty
-	
-	public boolean isFull()
-	{
-		boolean full = false;
-		
-		if(myTop == myWord.length)
-			{
-			full = true;
-			}//if 
-		
-		return full;
-	}//full
 
 }//Stackcordoni

@@ -14,10 +14,14 @@
  */
 public class QueueCordoni {
 
-	public static final int MAXSIZE = 100;
-	private NodeCordoni[] myWord;
-	private int myTop;
+	//public static final int MAXSIZE = 100;
+	//private NodeCordoni[] myWord;
+	//private int myTop;
+
+	private NodeCordoni myHead;
+	private NodeCordoni myTail;
 	
+	/*
 	public QueueCordoni()
 	{
 		myWord = new NodeCordoni[MAXSIZE];
@@ -25,18 +29,23 @@ public class QueueCordoni {
 			myWord[i]=null;
 		myTop = -1;
 	}//StackCordoni
+	*/
 
-	public boolean enqueue(NodeCordoni newword)
+	public void enqueue(String newword)
 	{
-		boolean success = false;
-		if(!isFull())
-		{
-			success = true;
-			myTop++;
-			myWord[myTop]=newword;
-		}//if
 		
-		return success;		
+		NodeCordoni oldTail = new NodeCordoni(newword);
+		
+		if (!isEmpty()){
+			myTail.setNext(oldTail);
+			myTail = oldTail;
+			
+		}//if
+
+		else{
+			myHead = myTail = oldTail;
+		}//else
+
 	}//enqueue
 	
 	public NodeCordoni dequeue()
@@ -45,10 +54,17 @@ public class QueueCordoni {
 		
 		if(!isEmpty())
 		{
-			int i = 0;
-			answer = myWord[i];
-			myTop++;
+			answer = myHead;
+			myHead = myHead.getNext();
+			
+			if(isEmpty()){
+				myHead = null;
+			}//if
 		}//if
+
+		else{
+			System.out.println("The Queue is empty");
+		}
 		return answer;
 	}//dequeue
 	
@@ -56,23 +72,11 @@ public class QueueCordoni {
 	{
 		boolean empty = false;
 		
-		if(myTop == -1)
+		if(myHead == null)
 			{
 			empty = true;
 			}//if
 		return empty;
 	}//empty
 	
-	public boolean isFull()
-	{
-		boolean full = false;
-		
-		if(myTop == myWord.length)
-			{
-			full = true;
-			}//if 
-		
-		return full;
-	}//full
-
 }//QueueCordoni

@@ -26,14 +26,12 @@ public class MainCordoni {
 	 */
 	static Scanner keyboard = new Scanner(System.in);
 
-
+	static StackCordoni theStack = new StackCordoni();
+	static QueueCordoni theQueue = new QueueCordoni();
+	
+	
 	public static void main(String[] args) {
 
-		/**
-		 * Remember to ignore case and remove space! 
-		 * 
-		 */
-		
 		/**
 		 * Declare and initialize variables 
 		 * 
@@ -45,15 +43,11 @@ public class MainCordoni {
 		String statement;
 		String noSpaceStatement;
 		NodeCordoni word = null;
-		QueueCordoni queue = new QueueCordoni();
+		QueueCordoni theQueue = new QueueCordoni();
 		String[] wordarray = new String[666];
 			
 
-		/**
-		 * Say Hello
-		 * 		 
-		 */
-		System.out.println("Hello!");
+
 	
 		/**
 		 * ask user to enter file name
@@ -104,21 +98,21 @@ public class MainCordoni {
 
 	    catch(NullPointerException ex)
 	    {
-	      System.out.println("Null pointer exception.");
-	      System.out.println(ex.getMessage());
+	      	System.out.println("Null pointer exception.");
+	      	System.out.println(ex.getMessage());
 	    }//catch
 	    catch(Exception ex)
 	    {
 	    	System.out.println("Something went wrong");
-	      ex.printStackTrace();
+	      	ex.printStackTrace();
 	    }//catch
 		
-		for(int i = 0; i < wordarray.length; i++){
-			System.out.println(wordarray[i]);
-			correctLine(wordarray[i]);
-		}//for
+		//for(int i = 0; i < wordarray.length; i++){
+			//System.out.println(wordarray);
+			correctLine(wordarray);
+		//}//for
 		
-		//splitPush(wordarray);
+		
 		
 		}//main
 	
@@ -126,50 +120,84 @@ public class MainCordoni {
 
 		//this method takes in one element of the array and make all letters
 		//the same case and gets rid of spaces
-		public static void correctLine(String line)
+		public static void correctLine( String[] wordarray)
 		{
+		
+			//System.out.println(wordarray);
+			String line = "none";
 			String statement = "none";
 			String noSpaceStatement;
 
+			
+			for(int i = 0; i<wordarray.length; i++){
+
+				//System.out.println(wordarray[i]);
+				line = wordarray[i];
 				statement = line.toLowerCase();
 				noSpaceStatement = statement.replaceAll("\\s", "");
-				System.out.println(noSpaceStatement);
+				//System.out.println(noSpaceStatement);
 				String[] charArray = noSpaceStatement.split("");
 				//System.out.println(charArray);
+
 				pushStack(charArray);
+				enqueueQueue(charArray);
+				compare(charArray);
+				
+			}//for
 
 		}//correctline
 
 		public static void pushStack(String[] chararray){
 
-			StackCordoni theStack = new StackCordoni();
-
 			for(int i = 0; i < chararray.length; i++){
 			
-				theStack.push(new NodeCordoni(chararray[i]));
-				//System.out.println(theStack.push(new NodeCordoni(chararray[i])));
+				theStack.push(chararray[i]);
+				//System.out.println(chararray[i]);
 			}//for
 			
 		}//pushStack
 
 		public static void enqueueQueue(String[] chararray){
 
-			QueueCordoni theQueue = new QueueCordoni();
-
 			for(int i = 0; i < chararray.length; i++){
 			
-				theQueue.enqueue(new NodeCordoni(chararray[i]));
-				//System.out.println(theQueue.push(new NodeCordoni(chararray[i])));
+				theQueue.enqueue(chararray[i]);
+				//System.out.println(chararray[i]);
 			}//for
 			
-		}//pushStack
+		}//enqueueQueue
 
-		public static void compare(){
+		public static void compare(String[] chararray){
 
-			
+			NodeCordoni popVal;
+			NodeCordoni dequeueVal;
 
+			//pop
+			popVal = theStack.pop();
+
+			//dequeue
+			dequeueVal = theQueue.dequeue();
+
+			//compare
+
+			if(popVal==dequeueVal){
+
+				do{
+					popVal = theStack.pop();
+					dequeueVal = theQueue.dequeue();
+
+				}
+				while(popVal==dequeueVal);
+
+				for(int i = 0; i < chararray.length; i++){
+					System.out.println(chararray[i]);
+				}//for
+			}//if
+
+			else{
+				//System.out.println("This word is not a palindrone.");
+			}//else
 			
-			
-		}//pushStack
+		}//compare
 
 }//MainCordoni
