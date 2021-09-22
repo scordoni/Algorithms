@@ -2,33 +2,18 @@
  * 
  * Assignment 1 <br>
  * Due Date and Time: 9/24/21 before 12:00am <br>
- * 
  * Purpose: This class creates the stack <br>
- * 
  * Input: The user will be inputting a word.<br>
- * 
  * Output: The program will push each letter of the word into the stack. <br>
- *
  * @author Shannon Cordoni <br>
  * 
  */
 public class StackCordoni {
 
-	//public static final int MAXSIZE = 100;
-	//private NodeCordoni[] myWord;
 	private NodeCordoni myTop = null;
 	private String myData;
 	
-	/*
-	public StackCordoni()
-	{
-		myWord = new NodeCordoni[MAXSIZE];
-		for (int i = 0; i < MAXSIZE;i++)
-			myWord[i]=null;
-		myTop = -1;
-	}//StackCordoni
-	*/
-
+	//This method takes in a new word or letter and pushes it into the stack
 	public  void push(String newword)
 	{
 		NodeCordoni oldTop = myTop;
@@ -38,6 +23,7 @@ public class StackCordoni {
 	
 	}//push
 	
+	//This method removes a letter from the stack and returns it
 	public NodeCordoni pop()
 	{
 		NodeCordoni answer = null;
@@ -54,6 +40,7 @@ public class StackCordoni {
 		return answer;
 	}//pop
 	
+	//This method checks whether or not the stack is empty
 	public boolean isEmpty()
 	{
 		boolean empty = false;

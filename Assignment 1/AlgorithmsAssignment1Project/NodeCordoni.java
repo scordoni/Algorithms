@@ -1,13 +1,8 @@
-import javafx.scene.Node;
-
 /** 
  * 
  * Assignment 1 <br>
  * Due Date and Time: 9/24/21 before 12:00am <br>
- * 
  * Purpose: This class creates the linked list (Node Class) <br>
- * 
- *
  * @author Shannon Cordoni <br>
  * 
  */
@@ -15,7 +10,7 @@ import javafx.scene.Node;
 public class NodeCordoni 
 {
    /**
-    * Instance Variable for word data and node <br>
+    * Instance Variable for word data and node 
     */
    private String myData;
    private NodeCordoni myNext;
