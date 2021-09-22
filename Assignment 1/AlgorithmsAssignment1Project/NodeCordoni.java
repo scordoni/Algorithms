@@ -62,6 +62,6 @@ public class NodeCordoni
    public NodeCordoni getNext()
        { return myNext;}//get node
 
-}//Word Cordoni
+}//Node Cordoni
 
     

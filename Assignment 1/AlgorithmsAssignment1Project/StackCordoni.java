@@ -35,7 +35,7 @@ public class StackCordoni {
 
 		else{
 			System.out.println("The stack is empty");
-		}
+		}//else
 
 		return answer;
 	}//pop
