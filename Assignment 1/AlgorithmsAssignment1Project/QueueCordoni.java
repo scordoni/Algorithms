@@ -5,6 +5,7 @@
  * Purpose: This class creates the stack <br>
  * Input: A word/statement from the input file .<br>
  * Output: The program will push each letter of the word/statement into the Queue. <br>
+ * Consults: I referenced GeeksforGeeks for some help on the enqueue method.
  * @author Shannon Cordoni <br>
  * 
  */
