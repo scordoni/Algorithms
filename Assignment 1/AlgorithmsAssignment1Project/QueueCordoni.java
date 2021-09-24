@@ -1,12 +1,11 @@
 /** 
  * 
- * Assignment 1 <br>
- * Due Date and Time: 9/24/21 before 12:00am <br>
- * Purpose: This class creates the stack <br>
- * Input: A word/statement from the input file .<br>
- * Output: The program will push each letter of the word/statement into the Queue. <br>
- * Consults: I referenced GeeksforGeeks for some help on the enqueue method.
- * @author Shannon Cordoni <br>
+ * Assignment 1 
+ * Due Date and Time: 9/24/21 before 12:00am 
+ * Purpose: This class creates the stack 
+ * Input: A word/statement from the input file .
+ * Output: The program will push each letter of the word/statement into the Queue. 
+ * @author Shannon Cordoni 
  * 
  */
 public class QueueCordoni {
@@ -17,23 +16,23 @@ public class QueueCordoni {
 	//This method adds a node to the queue, it does so by adding it to the end of the queue
 	public void enqueue(String newword)
 	{	
-		//this moves the pointer that points to the last node on the list to 
-		//now point to the new node added to the end of the queue
-		NodeCordoni oldTail = new NodeCordoni(newword);
+		//this sets a temp variable to hold the current tail node
+		NodeCordoni oldTail = myTail;
+
+		//this sets the tail to be a new node and its data to be the new string
+		myTail = new NodeCordoni();
+		myTail.setData(newword);
 		
 		//This checks to see if the queue is empty
-		//if it is not empty then the next tail is set to the old tail
-		//and then the tail is set to the old tail
+		//if it is not empty then the old tail is set to now point to the new Node
 		if (!isEmpty()){
-			myTail.setNext(oldTail);
-			myTail = oldTail;
-			
+			oldTail.setNext(myTail);		
 		}//if
 
 		//if the queue is empty then all variables are the same because there is nothing
 		//in the queue. Then the head and tail pointer would be pointing to the same thing.
 		else{
-			myHead = myTail = oldTail;
+			myHead = myTail;
 		}//else
 
 	}//enqueue

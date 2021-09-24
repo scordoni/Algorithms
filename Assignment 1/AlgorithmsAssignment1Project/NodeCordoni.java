@@ -1,9 +1,9 @@
 /** 
  * 
- * Assignment 1 <br>
- * Due Date and Time: 9/24/21 before 12:00am <br>
- * Purpose: This class creates the linked list (Node Class) <br>
- * @author Shannon Cordoni <br>
+ * Assignment 1 
+ * Due Date and Time: 9/24/21 before 12:00am 
+ * Purpose: This class creates the linked list (Node Class) 
+ * @author Shannon Cordoni 
  * 
  */
 
@@ -16,7 +16,7 @@ public class NodeCordoni
    private NodeCordoni myNext;
    
    /**
-    * The default Constructor for ItemCordoni
+    * The default Constructor for NodeCordoni
     */
    public NodeCordoni()
        {

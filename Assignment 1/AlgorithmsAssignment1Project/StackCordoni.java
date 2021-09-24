@@ -1,11 +1,11 @@
 /** 
  * 
- * Assignment 1 <br>
- * Due Date and Time: 9/24/21 before 12:00am <br>
- * Purpose: This class creates the stack <br>
- * Input: The user will be inputting a word.<br>
- * Output: The program will push each letter of the word into the stack. <br>
- * @author Shannon Cordoni <br>
+ * Assignment 1 
+ * Due Date and Time: 9/24/21 before 12:00am 
+ * Purpose: This class creates the stack 
+ * Input: The user will be inputting a word.
+ * Output: The program will push each letter of the word into the stack. 
+ * @author Shannon Cordoni 
  * 
  */
 public class StackCordoni {
