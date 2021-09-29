@@ -12,6 +12,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.Random;
 
 public class MainCordoni {
 
@@ -69,29 +70,39 @@ public class MainCordoni {
 	    }//catch
 		
 		//Passes word array into the shuffle method to shuffle the array
-		//shuffle(wordarray);
+		shuffle(wordarray);
 		
 	}//main
 
 	//This method 
-	public static String[] shuffle(String[] wordarray)
+	public static void shuffle(String[] wordarray)
 	{
+		//String[] temp = wordarray;
+		 
+		Random r = new Random();
+		
 		//swap
-		//temp = A
 		//A = B
 		//B = Temp
 
-		for ( int i = 0; i < wordarray.length; i++){
+		for ( int i = wordarray.length - 1; i > 0  ; i--){
+
+			int j = r.nextInt(i);
+			String temp = wordarray[i];
+			wordarray[i] = wordarray[j];
+			wordarray[j] = temp;
 
 		}//for
 
-		return wordarray;
+		System.out.println(wordarray.toString());
+		selectionSort(wordarray);
 	   
 	}//shufle
 
 	//This method
-	public int selectionSort(String[] wordarray)
+	public static void selectionSort(String[] wordarray)
 	{
+
 		int numberOfSortComparisons = 0;
 
 	   //comment
@@ -113,11 +124,17 @@ public class MainCordoni {
 			}//for j
 
 			//swap wordarray[i] with wordarray[smallpostion]
+			if (wordarray[smallpostion]!= wordarray[i]){
+				String temp = wordarray[i];
+				wordarray[i] = wordarray[smallpostion];
+				wordarray[smallpostion] = temp;
+				
+			}//if
 
 
 	   }//for i 
 
-	   return numberOfSortComparisons;
+	   System.out.println("Selection Sort Comparisons: " + numberOfSortComparisons);
 
 	}//selection sort
 
@@ -156,6 +173,11 @@ public class MainCordoni {
 	public int mergeSort(String[] wordarray)
 	{
 		int numberOfMergeComparisons = 0;
+		String[] temparray1 = new String[666];
+		String[] temparray2 = new String[666];
+
+
+
 	   
 		return numberOfMergeComparisons;
 	}//merge sort
