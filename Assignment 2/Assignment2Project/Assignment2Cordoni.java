@@ -116,7 +116,6 @@ public class Assignment2Cordoni {
                 numberOfSortComparisons++;
                 //System.out.println(numberOfSortComparisons);
                 
-                
             }//for j
 
             //swap wordarray[i] with wordarray[smallpostion]
@@ -127,10 +126,7 @@ public class Assignment2Cordoni {
                 wordarray[i] = wordarray[smallpostion];
                 wordarray[smallpostion] = temp;
 
-
-                
             }//if
-
 
        }//for i 
 
@@ -173,10 +169,8 @@ public class Assignment2Cordoni {
     public static void mergeSort(String[] wordarray)
     {
         int numberOfMergeComparisons = 0;
-        String[] temparray1 = new String[666];
-        String[] temparray2 = new String[666];
 
-
+        
 
        
         System.out.println("Merge Sort Comparisons: " + numberOfMergeComparisons);
