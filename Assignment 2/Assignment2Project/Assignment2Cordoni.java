@@ -12,6 +12,9 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+
+import jdk.internal.jshell.tool.resources.l10n;
+
 import java.util.Random;
 
 public class Assignment2Cordoni {
@@ -72,37 +75,43 @@ public class Assignment2Cordoni {
             System.out.println("Something went wrong");
             ex.printStackTrace();
         }//catch
+
+        int p = 1;
+        int r = 665;
+
         
         selectionWordArray = wordarray;
-        insertionWordArray = wordarray;
-        mergeWordArray = wordarray;
-        quickWordArray = wordarray;
-
-        //Passes word array 
         selectionSort(selectionWordArray);
+
+        insertionWordArray = wordarray;
         insertionSort(insertionWordArray);
+
+        mergeWordArray = wordarray;
         mergeSort(mergeWordArray);
-        quickSort(quickWordArray);
+
+        quickWordArray = wordarray;
+        quickSort(quickWordArray, p, r);
+
         
     }//main
 
     //This method
-    public static void selectionSort(String[] wordarray)
+    public static void selectionSort(String[] selectionWordArray)
     {
 
         int numberOfSortComparisons = 0;
 
        //comment
-       for(int i = 0; i < wordarray.length - 2; i++){
+       for(int i = 0; i < selectionWordArray.length - 2; i++){
 
             //comment
             int smallpostion = i;
             
             //comment
-            for(int j = i + 1; j < wordarray.length - 1; j++){
+            for(int j = i + 1; j < selectionWordArray.length - 1; j++){
 
                 //comment
-                if (wordarray[j].compareToIgnoreCase(wordarray[smallpostion]) < 0){
+                if (selectionWordArray[j].compareToIgnoreCase(selectionWordArray[smallpostion]) < 0){
                     smallpostion = j;
                     
                     //224184
@@ -119,12 +128,12 @@ public class Assignment2Cordoni {
             }//for j
 
             //swap wordarray[i] with wordarray[smallpostion]
-            if (wordarray[smallpostion]!= wordarray[i]){
+            if (selectionWordArray[smallpostion]!= selectionWordArray[i]){
                 
-                System.out.println("hi");
-                String temp = wordarray[i];
-                wordarray[i] = wordarray[smallpostion];
-                wordarray[smallpostion] = temp;
+                //System.out.println("hi");
+                String temp = selectionWordArray[i];
+                selectionWordArray[i] = selectionWordArray[smallpostion];
+                selectionWordArray[smallpostion] = temp;
 
             }//if
 
@@ -135,29 +144,29 @@ public class Assignment2Cordoni {
     }//selection sort
 
     //This method
-    public static void insertionSort(String[] wordarray)
+    public static void insertionSort(String[] insertionWordArray)
     {
         int numberOfInsertComparisons = 0;
 
         //comment
-        for(int i = 1; i < wordarray.length - 2; i++){
+        for(int i = 1; i < insertionWordArray.length - 2; i++){
 
             //comment
-            String key = wordarray[i];
+            String key = insertionWordArray[i];
 
             int j = i - 1;
             
             //comment
-            while(( j >= 0)&&(wordarray[j].compareToIgnoreCase(key) < 0)){
+            while(( j >= 0)&&(insertionWordArray[j].compareToIgnoreCase(key) < 0)){
 
                 //comment
-                wordarray[j + 1] = wordarray[j];
+                insertionWordArray[j + 1] = insertionWordArray[j];
                 j = j - 1;
                 numberOfInsertComparisons++;
 
             }//while
 
-            wordarray[j + 1] = key;
+            insertionWordArray[j + 1] = key;
 
        }//for i 
 
@@ -170,19 +179,91 @@ public class Assignment2Cordoni {
     {
         int numberOfMergeComparisons = 0;
 
-        
+        int p = 1;
+        int q = 333;
+        int r = 666;
 
+        int i = 0;
+        int j = 0;
+
+        int n1 = q-p+1;
+        int n2 = r-q;
+
+        String [] temparray1 = new String[666];
+        String [] temparray2 = new String[666];
+
+        for (i = 0; i< n1; i++){
+            temparray1[i] = wordarray[p+i-1];
+        }//for
+
+        for(j = 0; j < n2; j++){
+            temparray2[j] = wordarray[q+j];
+        }//for
+
+        i = 1;
+        j = 1;
+        for(int k = p; k < r; k++){
+            if(temparray1[i].compareToIgnoreCase(temparray2[j]) <= 0 ){
+                wordarray[k] = temparray1[i];
+                i = i + 1;
+                numberOfMergeComparisons++;
+            }//if
+            else if (wordarray[k] == temparray2[j]){
+                j = j+1;
+                numberOfMergeComparisons++;
+            }//else
+        }//for
        
         System.out.println("Merge Sort Comparisons: " + numberOfMergeComparisons);
     }//merge sort
 
     //This method
-    public static void quickSort(String[] wordarray)
+    public static void quickSort(String[] wordarray, int p, int r)
     {
         int numberOfQuickComparisons = 0;
+
+        int i = 0;
+
+        if (wordarray[p].compareToIgnoreCase(wordarray[r]) < 0){
+            numberOfQuickComparisons++;
+            int q = partition(wordarray, p, r);
+
+            quickSort(wordarray, p, q - 1);
+            quickSort(wordarray, q + 1, r);
+        }//if
 
         System.out.println("Quick Sort Comparisons: " + numberOfQuickComparisons);
        
     }//quick sort
 
+    public static int partition(String[] wordarray, int p, int r){
+
+        String temp = "none";
+        String temp2 = "none";
+        String temp3 = "none";
+
+        int i = 0;
+
+        temp = wordarray[r];
+        i = p-1;
+
+        for (j = p; j < r-1; j++){
+            if (wordarray[j].compareToIgnoreCase(temp) < 0){
+                numberOfQuickComparisons++;
+                i = i + 1;
+
+                temp2 = wordarray[i];
+                wordarray[i] = wordarray[j];
+                wordarray[j] = temp2;
+            }//if
+
+            temp3 = wordarray[i + 1];
+            wordarray[i + 1] = wordarray[r];
+            wordarray[r] = temp3;
+
+        }//for
+
+        return i + 1;
+    }//partition
+    
 }//MainCordoni
