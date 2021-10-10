@@ -1,3 +1,100 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% CMPT 435
+% Fall 2021
+% Lab Two
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Short Sectioned Assignment
+% LaTeX Template
+% Version 1.0 (5/5/12)
+%
+% This template has been downloaded from: http://www.LaTeXTemplates.com
+% Original author: % Frits Wenneker (http://www.howtotex.com)
+% License: CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+% Modified by Alan G. Labouseur  - alan@labouseur.com
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[letterpaper, 10pt,DIV=13]{scrartcl} 
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyph
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm,xfrac} % Math packages
+\usepackage{sectsty} % Allows customizing section commands
+\usepackage{graphicx}
+\usepackage[lined,linesnumbered,commentsnumbered]{algorithm2e}
+\usepackage{listings}
+\usepackage{parskip}
+\usepackage{lastpage}
+
+\allsectionsfont{\normalfont\scshape} % Make all section titles in default font and small caps.
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{page \thepage\ of \pageref{LastPage}} % Page numbering for right footer
+
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs.
+
+\binoppenalty=3000
+\relpenalty=3000
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+   \normalfont \normalsize 
+   \textsc{CMPT 435 - Fall 2021 - Dr. Labouseur} \\[10pt] % Header stuff.
+   \horrule{0.5pt} \\[0.25cm] 	% Top horizontal rule
+   \huge Assignment Two \\     	    % Assignment title
+   \horrule{0.5pt} \\[0.25cm] 	% Bottom horizontal rule
+}
+
+\author{Shannon Cordoni \\ \normalsize Shannon.Cordoni@Marist.edu}
+
+\date{\normalsize\today} 	% Today's date.
+
+\begin{document}
+\maketitle % Print the title
+
+%----------------------------------------------------------------------------------------
+%   start PROBLEM ONE
+%----------------------------------------------------------------------------------------
+\section{Problem One: Sorting}
+
+\subsection{The Data Structure}
+\paragraph{} Given a list of strings our job was to create an algorithm to go through this list and sort them. To do this we were assigned to read each element of the list into an array, and using different sorting methods such as selection, insertion, merge, and quick sort we were to sort them in alphabetical order.\\
+
+
+\subsection{Main Class}
+
+\subsubsection{Description}
+\paragraph{}For this class we created multiple instances of the word array created from the $magicitems.txt$ files. This allowed us to pass each of these arrays to their respective sort. The code below shows this and each of these sorting methods.
+
+\lstset{numbers=left, numberstyle=\tiny, stepnumber=1, numbersep=5pt, basicstyle=\footnotesize\ttfamily}
+\begin{lstlisting}[frame=single, ] 
+   
 /*
  * 
  * Assignment 2
@@ -194,7 +291,8 @@ public class Cordoni {
         
     }//main
 
-    //This method is the selection sort method that goes through and sorts the array using a Big Oh of n squared
+    //This method is the selection sort method that goes through and sorts the array using a 
+    //Big Oh of n squared
     public static void selectionSort(String[] selectionWordArray)
     {
 
@@ -205,10 +303,12 @@ public class Cordoni {
 
             int smallpostion = i;
             
-            //to loop through the array to to compare small position with the rest of the array
+            //to loop through the array to to compare small position with the rest of the 
+            //array
             for(int j = i + 1; j < selectionWordArray.length - 1; j++){
 
-                //compares to see if the value of j comes before the value of small position in the alphabet
+                //compares to see if the value of j comes before the value of small position 
+                //in the alphabet
                 if (selectionWordArray[j].compareToIgnoreCase(selectionWordArray[smallpostion]) < 0){
                     smallpostion = j;
                     numberOfSortComparisons++;
@@ -232,7 +332,8 @@ public class Cordoni {
 
     }//selection sort
 
-    //This method is the insertion sort method that goes through and sorts the array using a Big Oh of n squared
+    //This method is the insertion sort method that goes through and sorts the array using a
+    //Big Oh of n squared
     public static void insertionSort(String[] insertionWordArray)
     {
         int numberOfInsertComparisons = 0;
@@ -240,12 +341,13 @@ public class Cordoni {
         //to loop through the array to determine the next key
         for(int i = 1; i < insertionWordArray.length - 2; i++){
 
-            //sets the key to be a value of the array
+            //sets the key to be an value of the array
             String key = insertionWordArray[i];
 
             int j = i - 1;
             
-            //while j comes before the key this loop pushes the key to where it falls in the array
+            //while j comes before the key this loop pushes the key to where it 
+            //falls in the array
             while(( j >= 0)&&(insertionWordArray[j].compareToIgnoreCase(key) < 0)){
 
                 insertionWordArray[j + 1] = insertionWordArray[j];
@@ -263,7 +365,8 @@ public class Cordoni {
        
     }//insertion sort
 
-    //This method is the merge sort method that goes through and sorts the array using a Big Oh of n log n
+    //This method is the merge sort method that goes through and sorts the array using a Big 
+    //Oh of n log n
     public static void merge(String[] wordarray, int p, int r){
 
         //if the first value comes before the last value then we can move to the merge sort
@@ -316,7 +419,8 @@ public class Cordoni {
        System.out.println("Merge Sort Comparisons: " + numberOfMergeComparisons);
     }//merge sort
 
-    //This method is the quick sort method that goes through and sorts the array using a Big Oh of n log n
+    //This method is the quick sort method that goes through and sorts the array using a Big
+    //Oh of n log n
     public static void quickSort(String[] wordarray, int p, int r)
     {
         int numberOfQuickComparisons = 0;
@@ -361,8 +465,8 @@ public class Cordoni {
                 //numberOfQuickComparisons++;
                 i = i + 1;
 
-                //these 2 swaps help swap the pivot with the leftmost element greater than the temp
-                //value, putting the pivot in its correct place.
+                //these 2 swaps help swap the pivot with the leftmost element greater 
+                //than the temp value, putting the pivot in its correct place.
                 temp2 = wordarray[i];
                 wordarray[i] = wordarray[j];
                 wordarray[j] = temp2;
@@ -378,3 +482,34 @@ public class Cordoni {
     }//partition
     
 }//MainCordoni
+\end{lstlisting}
+
+\subsubsection{Description of Main Code}
+\paragraph{} The code above is the code inside the main class, this includes reading in of the file, and the multiple sorting methods. These methods include selection sort, insertion sort, merge sort, and quick sort. Sadly some of these sorts were unsuccessful in execution, however this does not mean that these sorts cannot be analyzed. To go through each of these sorts we can create a table for better data understanding, this table will show each sort and their asymptotic running time:
+
+\begin{center}
+\begin{tabular}{ |c|c|c|c| } 
+ \hline
+ Selection Sort & Insertion Sort & Merge Sort & Quick Sort \\ 
+ O($n^2$) & O($n^2$) & O($nlog(n)$) & O($nlog(n)$)\\ 
+ \hline
+\end{tabular}
+\end{center}
+
+\paragraph{} The table above shows a quick understanding of the sorting methods used here. To go into more detail the Selection Sort method has an asymptotic running time of O($n^2$). This is because if we go through each line of the selection or insertion sort and note the number of times each line is done, we can come up with a mathematical equation using these running times and the formula for an arithmetic sequence $(n(n+1))/2$. This formula once reduced and no longer including constants boils down to $n^2 + n$, because $n$ is smaller than $n^2$ we throw it away due to the fact that as $n$ grows closer to infinity $n$ becomes insignificant. This then leaves $n^2$ as the running time for selection and insertion sort. Another, quicker way to look at this is that both selection and insertion contain 2 loops, each of these loops have their own running time of $n$. Since we throw away constants, and since these loops are nested we can multiply these values to gain the total running time of the method. After multiplying we get $n^2$ as the total asymptotic running time of these methods. For quick sort and merge sort, both have an asymptotic running time of $nlog(n)$. This is because the recursion tree for both merge and quick sort has a running time of $T(n/2^k)$ at each level with $k$ being the level of the tree, now the height of the tree is equal to $log(n)$. With the height or merging time of the tree being $log(n)$ we then have to multiply it by the size of our data set producing $nlog(n)$ to be the asymptotic running time of merge and quick sort.
+
+
+
+%----------------------------------------------------------------------------------------
+%   REFERENCES
+%----------------------------------------------------------------------------------------
+% The following two commands are all you need in the initial runs of your .Tex file to
+% produce the bibliography for the citations in your paper.
+\bibliographystyle{abbrv}
+\bibliography{lab01} 
+% You must have a proper ".bib" file and remember to run:
+% latex bibtex latex latex
+% to resolve all references.
+
+\pagebreak
+\end{document}
