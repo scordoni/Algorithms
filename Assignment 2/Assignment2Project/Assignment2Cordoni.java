@@ -15,7 +15,7 @@ import java.util.Scanner;
 
 import java.util.Random;
 
-public class Cordoni {
+public class Assignment2Cordoni {
 
     //Declare keyboard 
     static Scanner keyboard = new Scanner(System.in);
@@ -74,8 +74,8 @@ public class Cordoni {
             ex.printStackTrace();
         }//catch
 
-        int p = 1;
-        int r = 665;
+        int startindex = 0;
+        int endindex = 665;
 
         //create selection array to match word array
         selectionWordArray = wordarray;
@@ -153,7 +153,7 @@ public class Cordoni {
         mergeWordArray = wordarray;
 
         //pass merge array to merge sort method
-        merge(mergeWordArray, p, r);
+        merge(mergeWordArray, startindex, endindex);
 
         //read file again to create new array
         //create new file object
@@ -189,7 +189,7 @@ public class Cordoni {
         quickWordArray = wordarray;
 
         //pass quick array to quick sort method
-        quickSort(quickWordArray, p, r);
+        quickSort(quickWordArray, startindex, endindex);
 
         
     }//main
@@ -264,45 +264,47 @@ public class Cordoni {
     }//insertion sort
 
     //This method is the merge sort method that goes through and sorts the array using a Big Oh of n log n
-    public static void merge(String[] wordarray, int p, int r){
+    public static void merge(String[] wordarray, int startindex, int endindex){
 
         //if the first value comes before the last value then we can move to the merge sort
-        if (wordarray[p].compareToIgnoreCase(wordarray[r]) < 0){
+        if (wordarray[startindex].compareToIgnoreCase(wordarray[endindex]) < 0){
             //numberOfMergeComparisons++;
 
-            int q = p + ((r-1)/2);
-            merge(wordarray, p, q);
-            merge(wordarray, q + 1, r);
-            mergeSort(wordarray, p, q, r);
+            int temp1 = endindex - 1;
+            int temp2 = temp1/2;
+            int split = startindex + temp2;
+            merge(wordarray, startindex, split);
+            merge(wordarray, split + 1, endindex);
+            mergeSort(wordarray, startindex, split, endindex);
         }//if
     }//merge
 
     //This method merges the subarrays back together
-    public static void mergeSort(String[] wordarray, int p, int q, int r)
+    public static void mergeSort(String[] wordarray, int startindex, int split, int endindex)
     {
         int numberOfMergeComparisons = 0;
 
         int i = 0;
         int j = 0;
 
-        int n1 = q - p + 1;
-        int n2 = r - q;
+        int n1 = split;
+        int n2 = endindex - split;
 
         String [] temparray1 = new String[n1];
         String [] temparray2 = new String[n2];
 
         //sets the values of the first temp array
         for (i = 0; i < n1; i++){
-            temparray1[i] = wordarray[p+i];
+            temparray1[i] = wordarray[startindex+i];
         }//for
 
         //sets the values of the second temp array
         for(j = 0; j < n2; j++){
-            temparray2[j] = wordarray[q + 1 + j];
+            temparray2[j] = wordarray[split + 1 + j];
         }//for
 
         //this  helps put the smallest elements of the temp arrays in sorted order
-        for(int k = p; k < r ; k++){
+        for(int k = startindex ; k < endindex; k++){
             if(temparray1[i].compareToIgnoreCase(temparray2[j]) < 0 ){
                 wordarray[k] = temparray1[i];
                 i = i + 1;
@@ -317,21 +319,21 @@ public class Cordoni {
     }//merge sort
 
     //This method is the quick sort method that goes through and sorts the array using a Big Oh of n log n
-    public static void quickSort(String[] wordarray, int p, int r)
+    public static void quickSort(String[] wordarray, int startindex, int endindex)
     {
         int numberOfQuickComparisons = 0;
 
         //this looks to see if the first value comes before the last value in the alphabet
         //if so we can move to creat the partition the array
-        if (wordarray[p].compareToIgnoreCase(wordarray[r]) < 0){
+        if (wordarray[p].compareToIgnoreCase(wordarray[endindex]) < 0){
             numberOfQuickComparisons++;
     
             //creates the partition
-            int q = partition(wordarray, p, r);
+            int split = partition(wordarray, startindex, endindex);
 
             //calls quick sort to sort both halfs of the array
-            quickSort(wordarray, p, q - 1);
-            quickSort(wordarray, q + 1, r);
+            quickSort(wordarray, startindex, split - 1);
+            quickSort(wordarray, split + 1, endindex);
         }//if
 
         System.out.println("Quick Sort Comparisons: " + numberOfQuickComparisons);
@@ -339,7 +341,7 @@ public class Cordoni {
     }//quick sort
 
     //this method creates the partition of the arary
-    public static int partition(String[] wordarray, int p, int r){
+    public static int partition(String[] wordarray, int startindex, int endindex){
 
         //int numberOfQuickComparisons = 0;
 
@@ -350,7 +352,7 @@ public class Cordoni {
         int i = 0;
         int j = 0;
 
-        temp = wordarray[r];
+        temp = wordarray[endindex];
         i = p-1;
 
         //this looks to create the partition
