@@ -33,6 +33,9 @@ public class Assignment3Cordoni {
 
         int binarysum = 0;
         double binaryaverage = 0.0;
+
+        int hashsum = 0;
+        double hashaverage = 0.0;
             
         //create new file object
         File myFile = new File("magicitems.txt");
@@ -92,7 +95,7 @@ public class Assignment3Cordoni {
 
         //find the average number of comparisons for linear search
         linearaverage = linearsum / randomarray.length;
-        System.out.println("The linear average is " + linearaverage);
+        System.out.println("The Linear Search average is " + linearaverage);
 
         //Call binary search to search for the 42 random items
         for (int i = 0; i < randomarray.length; i++){
@@ -101,7 +104,16 @@ public class Assignment3Cordoni {
 
         //find the average number of comparisons for binary search
         binaryaverage = binarysum / randomarray.length;
-        System.out.println("The binary average is " + binaryaverage);
+        System.out.println("The Binary Search average is " + binaryaverage);
+
+        //Call hashing to search for the 42 random items
+        for (int i = 0; i < randomarray.length; i++){
+            hashsum = hashsum + hashsearch(wordarray, randomarray[i], startindex, endindex);
+        }//for
+
+        //find the average number of comparisons for binary search
+        hashaverage = hashsum / randomarray.length;
+        System.out.println("The Hashing average is " + hashaverage);
        
     }//main
 
@@ -124,7 +136,6 @@ public class Assignment3Cordoni {
                 //compares to see if the value of j comes before the value of small position in the alphabet
                 if (wordArray[j].compareToIgnoreCase(wordArray[smallpostion]) < 0){
                     smallpostion = j;
-                    
                 }//if
 
             }//for j
@@ -197,8 +208,54 @@ public class Assignment3Cordoni {
         return numberofBinaryComparisons;
          
     }//Binary Search
-   
 
-    
-    
+    //This method uses hashing to retrieve the 42 items
+    public static int hashsearch(String[] wordArray, String target, int startindex, int endindex)
+    {
+
+        HashCordoni HashCordoni = new HashCordoni();
+        int[] hashValues = new int[666];
+        NodeCordoni[] hashTable = new NodeCordoni [250];
+        int numberofHashComparisons = 0;
+        int low = 0;
+        int high = 0;
+
+        low = startindex;
+        high = endindex;
+
+        //make hashcode for each string and place that hashcode in a new array
+        for (int i = 0; i < wordArray.length; i++){
+            hashValues[i] = HashCordoni.makeHashCode(wordArray[i]);
+            //System.out.println(hashValues[i]);
+        }//for
+
+
+        //input the node containing the string to either start or continue the chain
+        for (int i = hashValues[0]; i < hashValues.length; i++){
+            
+
+            if(hashTable[i] != null){
+                hashTable[i].setData(HashCordoni.makeChain(wordArray[i]).toString());
+            }//if
+
+            else{
+                hashTable[i].setData(wordArray[i]);
+            }//else
+
+            System.out.println(hashTable[i]);
+        }//for
+       
+        int i = 0;
+
+        //Go through the hash table and search for the 42 items
+        while(target.compareToIgnoreCase(hashTable[hashValues[i]].getData()) != 0){
+            i++;
+            numberofHashComparisons++;
+        }//while
+        
+
+        return numberofHashComparisons;
+         
+    }//Hash
+
 }//Assignment3Cordoni
