@@ -11,9 +11,10 @@
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.Scanner;
 
-public class Assignment3Cordoni {
+public class Cordoni {
 
     //Declare keyboard 
     static Scanner keyboard = new Scanner(System.in);
@@ -229,33 +230,45 @@ public class Assignment3Cordoni {
             //System.out.println(hashValues[i]);
         }//for
 
+        //set hashcode so that it is not null
+        for (int i = 0; i < hashTable.length; i++){
+            hashTable[i] = new NodeCordoni();
+        }//for
+
 
         //input the node containing the string to either start or continue the chain
-        for (int i = hashValues[0]; i < hashValues.length; i++){
-            
+        for (int i = 0; i < hashValues.length -1; i++){
 
-            if(hashTable[i] != null){
-                hashTable[i].setData(HashCordoni.makeChain(wordArray[i]).toString());
+            //System.out.println(hashValues[i]);
+            
+            hashTable[hashValues[i]].setData(HashCordoni.makeChain(wordArray[i]).toString());
+  
+        }//for
+
+        //print hash table
+        for (int i = 0; i < hashTable.length - 1; i++){
+            //System.out.println(hashTable[i].getData());
+        }//for
+       
+        
+        
+        //Go through the hash table and search for the 42 items
+        for ( int i = 0; i < hashValues.length; i++){
+
+            numberofHashComparisons++;
+
+            if ((target.compareToIgnoreCase(hashTable[hashValues[i]].getData().toString()) != 0)){
+
+                return numberofHashComparisons;
             }//if
 
             else{
-                hashTable[i].setData(wordArray[i]);
+                i++;
             }//else
-
-            System.out.println(hashTable[i]);
-        }//for
-       
-        int i = 0;
-
-        //Go through the hash table and search for the 42 items
-        while(target.compareToIgnoreCase(hashTable[hashValues[i]].getData()) != 0){
-            i++;
-            numberofHashComparisons++;
-        }//while
-        
+        }
 
         return numberofHashComparisons;
-         
+        
     }//Hash
 
 }//Assignment3Cordoni
