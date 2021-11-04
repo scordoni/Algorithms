@@ -21,8 +21,9 @@ public class HashCordoni
     private  final int HASH_TABLE_SIZE = 250;
     private  NodeCordoni myHead;
     private  NodeCordoni myTail;
+    Cordoni Assignment3Cordoni = new Cordoni();
 
-    //This method creates the hashcode for the string, courtesy of Profesor Labouseur!
+    //This method creates the hashcode for the string, courtesy of Professor Labouseur!
     public  int makeHashCode(String str) {
         int hashTableSize = 250;
         str = str.toUpperCase();
@@ -69,8 +70,7 @@ public class HashCordoni
             oldTail.setNext(myTail);		
         }//if
     
-        //if the queue is empty then all variables are the same because there is nothing
-        //in the queue. Then the head and tail pointer would be pointing to the same thing.
+       
         else{
             myHead = myTail;
         }//else
@@ -79,36 +79,10 @@ public class HashCordoni
     
     }//make chain
 
-    //This method adds a node to the chain
-    public  NodeCordoni searchChain()
-    {
-
-        //This sets the temp variable to null so that it can be set later.
-        NodeCordoni answer = null;
-        
-        //If the queue is not empty then it will remove the first node from the queue
-        if(!isEmpty())
-        {
-            //This sets the temp variable to the first node in the list and then sets
-            //the new head pointer to the second node in the queue
-            answer = myHead;
-            myHead = myHead.getNext();
-                
-            //if the queue is empty then the head is null 
-            if(isEmpty()){
-                myHead = null;
-            }//if
-        }//if
-
-        else{
-            System.out.println("The Hashtable is empty");
-        }
-
-        return answer;
-
-    }//searchChain
+    
+    
 	
-	//THis checks to see if the queue is empty
+	//This checks to see if the queue is empty
 	public  boolean isEmpty()
 	{
 		boolean empty = false;
@@ -121,5 +95,3 @@ public class HashCordoni
 	}//empty
 
 }//hashCordoni
-
-    
