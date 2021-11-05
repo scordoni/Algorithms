@@ -4,7 +4,7 @@
  * Due Date and Time: 11/5/21 before 12:00am 
  * Purpose: to implement searching and hashing, and to understand their performance.
  * Input: The user will be inputting a file containing a list of words/statements
- * Output: The program will sort them and search through them to find certain elements
+ * Output: The program will sort them and search through them to find certain elementss
  * @author Shannon Cordoni 
  * 
  */
@@ -25,11 +25,9 @@ public class Assignment3Cordoni {
         String line;
         String[] wordarray = new String[666];
         String[] randomarray = new String[42];
-
-        HashCordoni HashCordoni = new HashCordoni();
         int[] hashValues = new int[666];
-        int[] randomHashValues = new int[42];
         NodeCordoni[] hashTable = new NodeCordoni [250];
+        HashCordoni HashCordoni = new HashCordoni();
 
         int startindex = 0;
         int endindex = 665;
@@ -112,17 +110,12 @@ public class Assignment3Cordoni {
         binaryaverage = binarysum / randomarray.length;
         System.out.println("The Binary Search average is " + binaryaverage);
 
+
         //hashing
 
         //make hashcode for each string and place that hashcode in a new array
         for (int i = 0; i < wordarray.length; i++){
             hashValues[i] = HashCordoni.makeHashCode(wordarray[i]);
-            //System.out.println(hashValues[i]);
-        }//for
-
-        //make hashcode for each random string and place that hashcode in a new array
-        for (int i = 0; i < randomarray.length; i++){
-            randomHashValues[i] = HashCordoni.makeHashCode(randomarray[i]);
             //System.out.println(hashValues[i]);
         }//for
 
@@ -133,21 +126,25 @@ public class Assignment3Cordoni {
 
 
         //input the node containing the string to either start or continue the chain
-        //I cannot fully get this to work but I believe that this is wear my issue is in making
-        //the chain
-        for (int i = 0; i < hashValues.length - 1; i++){ 
-            hashTable[hashValues[i]].setData((HashCordoni.makeChain(wordarray[i]).getData()));
-           //System.out.println((HashCordoni.makeChain(wordarray[i]).getData()));
+        for (int i = 0; i < hashValues.length -1; i++){
+            //System.out.println(hashValues[i]);
+            //System.out.println(hashTable[hashValues[i]].getData());
+            //System.out.println((HashCordoni.makeChain(wordarray[i])).getData());
+            
+            hashTable[hashValues[i]].setData((HashCordoni.makeChain(wordarray[i])).getData());
+  
         }//for
 
+        //print hash table
+        for (int i = 0; i < hashTable.length - 1; i++){
+            //System.out.println(hashTable[i].getData());
+        }//for
 
         //Call hashing to search for the 42 random items
         for (int i = 0; i < randomarray.length; i++){
-            hashsum = hashsum + hashsearch(wordarray, randomarray[i], randomHashValues[i], hashTable);
+            hashsum = hashsum + hashsearch(wordarray, randomarray[i], hashValues, hashTable);
             //System.out.println(hashsum);
         }//for
-
-        //System.out.println(hashsum);
 
         //find the average number of comparisons for binary search
         hashaverage = hashsum / randomarray.length;
@@ -158,14 +155,18 @@ public class Assignment3Cordoni {
     //This method is the selection sort method that goes through and sorts the array using a Big Oh of n squared
     public static String[] selectionSort(String[] wordArray)
     {
+        int numberOfSortComparisons = 0;
 
        //to loop through the array to determine the next smallest position
        for(int i = 0; i < wordArray.length - 2; i++){
 
             int smallpostion = i;
+            numberOfSortComparisons++;
 
             //to loop through the array to to compare small position with the rest of the array
             for(int j = i + 1; j < wordArray.length - 1; j++){
+
+                numberOfSortComparisons++;
 
                 //compares to see if the value of j comes before the value of small position in the alphabet
                 if (wordArray[j].compareToIgnoreCase(wordArray[smallpostion]) < 0){
@@ -184,6 +185,8 @@ public class Assignment3Cordoni {
             }//if
 
        }//for i 
+
+       System.out.println("Selection Sort Comparisons: " + numberOfSortComparisons);
 
        return(wordArray);
     }//selection sort
@@ -217,6 +220,7 @@ public class Assignment3Cordoni {
         int low = 0;
         int high = 0;
         int mid = 0;
+        int temp = 0;
         
         low = startindex;
         high = endindex;
@@ -241,34 +245,26 @@ public class Assignment3Cordoni {
     }//Binary Search
 
     //This method uses hashing to retrieve the 42 items
-    public static int hashsearch(String[] wordArray, String target, int hashvalue, NodeCordoni[] hashtable)
+    public static int hashsearch(String[] wordArray, String target, int[]hashValues, NodeCordoni[] hashTable)
     {
+
         HashCordoni HashCordoni = new HashCordoni();
         int numberofHashComparisons = 0;
-                
+ 
         //Go through the hash table and search for the 42 items
-        for ( int i = 0; i < hashtable.length; i++){
+        for ( int i = 0; i < hashValues.length; i++){
 
             numberofHashComparisons++;
 
+            if ((target.compareToIgnoreCase(hashTable[hashValues[i]].getData().toString()) != 0)){
 
-                    if (target.compareToIgnoreCase(hashtable[i].getData().toString()) == 0){
-                        break;
-                    }//if
-                     
-                    else{
-                        while (hashtable[i].getNext() != null ){
+                return numberofHashComparisons;
+            }//if
+            
+            else{
+                hashTable[hashValues[i]].getNext();
+            }//else
 
-                            if (target.compareToIgnoreCase(hashtable[i].getData().toString()) == 0){
-                                break;
-                            }//if
-                             
-                            else{
-                                i++;
-                            }//else
-                            
-                        }//while
-                    }//else
         }//for
 
         return numberofHashComparisons;

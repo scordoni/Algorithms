@@ -19,12 +19,12 @@ public class HashCordoni
     private  final String FILE_NAME = "magicitems.txt";
     private  final int LINES_IN_FILE = 666;
     private  final int HASH_TABLE_SIZE = 250;
-    private  NodeCordoni myHead;
-    private  NodeCordoni myTail;
+    private static  NodeCordoni myHead;
+    private static  NodeCordoni myTail;
     Cordoni Assignment3Cordoni = new Cordoni();
 
     //This method creates the hashcode for the string, courtesy of Professor Labouseur!
-    public  int makeHashCode(String str) {
+    public static  int makeHashCode(String str) {
         int hashTableSize = 250;
         str = str.toUpperCase();
         int length = str.length();
@@ -55,19 +55,19 @@ public class HashCordoni
     
         
     //This method adds a node to the chain
-    public  NodeCordoni makeChain(String newword)
+    public static  NodeCordoni makeChain(String newword)
     {	
         //this sets a temp variable to hold the current tail node
-        NodeCordoni oldTail = myTail;
+        NodeCordoni oldHead = myHead;
 
         //this sets the tail to be a new node and its data to be the new string
-        myTail = new NodeCordoni();
-        myTail.setData(newword);
+        myHead = new NodeCordoni();
+        myHead.setData(newword);
             
         //This checks to see if the hash index is empty
         //if it is not empty then the old tail is set to now point to the new Node
         if (!isEmpty()){
-            oldTail.setNext(myTail);		
+            myHead.setNext(oldHead);		
         }//if
     
        
@@ -83,7 +83,7 @@ public class HashCordoni
     
 	
 	//This checks to see if the queue is empty
-	public  boolean isEmpty()
+	public static  boolean isEmpty()
 	{
 		boolean empty = false;
 		
@@ -95,3 +95,5 @@ public class HashCordoni
 	}//empty
 
 }//hashCordoni
+
+    
