@@ -14,7 +14,7 @@ import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class Assignment3Cordoni {
+public class Cordoni {
 
     //Declare keyboard 
     static Scanner keyboard = new Scanner(System.in);
@@ -155,7 +155,6 @@ public class Assignment3Cordoni {
     //This method is the selection sort method that goes through and sorts the array using a Big Oh of n squared
     public static String[] selectionSort(String[] wordArray)
     {
-        int numberOfSortComparisons = 0;
 
        //to loop through the array to determine the next smallest position
        for(int i = 0; i < wordArray.length - 2; i++){
@@ -186,7 +185,7 @@ public class Assignment3Cordoni {
 
        }//for i 
 
-       System.out.println("Selection Sort Comparisons: " + numberOfSortComparisons);
+       //System.out.println("Selection Sort Comparisons: " + numberOfSortComparisons);
 
        return(wordArray);
     }//selection sort
@@ -248,7 +247,6 @@ public class Assignment3Cordoni {
     public static int hashsearch(String[] wordArray, String target, int[]hashValues, NodeCordoni[] hashTable)
     {
 
-        HashCordoni HashCordoni = new HashCordoni();
         int numberofHashComparisons = 0;
  
         //Go through the hash table and search for the 42 items

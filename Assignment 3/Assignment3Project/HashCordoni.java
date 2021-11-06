@@ -24,7 +24,7 @@ public class HashCordoni
     Cordoni Assignment3Cordoni = new Cordoni();
 
     //This method creates the hashcode for the string, courtesy of Professor Labouseur!
-    public static  int makeHashCode(String str) {
+    public  int makeHashCode(String str) {
         int hashTableSize = 250;
         str = str.toUpperCase();
         int length = str.length();
@@ -55,7 +55,7 @@ public class HashCordoni
     
         
     //This method adds a node to the chain
-    public static  NodeCordoni makeChain(String newword)
+    public  NodeCordoni makeChain(String newword)
     {	
         //this sets a temp variable to hold the current tail node
         NodeCordoni oldHead = myHead;
