@@ -14,7 +14,7 @@ import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class Cordoni {
+public class Assignment3Cordoni {
 
     //Declare keyboard 
     static Scanner keyboard = new Scanner(System.in);
@@ -155,17 +155,18 @@ public class Cordoni {
     //This method is the selection sort method that goes through and sorts the array using a Big Oh of n squared
     public static String[] selectionSort(String[] wordArray)
     {
+        
 
        //to loop through the array to determine the next smallest position
        for(int i = 0; i < wordArray.length - 2; i++){
 
             int smallpostion = i;
-            numberOfSortComparisons++;
+            
 
             //to loop through the array to to compare small position with the rest of the array
             for(int j = i + 1; j < wordArray.length - 1; j++){
 
-                numberOfSortComparisons++;
+                
 
                 //compares to see if the value of j comes before the value of small position in the alphabet
                 if (wordArray[j].compareToIgnoreCase(wordArray[smallpostion]) < 0){

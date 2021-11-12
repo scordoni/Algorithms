@@ -21,7 +21,7 @@ public class HashCordoni
     private  final int HASH_TABLE_SIZE = 250;
     private static  NodeCordoni myHead;
     private static  NodeCordoni myTail;
-    Cordoni Assignment3Cordoni = new Cordoni();
+   
 
     //This method creates the hashcode for the string, courtesy of Professor Labouseur!
     public  int makeHashCode(String str) {

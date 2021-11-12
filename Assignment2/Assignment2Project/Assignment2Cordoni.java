@@ -155,6 +155,8 @@ public class Assignment2Cordoni {
         //pass merge array to merge sort method
         merge(mergeWordArray, startindex, endindex);
 
+        System.out.println("Merge Sort Comparisons: " + merge(mergeWordArray, startindex, endindex));
+
         //read file again to create new array
         //create new file object
         File myFile4 = new File("magicitems.txt");
@@ -190,6 +192,8 @@ public class Assignment2Cordoni {
 
         //pass quick array to quick sort method
         quickSort(quickWordArray, startindex, endindex);
+
+        System.out.println("Quick Sort Comparisons: " + quickSort(quickWordArray, startindex, endindex));
 
         
     }//main
@@ -264,69 +268,89 @@ public class Assignment2Cordoni {
     }//insertion sort
 
     //This method is the merge sort method that goes through and sorts the array using a Big Oh of n log n
-    public static void merge(String[] wordarray, int startindex, int endindex){
+    public static int merge(String[] wordarray, int startindex, int endindex){
+        int numberOfMergeComparisons1 = 0;
+        int numberOfMergeComparisons = 0;
 
         //if the first value comes before the last value then we can move to the merge sort
         if (wordarray[startindex].compareToIgnoreCase(wordarray[endindex]) < 0){
-            //numberOfMergeComparisons++;
+            numberOfMergeComparisons1++;
 
-            int temp1 = endindex - 1;
-            int temp2 = temp1/2;
-            int split = startindex + temp2;
+            //int temp1 = endindex - 1;
+            //int temp2 = temp1/2;
+            int split = (startindex + endindex) / 2;
             merge(wordarray, startindex, split);
             merge(wordarray, split + 1, endindex);
             mergeSort(wordarray, startindex, split, endindex);
+            numberOfMergeComparisons = mergeSort(wordarray, startindex, split, endindex) + numberOfMergeComparisons1;
         }//if
+
+        
+        return(numberOfMergeComparisons);
     }//merge
 
     //This method merges the subarrays back together
-    public static void mergeSort(String[] wordarray, int startindex, int split, int endindex)
+    public static int mergeSort(String[] wordarray, int startindex, int split, int endindex)
     {
-        int numberOfMergeComparisons = 0;
+        int numberOfMergeComparisons2 = 0;
+        
 
         int i = 0;
         int j = 0;
 
-        int n1 = split;
+        int n1 = split - startindex + 1;
         int n2 = endindex - split;
 
-        String [] temparray1 = new String[n1];
-        String [] temparray2 = new String[n2];
+        String [] temparray1 = new String[n1 + 1];
+        String [] temparray2 = new String[n2 + 1];
 
         //sets the values of the first temp array
-        for (i = 0; i < n1; i++){
-            temparray1[i] = wordarray[startindex+i];
+        for (i = 1; i < n1 + 1 ; i++){
+            temparray1[i] = wordarray[startindex + i - 1];
+            
         }//for
 
         //sets the values of the second temp array
-        for(j = 0; j < n2; j++){
-            temparray2[j] = wordarray[split + 1 + j];
+        for(j = 1; j < n2 + 1; j++){
+            temparray2[j] = wordarray[split + j];
+             
         }//for
 
+        i = 1;
+        j = 1;
+        
         //this  helps put the smallest elements of the temp arrays in sorted order
-        for(int k = startindex ; k < endindex; k++){
-            if(temparray1[i].compareToIgnoreCase(temparray2[j]) < 0 ){
+        for(int k = startindex; k < endindex ; k++){
+
+
+            if(temparray1[i].compareToIgnoreCase(temparray2[j]) <= 0 ){
                 wordarray[k] = temparray1[i];
                 i = i + 1;
-                numberOfMergeComparisons++;
+                numberOfMergeComparisons2++;
             }//if
-            else if (wordarray[k] == temparray2[j]){
-                j = j+1;
-                numberOfMergeComparisons++;
+
+            else if (wordarray[k].compareToIgnoreCase(temparray2[j]) == 0){
+                j = j + 1;
+                numberOfMergeComparisons2++;
             }//else
+
         }//for
-       System.out.println("Merge Sort Comparisons: " + numberOfMergeComparisons);
+
+
+        return numberOfMergeComparisons2;
     }//merge sort
 
     //This method is the quick sort method that goes through and sorts the array using a Big Oh of n log n
-    public static void quickSort(String[] wordarray, int startindex, int endindex)
+    public static int quickSort(String[] wordarray, int startindex, int endindex)
     {
         int numberOfQuickComparisons = 0;
 
+        numberOfQuickComparisons++;
+
         //this looks to see if the first value comes before the last value in the alphabet
         //if so we can move to creat the partition the array
-        if (wordarray[p].compareToIgnoreCase(wordarray[endindex]) < 0){
-            numberOfQuickComparisons++;
+        if ((wordarray[startindex].compareToIgnoreCase(wordarray[endindex])) < 0){
+            
     
             //creates the partition
             int split = partition(wordarray, startindex, endindex);
@@ -334,16 +358,16 @@ public class Assignment2Cordoni {
             //calls quick sort to sort both halfs of the array
             quickSort(wordarray, startindex, split - 1);
             quickSort(wordarray, split + 1, endindex);
+
         }//if
 
-        System.out.println("Quick Sort Comparisons: " + numberOfQuickComparisons);
+        return numberOfQuickComparisons;
+        
        
     }//quick sort
 
     //this method creates the partition of the arary
     public static int partition(String[] wordarray, int startindex, int endindex){
-
-        //int numberOfQuickComparisons = 0;
 
         String temp = "none";
         String temp2 = "none";
@@ -353,14 +377,14 @@ public class Assignment2Cordoni {
         int j = 0;
 
         temp = wordarray[endindex];
-        i = p-1;
+        i = startindex-1;
 
         //this looks to create the partition
-        for (j = p; j < r-1; j++){
+        for (j = startindex; j < endindex-1; j++){
 
             //this looks to see whether the value is smaller than the pivot value
             if (wordarray[j].compareToIgnoreCase(temp) < 0){
-                //numberOfQuickComparisons++;
+                
                 i = i + 1;
 
                 //these 2 swaps help swap the pivot with the leftmost element greater than the temp
@@ -371,8 +395,8 @@ public class Assignment2Cordoni {
             }//if
 
             temp3 = wordarray[i + 1];
-            wordarray[i + 1] = wordarray[r];
-            wordarray[r] = temp3;
+            wordarray[i + 1] = wordarray[endindex];
+            wordarray[endindex] = temp3;
 
         }//for
 
