@@ -26,7 +26,7 @@ public class Assignment3Cordoni {
         String[] wordarray = new String[666];
         String[] randomarray = new String[42];
         int[] hashValues = new int[666];
-        NodeCordoni[] hashTable = new NodeCordoni [250];
+        NodeCordoniString[] hashTable = new NodeCordoniString [250];
         HashCordoni HashCordoni = new HashCordoni();
 
         int startindex = 0;
@@ -121,7 +121,7 @@ public class Assignment3Cordoni {
 
         //set hashcode so that it is not null
         for (int i = 0; i < hashTable.length; i++){
-            hashTable[i] = new NodeCordoni();
+            hashTable[i] = new NodeCordoniString();
         }//for
 
 
@@ -245,7 +245,7 @@ public class Assignment3Cordoni {
     }//Binary Search
 
     //This method uses hashing to retrieve the 42 items
-    public static int hashsearch(String[] wordArray, String target, int[]hashValues, NodeCordoni[] hashTable)
+    public static int hashsearch(String[] wordArray, String target, int[]hashValues, NodeCordoniString[] hashTable)
     {
 
         int numberofHashComparisons = 0;

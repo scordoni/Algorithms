@@ -61,6 +61,6 @@ public class NodeCordoni
     * @return the incoming node data
     */
    public NodeCordoni getNext()
-       { return myNext;}//get node
+        {return myNext;}//get node
 
 }//Node Cordoni

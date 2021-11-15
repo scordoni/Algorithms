@@ -13,7 +13,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.*;
 import java.util.Scanner;
+
+
 
 public class Assignment4Cordoni {
 
@@ -27,9 +30,15 @@ public class Assignment4Cordoni {
 
         //For binary search tree
         String[] wordarray = new String[666];
+        NodeCordoni[] nodeWordArray = new NodeCordoni[666];
         String[] instructionarray = new String[375];
-        String[] splitinstructionarray = new String[375][8];
-        
+        String[] searcharray = new String[42];
+        String[] splitinstructionarray = new String[375];
+        NodeCordoni NodeCordoni = new NodeCordoni();
+        NodeCordoni root = new NodeCordoni();
+        VertexCordoni VertexCordoni = new VertexCordoni();
+        VertexCordoni rootVertex = new VertexCordoni();
+        int numberOfLookupComparisons = 0;
 
         //Reads in the magic items file for the binary search tree
         //create new file object
@@ -87,11 +96,55 @@ public class Assignment4Cordoni {
             
             int i = 0;
 
+            while(input.hasNext()){
+
+                instructionarray[i] = input.nextLine();
+                i++;
+            }
+  
+
+            input.close();  
+
+        }//try
+        
+        //error for file not found
+        catch(FileNotFoundException ex)
+        {
+          System.out.println("Failed to find file: " + myFile.getAbsolutePath()); 
+        }//catch
+
+        //Error in case of a null pointer exception
+        catch(NullPointerException ex)
+        {
+            System.out.println("Null pointer exception.");
+            System.out.println(ex.getMessage());
+        }//catch
+
+        //General error message
+        catch(Exception ex)
+        {
+            System.out.println("Something went wrong");
+            ex.printStackTrace();
+        }//catch
+
+
+        //Reads in the magic items to find in the binary search tree 
+        //create new file object
+        File myFile2 = new File("magicitems-find-in-bst.txt");
+        
+        try
+        {
+            //create scanner
+            Scanner input = new Scanner(myFile2);
+            line = null;
+            
+            int i = 0;
+
              //while there are more lines in the file it inputs them into an instruction array
              while(input.hasNext())
              {  
                 //Input into array 
-                instructionarray[i] = input.nextLine();
+                searcharray[i] = input.nextLine();
                 i++;
              }//while
 
@@ -121,6 +174,7 @@ public class Assignment4Cordoni {
             ex.printStackTrace();
         }//catch
 
+
         /*
         //Print to check array 
         for (int i = 0; i < wordarray.length; i++){
@@ -128,32 +182,69 @@ public class Assignment4Cordoni {
         }//for
         */
 
+        /*
+        //Print to check array 
+        for (int i = 0; i < wordarray.length; i++){
+            System.out.println(searcharray[i]);
+        }//for
+        */
+
+
+    
         //Print to check array 
         for (int i = 0; i < instructionarray.length; i++){
-            //System.out.println(Arrays.toString(instructionarray[i].split(" ")));
+
+            System.out.println(instructionarray[i]);
+
         }//for
-
-        //put into split array  
-        for (int i = 0; i < instructionarray.length; i++){
-            splitinstructionarray = (Arrays.toString(instructionarray[i].split(" ")));
-        }//for
-
-
-        for(int i =0; i < splitinstructionarray.length; i++){
-            for(int j = 0; j < splitinstructionarray.length; j++){
-                System.out.println(splitinstructionarray[i]);
-            }
-        }
-       
 
 
         //Print to check array 
-        for (int i = 0; i < instructionarray.length; i++){
-            //System.out.println(instructionarray[i]);
+        for (int i = 0; i < splitinstructionarray.length; i++){
+
+            splitinstructionarray[i] = Arrays.toString(instructionarray[i].split(" "));
+                
         }//for
+
+        
+       for (int i = 0; i < splitinstructionarray.length; i++){
+    
+            System.out.println(splitinstructionarray[i]);
+
+        }//for
+
+
+        //Graphs!!
 
         //making the matrix
         //makeMatrix(splitinstructionarray);
+
+        //make the adjacency list
+        //makeAdjacencyList(splitinstructionarray);
+
+        //make linked list
+        //makeLinkedObjects(splitinstructionarray);
+
+        //breadth first traversal
+        //breadthTraversal(rootVertex);
+
+        //depth first traversal
+        //depthTraversal(rootVertex);
+
+
+
+        //Binary Search Trees!!
+
+        //insert the word array into the tree
+        for (int i = 0; i < wordarray.length; i++){
+            insertTree(root, wordArray[i]);
+        }//for
+
+
+        //Search for the 42 magic items
+        for (int i = 0; i < searcharray.length; i++){
+            numberOfLookupComparisons = numberOfLookupComparisons + searchTree(rootnode, searcharray[i]);
+        }//for
 
     }//main
 
@@ -170,16 +261,16 @@ public class Assignment4Cordoni {
         for (int i = 0; i < instructions.length; i++){
 
             
-            if(((Arrays.toString(instructionarray[i].split(" ")))) == "--"){
+            //if(((Arrays.toString(instructionarray[i].split(" ")))) == "--"){
                 System.out.println("new graph here!");
-            }//if
+            //}//if
 
-            else if (((Arrays.toString(instructionarray[i].split(" ")))) == "vertex"){
+           // else if (((Arrays.toString(instructionarray[i].split(" ")))) == "vertex"){
                 length++;
                 height++;
-            }//else
+            //}//else
 
-            else if (((Arrays.toString(instructionarray[i].split(" ")))) == "edge"){
+            //else if (((Arrays.toString(instructionarray[i].split(" ")))) == "edge"){
             
                 //grab index 3 make it length and grab index 5 and make it height
 
@@ -189,13 +280,13 @@ public class Assignment4Cordoni {
 
                 //put one
                 
-            }//else
+            //}//else
             
 
         }//for
 
         
-        for (i = 0; i < instructions.length; i++) {
+        for (int i = 0; i < instructions.length; i++) {
             for (int j = 0; j < instructions[i].length; j++) {
 
                 System.out.print(matrix[i][j] + " ");
@@ -209,7 +300,7 @@ public class Assignment4Cordoni {
     }//make Matrix
 
     //This method creates the adjacency list of the undirected graph
-    public void makeAdjacencyList(String[] instructions) {
+    public static void makeAdjacencyList(String[] instructions) {
 
         int size = 0;
 
@@ -246,7 +337,7 @@ public class Assignment4Cordoni {
     }//make adjacency list
 
     //This method creates the linked objects of the undirected graph
-    public void makeLinkedObjects(String[] instructions) {
+    public static void makeLinkedObjects(String[] instructions) {
 
         int size = 0;
 
@@ -282,5 +373,138 @@ public class Assignment4Cordoni {
     }//make linked objects
 
 
+    //Searching far and wide!
+    public static void breadthTraversal( VertexCordoni vertex) {
 
+        QueueCordoni thequeue = new QueueCordoni();
+        VertexCordoni theVertex = new VertexCordoni();
+
+        VertexCordoni currentvertex;
+         
+        thequeue.enqueue(vertex.getId());
+
+        vertex.setProcessStatus(true);
+
+        while(!(thequeue.isEmpty())){
+
+            currentvertex = thequeue.dequeue();
+
+            System.out.println(currentvertex.getId());
+
+            //for(int i = 0 ; i < currentvertex.neighbors ; i++){
+
+            //    if ( i.getProcessStatus() == false){
+
+            //        thequeue.enqueue(i);
+            //       i.setProcessStatus(true);
+
+            //    }//if
+            //}//for
+        }//while
+    }//breadth Traversal
+
+    //Searching far and wide!
+    public void depthTraversal(VertexCordoni vertex) {
+
+        VertexCordoni VertexCordoni = new VertexCordoni();
+
+        if(!(vertex.getProcessStatus())){
+
+            System.out.println(vertex.getId());
+            vertex.setProcessStatus(true);
+
+        }//if
+
+        for(int neighbor = 0; neighbor < vertex.getNeighbors().length; neighbor++){
+
+            if(!(vertex.getProcessStatus())){
+                breadthTraversal(neighbor);
+            }//if
+
+        }//for
+
+    }//depth Traversal
+
+
+    //lets make the trees!
+
+    //This method inserts the nodes into the tress
+    public void insertTree(String[] tree, NodeCordoni newnode) {
+
+        NodeCordoniTree trailing = null;
+        NodeCordoniTree current = tree.root;
+
+
+        while (current.getData() != null){
+
+            trailing = current;
+
+            if(newnode.key < current.key){
+
+                current = current.getleft();
+                System.out.println("L ");
+
+            }//if
+
+            else{
+
+                current = current.getright();
+                System.out.println("R ");
+
+            }//else
+
+        }//while
+
+        node.parent = trailing;
+
+        if(trailing == null){
+
+            tree.root = node;
+            System.out.println("Root ");
+
+        }//if
+
+        else{
+
+            if(node.key < trailing.key){
+
+                node = trailing.getleft();
+                System.out.println("L ");
+
+            }//if
+
+            else{
+
+                trailing.right = node;
+                System.out.println("R ");
+
+            }//else
+        }//else
+
+    }//insertTree
+
+    //This method inserts the nodes into the tress
+    public NodeCordoni searchTree(NodeCordoni rootnode, String target) {
+
+        int numberOfComparisons = 0;
+
+        if((rootnode == null) || (rootnode.getData() == target)){
+            return rootnode;
+        }//if
+
+        else{
+
+            if(target.compareToIgnoreCase(rootnode.getData()) < 0){
+                numberOfComparisons++;
+                searchTree(rootnode.getleft(), target);
+            }//if
+
+            else{
+                searchTree(rootnode.getright(), target);
+            }//else
+        }//else
+
+    }//searchTree
+
+    
 }//Assignment4Cordoni
