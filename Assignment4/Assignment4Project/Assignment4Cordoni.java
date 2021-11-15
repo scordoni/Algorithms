@@ -31,9 +31,9 @@ public class Assignment4Cordoni {
         //For binary search tree
         String[] wordarray = new String[666];
         NodeCordoni[] nodeWordArray = new NodeCordoni[666];
-        String[] instructionarray = new String[375];
+        String[] instructionarray = new String[20];
         String[] searcharray = new String[42];
-        String[] splitinstructionarray = new String[375];
+        String[][] splitinstructionarray = new String[20][8];
         NodeCordoni NodeCordoni = new NodeCordoni();
         NodeCordoni root = new NodeCordoni();
         VertexCordoni VertexCordoni = new VertexCordoni();
@@ -189,42 +189,48 @@ public class Assignment4Cordoni {
         }//for
         */
 
-
-    
+        /*
         //Print to check array 
         for (int i = 0; i < instructionarray.length; i++){
-
-            System.out.println(instructionarray[i]);
-
+            //System.out.println(instructionarray[i]);
         }//for
+        */
 
-
-        //Print to check array 
+        //split up into 2D array 
         for (int i = 0; i < splitinstructionarray.length; i++){
 
-            splitinstructionarray[i] = Arrays.toString(instructionarray[i].split(" "));
-                
+            for( int j = 0; j < splitinstructionarray[i].length; j++){
+
+            splitinstructionarray[i] = instructionarray[i].split(" ");
+
+            }//for j 
         }//for
 
-        
-       for (int i = 0; i < splitinstructionarray.length; i++){
-    
-            System.out.println(splitinstructionarray[i]);
+        /*
+        //print to check array
+        for (int i = 0; i < splitinstructionarray.length; i++){
+            for( int j = 0; j < splitinstructionarray[i].length; j++){
 
+             //System.out.println(splitinstructionarray[i][j]);
+
+            }//for j 
         }//for
-
-
+        */
+       
         //Graphs!!
 
         //making the matrix
-        //makeMatrix(splitinstructionarray);
+        makeMatrix(splitinstructionarray);
 
         //make the adjacency list
-        //makeAdjacencyList(splitinstructionarray);
+        makeAdjacencyList(splitinstructionarray);
 
         //make linked list
-        //makeLinkedObjects(splitinstructionarray);
+        makeLinkedObjects(splitinstructionarray);
 
+
+        //Searching Far and Wide!
+        
         //breadth first traversal
         //breadthTraversal(rootVertex);
 
@@ -248,46 +254,61 @@ public class Assignment4Cordoni {
 
     }//main
 
-    //lets make the graphs
-
     //This method creates the matrix of the undirected graph
-    public static void makeMatrix(String[] instructions) {
+    public static void makeMatrix(String[][] instructions) {
 
         //instantiate matrix
-        int length = 0;
-        int height = 0;
+        int length = 8;
+        int height = 8;
         int[][] matrix = new int[length][height];
 
         for (int i = 0; i < instructions.length; i++){
 
+            for(int j = 0; j < instructions[i].length; j ++){
+
             
-            //if(((Arrays.toString(instructionarray[i].split(" ")))) == "--"){
-                System.out.println("new graph here!");
-            //}//if
+                if(instructions[i][j].compareToIgnoreCase("--")==0){
+                    System.out.println("new graph here!");
+                }//if
 
-           // else if (((Arrays.toString(instructionarray[i].split(" ")))) == "vertex"){
-                length++;
-                height++;
-            //}//else
-
-            //else if (((Arrays.toString(instructionarray[i].split(" ")))) == "edge"){
+                else if (instructions[i][j].compareToIgnoreCase("vertex")==0){
+                    //length++;
+                    //height++;
+                    
+                }//else
             
-                //grab index 3 make it length and grab index 5 and make it height
+            }//for j
 
-                //put one
+        }//for i
 
-                //grab index 5 make it length and grab index 3 and make it height
+        //System.out.println(length);
+       // System.out.println(height);
 
-                //put one
+        for (int i = 0; i < instructions.length; i++){
+
+            for(int j = 0; j < instructions[i].length; j ++){
+
+                if (instructions[i][j].compareToIgnoreCase("edge")==0){
                 
-            //}//else
-            
-
-        }//for
-
+                    //grab index 2 make it length and grab index 4 and make it height
+                    //System.out.println(instructions[i][j + 1]);
         
-        for (int i = 0; i < instructions.length; i++) {
-            for (int j = 0; j < instructions[i].length; j++) {
+                    //grab index 4 make it length and grab index 2 and make it height
+                    //System.out.println(instructions[i][j + 3]);
+        
+                    matrix[Integer.valueOf(instructions[i][j + 1])][Integer.valueOf(instructions[i][j + 3])] = 1;
+        
+                    matrix[Integer.valueOf(instructions[i][j + 3])][Integer.valueOf(instructions[i][j + 1])] = 1;
+                    
+                }//else
+
+            
+            }//for j
+
+        }//for i
+        
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
 
                 System.out.print(matrix[i][j] + " ");
 
@@ -296,85 +317,73 @@ public class Assignment4Cordoni {
             System.out.println();
 
         }//for i
+        
 
     }//make Matrix
 
-    //This method creates the adjacency list of the undirected graph
-    public static void makeAdjacencyList(String[] instructions) {
-
-        int size = 0;
-
-
-        for (int i = 0; i < instructions.length; i++){
-
-            if(((Arrays.toString(instructionarray[i].split(" ")))) == "--"){
-                System.out.println("new graph here!");
-            }//if
-
-            else if (((Arrays.toString(instructionarray[i].split(" ")))) == "vertex"){
-                size++;
-                
-            }//else
-
-            else if (((Arrays.toString(instructionarray[i].split(" ")))) == "edge"){
-            
-                //grab index 3 make it length and grab index 5 and make it height
-
-                //put one
-
-                //grab index 5 make it length and grab index 3 and make it height
-
-                //put one
-                
-            }//else
-            
-
-        }//for i
-
-       
-
-        
-    }//make adjacency list
-
     //This method creates the linked objects of the undirected graph
-    public static void makeLinkedObjects(String[] instructions) {
+    public static void makeLinkedObjects(String[][] instructions) {
 
-        int size = 0;
+        VertexCordoni vertex = new VertexCordoni();
 
 
         for (int i = 0; i < instructions.length; i++){
 
-            if(((Arrays.toString(instructionarray[i].split(" ")))) == "--"){
-                System.out.println("new graph here!");
-            }//if
+            for(int j = 0; j < instructions[i].length; j ++){
 
-            else if (((Arrays.toString(instructionarray[i].split(" ")))) == "vertex"){
-                size++;
+
+                if (instructions[i][j].compareToIgnoreCase("vertex")==0){
+
+                    vertex.setId(instructions[i][j + 1]); 
+
+                }//else
+
+                else if (instructions[i][j].compareToIgnoreCase("edge")==0){
                 
-            }//else
 
-            else if (((Arrays.toString(instructionarray[i].split(" ")))) == "edge"){
+                    
+                }//else
             
-                //grab index 3 make it length and grab index 5 and make it height
-
-                //put one
-
-                //grab index 5 make it length and grab index 3 and make it height
-
-                //put one
-                
-            }//else
-            
-
+            }//for j
         }//for i
 
 
         
     }//make linked objects
 
+    //This method creates the adjacency list of the undirected graph
+    public static void makeAdjacencyList(String[][] instructions) {
 
-    //Searching far and wide!
-    public static void breadthTraversal( VertexCordoni vertex) {
+        int size = 0;
+
+
+        for (int i = 0; i < instructions.length; i++){
+
+            for(int j = 0; j < instructions[i].length; j ++){
+
+                if(instructions[i][j].compareToIgnoreCase("--")==0){
+                    System.out.println(" ");
+                }//if
+
+                else if (instructions[i][j].compareToIgnoreCase("vertex")==0){
+                    size++;
+                    System.out.println("[" + instructions[i][j + 1] + "]");
+                    
+                }//else
+
+                else if (instructions[i][j].compareToIgnoreCase("edge")==0){
+                
+                    System.out.print(Integer.valueOf(instructions[i][j + 3]));
+                    
+                }//else
+            
+            }//for j
+        }//for i
+
+    }//make adjacency list
+
+     //Searching far and wide!
+     public static void breadthTraversal( VertexCordoni vertex) {
 
         QueueCordoni thequeue = new QueueCordoni();
         VertexCordoni theVertex = new VertexCordoni();
@@ -506,5 +515,6 @@ public class Assignment4Cordoni {
 
     }//searchTree
 
-    
-}//Assignment4Cordoni
+
+
+}//Assignment 4
