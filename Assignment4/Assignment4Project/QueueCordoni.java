@@ -10,18 +10,18 @@
  */
 public class QueueCordoni {
 
-	private NodeCordoni myHead;
-	private NodeCordoni myTail;
+	private VertexCordoni myHead;
+	private VertexCordoni myTail;
 	
 	//This method adds a node to the queue, it does so by adding it to the end of the queue
 	public void enqueue(String newword)
 	{	
 		//this sets a temp variable to hold the current tail node
-		NodeCordoni oldTail = myTail;
+		VertexCordoni oldTail = myTail;
 
 		//this sets the tail to be a new node and its data to be the new string
-		myTail = new NodeCordoni();
-		myTail.setData(newword);
+		myTail = new VertexCordoni();
+		myTail.setId(newword);
 		
 		//This checks to see if the queue is empty
 		//if it is not empty then the old tail is set to now point to the new Node
@@ -38,10 +38,10 @@ public class QueueCordoni {
 	}//enqueue
 	
 	//This method removes a node from the queue
-	public NodeCordoni dequeue()
+	public VertexCordoni dequeue()
 	{
 		//This sets the temp variable to null so that it can be set later.
-		NodeCordoni answer = null;
+		VertexCordoni answer = null;
 		
 		//If the queue is not empty then it will remove the first node from the queue
 		if(!isEmpty())

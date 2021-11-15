@@ -13,6 +13,7 @@ public class NodeCordoni
    private NodeCordoni myRoot;
    private NodeCordoni myRight;
    private NodeCordoni myLeft;
+   private NodeCordoni myParent;
 
    
    /**
@@ -24,6 +25,7 @@ public class NodeCordoni
        myRoot = null;
        myLeft = null;
        myRight = null;
+       myParent = null;
        myNext= null;
        }//Node Cordoni
    
@@ -37,6 +39,7 @@ public class NodeCordoni
         myRoot = null;
         myLeft = null;
         myRight = null;
+        myParent = null;
         myNext = null;
         
    }//NodeCordoni
@@ -113,5 +116,19 @@ public class NodeCordoni
     */
     public NodeCordoni getRight()
     { return myRight;}//get node
+
+     /**
+    * The setter for the node
+    * @param NewParent the incoming node data
+    */
+   public void setParent(NodeCordoni newParent)
+   {myParent = newParent;}//set Node
+
+    /**
+    * the getter for the node
+    * @return the incoming node data
+    */
+    public NodeCordoni getParent()
+    { return myParent;}//get node
 
 }//Node Cordoni

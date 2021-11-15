@@ -222,15 +222,12 @@ public class Assignment4Cordoni {
         //making the matrix
         makeMatrix(splitinstructionarray);
 
-        //make the adjacency list
-        makeAdjacencyList(splitinstructionarray);
-
         //make linked list
         makeLinkedObjects(splitinstructionarray);
 
+        //make the adjacency list
+        makeAdjacencyList(splitinstructionarray);
 
-        //Searching Far and Wide!
-        
         //breadth first traversal
         //breadthTraversal(rootVertex);
 
@@ -243,14 +240,15 @@ public class Assignment4Cordoni {
 
         //insert the word array into the tree
         for (int i = 0; i < wordarray.length; i++){
-            insertTree(root, wordArray[i]);
+            insertTree(root, wordarray[i]);
         }//for
 
 
         //Search for the 42 magic items
         for (int i = 0; i < searcharray.length; i++){
-            numberOfLookupComparisons = numberOfLookupComparisons + searchTree(rootnode, searcharray[i]);
+            numberOfLookupComparisons = numberOfLookupComparisons + searchTree(root, searcharray[i]);
         }//for
+
 
     }//main
 
@@ -325,6 +323,7 @@ public class Assignment4Cordoni {
     public static void makeLinkedObjects(String[][] instructions) {
 
         VertexCordoni vertex = new VertexCordoni();
+        int index = 0;
 
 
         for (int i = 0; i < instructions.length; i++){
@@ -339,15 +338,19 @@ public class Assignment4Cordoni {
                 }//else
 
                 else if (instructions[i][j].compareToIgnoreCase("edge")==0){
-                
 
+                    vertex.setneighbor(index, instructions[i][j + 3]);
+                
+                    index++;
                     
                 }//else
             
             }//for j
         }//for i
 
-
+        while(vertex.getneighbor(index) != null){
+            System.out.println(vertex.getneighbor(index)); 
+        }
         
     }//make linked objects
 
@@ -355,6 +358,8 @@ public class Assignment4Cordoni {
     public static void makeAdjacencyList(String[][] instructions) {
 
         int size = 0;
+        int index = 0;
+        VertexCordoni vertex = new VertexCordoni();
 
 
         for (int i = 0; i < instructions.length; i++){
@@ -368,28 +373,28 @@ public class Assignment4Cordoni {
                 else if (instructions[i][j].compareToIgnoreCase("vertex")==0){
                     size++;
                     System.out.println("[" + instructions[i][j + 1] + "]");
+
+                    while(vertex.getneighbor(index) != null){
+                        System.out.println(vertex.getneighbor(index)); 
+                    }
                     
                 }//else
 
-                else if (instructions[i][j].compareToIgnoreCase("edge")==0){
-                
-                    System.out.print(Integer.valueOf(instructions[i][j + 3]));
-                    
-                }//else
             
             }//for j
         }//for i
 
     }//make adjacency list
 
-     //Searching far and wide!
-     public static void breadthTraversal( VertexCordoni vertex) {
+    
+    //Searching far and wide!
+    public static void breadthTraversal( VertexCordoni vertex) {
 
         QueueCordoni thequeue = new QueueCordoni();
         VertexCordoni theVertex = new VertexCordoni();
 
         VertexCordoni currentvertex;
-         
+        
         thequeue.enqueue(vertex.getId());
 
         vertex.setProcessStatus(true);
@@ -410,6 +415,7 @@ public class Assignment4Cordoni {
             //    }//if
             //}//for
         }//while
+
     }//breadth Traversal
 
     //Searching far and wide!
@@ -427,7 +433,7 @@ public class Assignment4Cordoni {
         for(int neighbor = 0; neighbor < vertex.getNeighbors().length; neighbor++){
 
             if(!(vertex.getProcessStatus())){
-                breadthTraversal(neighbor);
+                depthTraversal(neighbor);
             }//if
 
         }//for
@@ -437,54 +443,59 @@ public class Assignment4Cordoni {
 
     //lets make the trees!
 
-    //This method inserts the nodes into the tress
-    public void insertTree(String[] tree, NodeCordoni newnode) {
+    //This method inserts the nodes into the tres
+    public static void insertTree(NodeCordoni tree, String word) {
 
-        NodeCordoniTree trailing = null;
-        NodeCordoniTree current = tree.root;
+        NodeCordoni newnode = new NodeCordoni();
+
+        newnode.setData(word);
+
+        NodeCordoni trailing = null;
+
+        NodeCordoni current = tree.getRoot();
 
 
         while (current.getData() != null){
 
             trailing = current;
 
-            if(newnode.key < current.key){
+            if(newnode.getData().compareToIgnoreCase(current.getData()) < 0){
 
-                current = current.getleft();
+                current = current.getLeft();
                 System.out.println("L ");
 
             }//if
 
             else{
 
-                current = current.getright();
+                current = current.getRight();
                 System.out.println("R ");
 
             }//else
 
         }//while
 
-        node.parent = trailing;
+        newnode.setParent(trailing);
 
         if(trailing == null){
 
-            tree.root = node;
+            tree.setRoot(newnode);
             System.out.println("Root ");
 
         }//if
 
         else{
 
-            if(node.key < trailing.key){
+            if(newnode.getData().compareToIgnoreCase(trailing.getData()) < 0){
 
-                node = trailing.getleft();
+                newnode = trailing.getLeft();
                 System.out.println("L ");
 
             }//if
 
             else{
 
-                trailing.right = node;
+                trailing.setRight(newnode);
                 System.out.println("R ");
 
             }//else
@@ -492,29 +503,31 @@ public class Assignment4Cordoni {
 
     }//insertTree
 
-    //This method inserts the nodes into the tress
-    public NodeCordoni searchTree(NodeCordoni rootnode, String target) {
+    //This method searches the tree
+    public static int searchTree(NodeCordoni rootnode, String target) {
 
         int numberOfComparisons = 0;
+        
 
         if((rootnode == null) || (rootnode.getData() == target)){
-            return rootnode;
+            return numberOfComparisons;
         }//if
 
         else{
 
             if(target.compareToIgnoreCase(rootnode.getData()) < 0){
                 numberOfComparisons++;
-                searchTree(rootnode.getleft(), target);
+                searchTree(rootnode.getLeft(), target);
             }//if
 
             else{
-                searchTree(rootnode.getright(), target);
+                searchTree(rootnode.getRight(), target);
             }//else
         }//else
+
+    return numberOfComparisons;
 
     }//searchTree
 
 
-
-}//Assignment 4
+}//Assignment4Cordoni

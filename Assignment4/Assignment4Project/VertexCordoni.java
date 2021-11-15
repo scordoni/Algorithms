@@ -11,7 +11,8 @@ public class VertexCordoni
     */
     private String myId;
     private boolean myIsProcessed;
-    private  ArrayList <VertexCordoni> neighbors= new ArrayList <VertexCordoni>();
+    private  ArrayList <String> neighbors= new ArrayList <String>();
+    private VertexCordoni myNext;
 
     /**
     * The default Constructor for VertexCordoni
@@ -20,8 +21,20 @@ public class VertexCordoni
     {
     myId = new String();
     myIsProcessed = false;
-    ArrayList myNeighbors;
+    myNext = null;
     }//vertex Cordoni
+
+     /**
+    * The full constructor for NodeCordoni
+    * @param newData the incoming data of the item
+    */
+   public NodeCordoni(String newData)
+   {
+        myId = newData;
+        myIsProcessed = false;
+        myNext = null;
+        
+   }//NodeCordoni
 
     /**
      * 
@@ -38,6 +51,21 @@ public class VertexCordoni
     public String getId()
     {return myId;}//get data
 
+     /**
+     * 
+    * the setter for the next vertex in the queue
+    * @param newNext the incoming data of the vertex
+    */
+    public void setNext(VertexCordoni newNext)
+    {myNext = newNext;} //set data
+
+    /**
+    * The getter for the vertex 
+    * @return the incoming data of the vertex
+    */
+    public VertexCordoni getNext()
+    {return myNext;}//get data
+
     /**
     * The setter for the process status
     * @param newIsProcessed the incoming process status
@@ -50,7 +78,14 @@ public class VertexCordoni
     * @return the incoming process status
     */
     public boolean getProcessStatus()
-    { return myIsProcessed;}//get node
+    { return myIsProcessed;}//get node 
+
+    
+    public void setneighbor(int index, String newId)
+    { neighbors.add(index, newId);}//get node
+
+    public String getneighbor(int index)
+    { return neighbors.get(index);}//get node
 
     
 }//Vertex Cordoni
