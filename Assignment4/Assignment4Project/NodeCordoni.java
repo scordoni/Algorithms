@@ -1,5 +1,11 @@
-/** 
+/*
  * 
+ * Assignment 4
+ * Due Date and Time: 11/19/21 before 12:00am 
+ * Purpose: to implement graph and tree data structures, and to understand the performance of their traversals.
+ * Input: The user will be inputting a file containing a list of edges and vertices. 
+ * Output: The program will output graph and tree data structures. 
+ * @author Shannon Cordoni 
  * 
  */
 
@@ -10,11 +16,6 @@ public class NodeCordoni
     */
    private String myData;
    private NodeCordoni myNext;
-   private NodeCordoni myRoot;
-   private NodeCordoni myRight;
-   private NodeCordoni myLeft;
-   private NodeCordoni myParent;
-
    
    /**
     * The default Constructor for NodeCordoni
@@ -22,10 +23,6 @@ public class NodeCordoni
    public NodeCordoni()
        {
        myData = new String();
-       myRoot = null;
-       myLeft = null;
-       myRight = null;
-       myParent = null;
        myNext= null;
        }//Node Cordoni
    
@@ -36,10 +33,6 @@ public class NodeCordoni
    public NodeCordoni(String newData)
    {
         myData = newData;
-        myRoot = null;
-        myLeft = null;
-        myRight = null;
-        myParent = null;
         myNext = null;
         
    }//NodeCordoni
@@ -73,62 +66,5 @@ public class NodeCordoni
    public NodeCordoni getNext()
        { return myNext;}//get node
 
-
-    /**
-    * The setter for the node
-    * @param NewRoot the incoming node data
-    */
-   public void setRoot(NodeCordoni newroot)
-   {myRoot = newroot;}//set Node
-
-    /**
-    * the getter for the node
-    * @return the incoming node data
-    */
-    public NodeCordoni getRoot()
-    { return myRoot;}//get node
-
-    /**
-    * The setter for the node
-    * @param NewLeft the incoming node data
-    */
-   public void setLeft(NodeCordoni newLeft)
-   {myLeft = newLeft;}//set Node
-
-    /**
-    * the getter for the node
-    * @return the incoming node data
-    */
-    public NodeCordoni getLeft()
-    { return myLeft;}//get node
-
-
-    /**
-    * The setter for the node
-    * @param NewRight the incoming node data
-    */
-   public void setRight(NodeCordoni newRight)
-   {myLeft = newRight;}//set Node
-
-    /**
-    * the getter for the node
-    * @return the incoming node data
-    */
-    public NodeCordoni getRight()
-    { return myRight;}//get node
-
-     /**
-    * The setter for the node
-    * @param NewParent the incoming node data
-    */
-   public void setParent(NodeCordoni newParent)
-   {myParent = newParent;}//set Node
-
-    /**
-    * the getter for the node
-    * @return the incoming node data
-    */
-    public NodeCordoni getParent()
-    { return myParent;}//get node
 
 }//Node Cordoni

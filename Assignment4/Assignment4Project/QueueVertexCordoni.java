@@ -1,27 +1,27 @@
-/** 
+/*
  * 
- * Assignment 1 
- * Due Date and Time: 9/24/21 before 12:00am 
- * Purpose: This class creates the stack 
- * Input: A word/statement from the input file .
- * Output: The program will push each letter of the word/statement into the Queue. 
+ * Assignment 4
+ * Due Date and Time: 11/19/21 before 12:00am 
+ * Purpose: to implement graph and tree data structures, and to understand the performance of their traversals.
+ * Input: The user will be inputting a file containing a list of edges and vertices. 
+ * Output: The program will output graph and tree data structures. 
  * @author Shannon Cordoni 
  * 
  */
-public class QueueCordoni {
+
+public class QueueVertexCordoni {
 
 	private VertexCordoni myHead;
 	private VertexCordoni myTail;
 	
-	//This method adds a node to the queue, it does so by adding it to the end of the queue
-	public void enqueue(String newword)
+	//This method adds a vertex to the queue, it does so by adding it to the end of the queue
+	public void enqueue(VertexCordoni newVertex)
 	{	
 		//this sets a temp variable to hold the current tail node
 		VertexCordoni oldTail = myTail;
 
-		//this sets the tail to be a new node and its data to be the new string
-		myTail = new VertexCordoni();
-		myTail.setId(newword);
+		//this sets the tail to be a new node and its data to be the new vertex
+		myTail = newVertex;
 		
 		//This checks to see if the queue is empty
 		//if it is not empty then the old tail is set to now point to the new Node
@@ -37,17 +37,17 @@ public class QueueCordoni {
 
 	}//enqueue
 	
-	//This method removes a node from the queue
+	//This method removes a vertex from the queue
 	public VertexCordoni dequeue()
 	{
 		//This sets the temp variable to null so that it can be set later.
 		VertexCordoni answer = null;
 		
-		//If the queue is not empty then it will remove the first node from the queue
+		//If the queue is not empty then it will remove the first vertex from the queue
 		if(!isEmpty())
 		{
-			//This sets the temp variable to the first node in the list and then sets
-			//the new head pointer to the second node in the queue
+			//This sets the temp variable to the first vertex in the list and then sets
+			//the new head pointer to the second vertex in the queue
 			answer = myHead;
 			myHead = myHead.getNext();
 			

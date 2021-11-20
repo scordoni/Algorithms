@@ -1,3 +1,13 @@
+/*
+ * 
+ * Assignment 4
+ * Due Date and Time: 11/19/21 before 12:00am 
+ * Purpose: to implement graph and tree data structures, and to understand the performance of their traversals.
+ * Input: The user will be inputting a file containing a list of edges and vertices. 
+ * Output: The program will output graph and tree data structures. 
+ * @author Shannon Cordoni 
+ * 
+ */
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -11,8 +21,9 @@ public class VertexCordoni
     */
     private String myId;
     private boolean myIsProcessed;
-    private  ArrayList <String> neighbors= new ArrayList <String>();
+    public  ArrayList <VertexCordoni> neighbors= new ArrayList <VertexCordoni>();
     private VertexCordoni myNext;
+    
 
     /**
     * The default Constructor for VertexCordoni
@@ -25,10 +36,10 @@ public class VertexCordoni
     }//vertex Cordoni
 
      /**
-    * The full constructor for NodeCordoni
-    * @param newData the incoming data of the item
+    * The full constructor for VertexCordoni
+    * @param newData the incoming data 
     */
-   public NodeCordoni(String newData)
+   public VertexCordoni(String newData)
    {
         myId = newData;
         myIsProcessed = false;
@@ -51,9 +62,10 @@ public class VertexCordoni
     public String getId()
     {return myId;}//get data
 
-     /**
-     * 
-    * the setter for the next vertex in the queue
+
+    /**
+    * 
+    * the setter for the next vertex 
     * @param newNext the incoming data of the vertex
     */
     public void setNext(VertexCordoni newNext)
@@ -80,14 +92,19 @@ public class VertexCordoni
     public boolean getProcessStatus()
     { return myIsProcessed;}//get node 
 
-    
-    public void setneighbor(int index, String newId)
-    { neighbors.add(index, newId);}//get node
+    //This checks to see if the neighbor array is empty
+	public boolean isEmpty()
+	{
+		boolean empty = false;
+		
+		if(neighbors == null)
+			{
+			empty = true;
+			}//if
+		return empty;
+	}//empty
 
-    public String getneighbor(int index)
-    { return neighbors.get(index);}//get node
-
-    
+   
 }//Vertex Cordoni
 
 
