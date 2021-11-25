@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.*;
 import java.util.Scanner;
+import java.util.Collections;
 
 
 
@@ -29,31 +30,25 @@ public class Assignment5Cordoni {
         String line;
 
         //For binary search tree
-        String[] wordarray = new String[666];
+        String[] spicearray = new String[14];
+        String[][] splitspicearray = new String[14][13];
        
-        String[] instructionarray = new String[375];
-        String[] graph1array = new String[20];
-        String[] graph2array = new String[38];
-        String[] graph3array = new String[127];
-        String[] graph4array = new String[138];
-        String[] graph5array = new String[48];
+        String[] instructionarray = new String[88];
+        String[] graph1array = new String[17];
+        String[] graph2array = new String[21];
+        String[] graph3array = new String[21];
+        String[] graph4array = new String[21];
 
-        String[] searcharray = new String[42];
-        String[][] splitinstructionarray = new String[375][8];
-        String[][] graph1splitarray = new String[20][8];
-        String[][] graph2splitarray = new String[38][8];
-        String[][] graph3splitarray = new String[127][8];
-        String[][] graph4splitarray = new String[138][8];
-        String[][] graph5splitarray = new String[48][8];
-        TreeCordoni tree = new TreeCordoni();
-    
-        int numberOfLookupComparisons = 0;
-        int averagenumberOfLookupComparisons = 0;
+        String[][] splitinstructionarray = new String[88][17];
+        String[][] graph1splitarray = new String[17][17];
+        String[][] graph2splitarray = new String[21][17];
+        String[][] graph3splitarray = new String[21][17];
+        String[][] graph4splitarray = new String[21][17];
 
 
-        //Reads in the magic items file for the binary search tree
+        //Reads in the spice items 
         //create new file object
-        File myFile = new File("magicitems.txt");
+        File myFile = new File("spice.txt");
         
         try
         {
@@ -67,26 +62,13 @@ public class Assignment5Cordoni {
             while(input.hasNext())
             {  
                 //Input into array 
-                wordarray[i] = input.nextLine();        
+                spicearray[i] = input.nextLine();        
                 i++;
             }//while
 
             input.close();  
 
         }//try
-        
-        //error for file not found
-        catch(FileNotFoundException ex)
-        {
-          System.out.println("Failed to find file: " + myFile.getAbsolutePath()); 
-        }//catch
-
-        //Error in case of a null pointer exception
-        catch(NullPointerException ex)
-        {
-            System.out.println("Null pointer exception.");
-            System.out.println(ex.getMessage());
-        }//catch
 
         //General error message
         catch(Exception ex)
@@ -97,7 +79,7 @@ public class Assignment5Cordoni {
 
         //Reads in the graph file to create graphs 
         //create new file object
-        File myFile1 = new File("graphs1.txt");
+        File myFile1 = new File("graphs2.txt");
         
         try
         {
@@ -118,19 +100,6 @@ public class Assignment5Cordoni {
 
         }//try
         
-        //error for file not found
-        catch(FileNotFoundException ex)
-        {
-          System.out.println("Failed to find file: " + myFile.getAbsolutePath()); 
-        }//catch
-
-        //Error in case of a null pointer exception
-        catch(NullPointerException ex)
-        {
-            System.out.println("Null pointer exception.");
-            System.out.println(ex.getMessage());
-        }//catch
-
         //General error message
         catch(Exception ex)
         {
@@ -139,51 +108,25 @@ public class Assignment5Cordoni {
         }//catch
 
 
-        //Reads in the magic items to find in the binary search tree 
-        //create new file object
-        File myFile2 = new File("magicitems-find-in-bst.txt");
-        
-        try
-        {
-            //create scanner
-            Scanner input = new Scanner(myFile2);
-            line = null;
-            
-            int i = 0;
+        //Print to check array 
+        for (int i = 0; i < spicearray.length; i++){
+            //System.out.println(spicearray[i]);
+        }//for
 
-             //while there are more lines in the file it inputs them into an instruction array
-             while(input.hasNext())
-             {  
-                //Input into array 
-                searcharray[i] = input.nextLine();
-                i++;
-             }//while
+        //split up into 2D array 
+        for (int i = 0; i < splitspicearray.length; i++){
+            for( int j = 0; j < splitspicearray[i].length; j++){
+            splitspicearray[i] = spicearray[i].split(" ");
+            }//for j 
+        }//for
 
-             
+        //split up into 2D array 
+        for (int i = 0; i < splitspicearray.length; i++){
+            for( int j = 0; j < splitspicearray[i].length; j++){
+            //System.out.println(j + splitspicearray[i][j]);
+            }//for j 
+        }//for
 
-            input.close();  
-
-        }//try
-        
-        //error for file not found
-        catch(FileNotFoundException ex)
-        {
-          System.out.println("Failed to find file: " + myFile.getAbsolutePath()); 
-        }//catch
-
-        //Error in case of a null pointer exception
-        catch(NullPointerException ex)
-        {
-            System.out.println("Null pointer exception.");
-            System.out.println(ex.getMessage());
-        }//catch
-
-        //General error message
-        catch(Exception ex)
-        {
-            System.out.println("Something went wrong");
-            ex.printStackTrace();
-        }//catch
 
         // i know this is not exactly how I was supposed to split up the text
         //file, but this was the only way I could get it to work with everything 
@@ -200,22 +143,17 @@ public class Assignment5Cordoni {
 
         //Put instructions into graph 2 array
         for (int i = 0; i < graph2array.length; i++){
-            graph2array[i] = instructionarray[i + 22];
+            graph2array[i] = instructionarray[i + 23];
         }//for
 
         //Put instructions into graph 3 array
         for (int i = 0; i < graph3array.length; i++){
-            graph3array[i] = instructionarray[i + 61];
+            graph3array[i] = instructionarray[i + 45];
         }//for
 
         //Put instructions into graph 4 array
         for (int i = 0; i < graph4array.length; i++){
-            graph4array[i] = instructionarray[i + 189];
-        }//for
-
-        //Put instructions into graph 5 array 
-        for (int i = 0; i < graph5array.length; i++){
-            graph5array[i] = instructionarray[i + 327];
+            graph4array[i] = instructionarray[i + 67];
         }//for
         
         //split up into 2D array 
@@ -253,320 +191,52 @@ public class Assignment5Cordoni {
             }//for j 
         }//for
 
-        //split up into 2D array for graph 5
-        for (int i = 0; i < graph5splitarray.length; i++){
-            for( int j = 0; j < graph5splitarray[i].length; j++){
-            graph5splitarray[i] = graph5array[i].split(" ");
-            }//for j 
-        }//for
- 
        
         //Graphs!!
 
         System.out.println("Graph 1");
 
-        //making the matrix
-        makeMatrix(graph1splitarray);
-
-        //make the adjacency list
-        makeAdjacencyList(graph1splitarray);
-
         //make linked list
         makeLinkedObjects(graph1splitarray);
 
-        //breadth first traversal
-        breadthTraversal(makeLinkedObjects(graph1splitarray));
-
-        //reset process status
-        reboot(makeLinkedObjects(graph1splitarray));
-
-        System.out.println(" ");
-        System.out.println("Depth Traversal");
-
-        //depth first traversal
-        depthTraversal(makeLinkedObjects(graph1splitarray));
 
 
         System.out.println(" ");
         System.out.println("Graph 2");
 
-        //making the matrix
-        makeMatrix(graph2splitarray);
-
-        //make the adjacency list
-        makeAdjacencyList(graph2splitarray);
-
         //make linked list
         makeLinkedObjects(graph2splitarray);
 
-        //breadth first traversal
-        breadthTraversal(makeLinkedObjects(graph2splitarray));
-
-        //reset process status
-        reboot(makeLinkedObjects(graph2splitarray));
-
-        System.out.println(" ");
-        System.out.println("Depth Traversal");
-
-        //depth first traversal
-        depthTraversal(makeLinkedObjects(graph2splitarray));
 
 
         System.out.println(" ");
         System.out.println("Graph 3");
 
-        //making the matrix
-        makeMatrix(graph3splitarray);
-
-        //make the adjacency list
-        makeAdjacencyList(graph3splitarray);
-
         //make linked list
         makeLinkedObjects(graph3splitarray);
 
-        //breadth first traversal
-        breadthTraversal(makeLinkedObjects(graph3splitarray));
-
-        //reset process status
-        reboot(makeLinkedObjects(graph3splitarray));
-
-        System.out.println(" ");
-        System.out.println("Depth Traversal");
-
-        //depth first traversal
-        depthTraversal(makeLinkedObjects(graph3splitarray));
 
 
         System.out.println(" ");
         System.out.println("Graph 4");
 
-        //making the matrix
-        makeMatrix(graph4splitarray);
-
-        //make the adjacency list
-        makeAdjacencyList(graph4splitarray);
-
         //make linked list
         makeLinkedObjects(graph4splitarray);
 
-        //breadth first traversal
-        breadthTraversal(makeLinkedObjects(graph4splitarray));
-
-        //reset process status
-        reboot(makeLinkedObjects(graph4splitarray));
-
-        System.out.println(" ");
-        System.out.println("Depth Traversal");
-
-        //depth first traversal
-        depthTraversal(makeLinkedObjects(graph4splitarray));
 
 
-        System.out.println(" ");
-        System.out.println("Graph 5");
+        //Spices!
 
-        //making the matrix
-        makeMatrix(graph5splitarray);
+        spiceItUp(splitspicearray);
 
-        //make the adjacency list
-        makeAdjacencyList(graph5splitarray);
+        createKnapsack(splitspicearray);
 
-        //make linked list
-        makeLinkedObjects(graph5splitarray);
-
-        //breadth first traversal
-        breadthTraversal(makeLinkedObjects(graph5splitarray));
-
-        //reset process status
-        reboot(makeLinkedObjects(graph5splitarray));
-
-        System.out.println(" ");
-        System.out.println("Depth Traversal");
-
-        //depth first traversal
-        depthTraversal(makeLinkedObjects(graph5splitarray));
-
-
-
-        //Binary Search Trees!!
-
-        //I know this does not print out the binary search tree correctly but if
-        // you uncomment line 854 it looks as though different numbers should be returned 
-        //for the comparison.
-
-        System.out.println(" ");
-        System.out.println(" ");
-        System.out.println(" Insert the Magic Items into the Tree ");
-
-        
-        //insert the word array into the tree
-        for (int i = 0; i < wordarray.length; i++){
-            insertTree(tree, wordarray[i]);
-        }//for
-
-        System.out.println(" ");
-        System.out.println(" ");
-        System.out.println(" Search for the Magic Items in the Tree ");
-
-        int comparisons = 0;
-
-        //Search for the 42 magic items
-        for (int i = 0; i < searcharray.length; i++){
-
-            System.out.println("Number of Comparisons: " + searchTree(tree.getRoot(), searcharray[i], comparisons));
-            numberOfLookupComparisons = numberOfLookupComparisons + searchTree(tree.getRoot(), searcharray[i], comparisons);
-            
-        }//for
-
-        //get the average lookup comparisons
-        averagenumberOfLookupComparisons = numberOfLookupComparisons/searcharray.length;
-
-        System.out.println("Average lookup: " + averagenumberOfLookupComparisons);
 
     }//main
 
-    //This method creates the matrix of the undirected graph
-    public static void makeMatrix(String[][] instructions) {
-
-        //instantiate matrix
-        int length = 1;
-        int height = 1;
-
-        for (int i = 0; i < instructions.length; i++){
-
-            for(int j = 0; j < instructions[i].length; j ++){
-
-                //skip comment line
-                if(instructions[i][j].compareToIgnoreCase("--")==0){
-                    System.out.println(" ");
-                }//if
-
-                //increment length and heigh to get matrix dimensions
-                else if (instructions[i][j].compareToIgnoreCase("vertex")==0){
-                    length++;
-                    height++;
-                    
-                }//else if
-
-            }//for j
-
-        }//for i
-
-        //create matrix
-        int[][] matrix = new int[length][height];
-
-        //System.out.println("length: " + length);
-        //System.out.println("height: " + height);
-
-        //loop through to add value at correct matrix location
-        for (int i = 0; i < instructions.length; i++){
-
-            for(int j = 0; j < instructions[i].length; j ++){
-
-                if (instructions[i][j].compareToIgnoreCase("edge")==0){
-                
-                    //grab index 2 make it length and grab index 4 and make it height
-                    //System.out.println("index 2: "+ Integer.valueOf(instructions[i][j + 1]));
-
-                    //grab index 4 make it length and grab index 2 and make it height
-                    //System.out.println("index 4: " + Integer.valueOf(instructions[i][j + 3]));
-            
-                    matrix[Integer.valueOf(instructions[i][j + 1])][Integer.valueOf(instructions[i][j + 3])] = 1;
-            
-                    matrix[Integer.valueOf(instructions[i][j + 3])][Integer.valueOf(instructions[i][j + 1])] = 1;
-                    
-                }//if
-
-            }
-        }
-
-        //print out the matrix
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[i].length; j++) {
-
-                System.out.print(matrix[i][j] + " ");
-
-            }//for j
-
-            System.out.println();
-
-        }//for i
-    }//make Matrix
-
-    //This method creates the adjacency list of the undirected graph
-    public static void makeAdjacencyList(String[][] instructions) {
-
-        System.out.println(" ");
-
-        int height = 1; 
-
-        for (int i = 0; i < instructions.length; i++){
-
-            for(int j = 0; j < instructions[i].length; j ++){
-
-                //skip comment line
-                if(instructions[i][j].compareToIgnoreCase("--")==0){
-                    System.out.println(" ");
-                }//if
-
-                //increment height to create arraylist
-                else if (instructions[i][j].compareToIgnoreCase("vertex")==0){
-                    height++;
-                }//else
-            
-            }//for j
-        }//for i
-
-        //create arraylist
-        ArrayList<ArrayList<Integer>> adjlist = new ArrayList<>(height);
-
-        //add arraylist at each index
-        for(int i=0; i < height; i++) {
-            adjlist.add(new ArrayList());
-        }//for
-
-        //add neighbors to arraylist
-        for (int i = 0; i < instructions.length; i++){
-
-            for(int j = 0; j < instructions[i].length; j ++){
-
-                if (instructions[i][j].compareToIgnoreCase("edge")==0){
-                    
-                    //grab index 2 and add 4 to arraylist
-                    //System.out.println(instructions[i][j + 1]);
-        
-                    adjlist.get(Integer.parseInt(instructions[i][j + 1])).add(Integer.parseInt(instructions[i][j + 3]));
-        
-                    //grab index 4 and add 2 to arraylist
-                    //System.out.println(instructions[i][j + 3]);
-        
-                    adjlist.get(Integer.parseInt(instructions[i][j + 3])).add(Integer.parseInt(instructions[i][j + 1]));
-                    
-                }//else
-            
-            }//for j
-        }//for i
-
-        //print out arraylist
-        for (int i = 0; i < instructions.length; i++){
-
-            for(int j = 0; j < instructions[i].length; j ++){
-
-                if (instructions[i][j].compareToIgnoreCase("vertex")==0){
-
-                    System.out.println("[" + instructions[i][j + 1] + "]" + adjlist.get(Integer.parseInt(instructions[i][j + 1])));
-
-                }//else
-            
-            }//for j
-        }//for i
-
-    }//make adjacency list
-
     //This method creates the linked objects of the undirected graph
     public static VertexCordoni makeLinkedObjects(String[][] instructions) {
-
-        
+ 
         int index = 0;
         VertexCordoni[] vertexlist;
         
@@ -632,18 +302,12 @@ public class Assignment5Cordoni {
                                     vertexlist[l].neighbors.add(vertexlist[k]);
                                     //System.out.println("l" +vertexlist[l].getId());
 
-                                }//if
-                                
-                            }//for
-
+                                }//if                              
+                            }//for l
                         }//if
-        
-                    }//for
-    
+                    }//for k
                 }//else if
-
             }//if
-            
         }//for i
 
         //print neighbor array size to check
@@ -651,234 +315,144 @@ public class Assignment5Cordoni {
             //System.out.println("size " + vertexlist[i].neighbors.size());
         }
 
-
         //return
         return vertexlist[0];
 
     }//make linked objects 
 
 
-    //Searching far and wide!
+    //This method 
+    public static void bellmanFord(VertexCordoni[] graph, Integer weightfunction, VertexCordoni source) {
+ 
+        singlesource(graph, source);
 
-    //this method preforms the breadth traversal 
-    public static void breadthTraversal( VertexCordoni vertex) {
 
-        System.out.println(" ");
-        System.out.println("Breadth Traversal");
 
-        QueueVertexCordoni thequeue = new QueueVertexCordoni();
 
-        VertexCordoni currentvertex;
+    }//BellmanFord
+
+    //This method 
+    public static void singlesource(VertexCordoni[] graph, VertexCordoni source) {
+ 
+
+    
+
+    }//singlesource
+
+    //This method 
+    public static void relax(VertexCordoni[] graph, VertexCordoni source) {
+ 
+
         
-        thequeue.enqueue(vertex);
 
-        vertex.setProcessStatus(true);
+    }//relax
 
-        while(!(thequeue.isEmpty())){
+    //Spices!
 
-            currentvertex = thequeue.dequeue();
-
-            System.out.println("Id " + currentvertex.getId());
-            
-            
-            for(int i = 0 ; i < currentvertex.neighbors.size() ; i++){
-
-
-                if ( currentvertex.neighbors.get(i).getProcessStatus() == false){
-
-                   thequeue.enqueue(currentvertex.neighbors.get(i));
-                   currentvertex.neighbors.get(i).setProcessStatus(true);
-
-                }//if
-            }//for
-            
-
-        }//while
-
-    }//breadth Traversal
-
-    //this method resets the process status for depth traversal 
-    public static void reboot( VertexCordoni vertex) {
-
-        System.out.println(" ");
-        System.out.println("Reset Processed Status for Depth Traversal");
-
-        QueueVertexCordoni thequeue = new QueueVertexCordoni();
-
-        VertexCordoni currentvertex;
+    //This method creates the spice object
+    public static void spiceItUp(String[][] spices) {
+ 
+        ArrayList <SpiceCordoni> spicelist = new ArrayList <SpiceCordoni>();
         
-        thequeue.enqueue(vertex);
+        //increment index to create spice array
+        for (int i = 0; i < spices.length; i++){
 
-        vertex.setProcessStatus(false);
+            if (spices[i][0].compareToIgnoreCase("spice")==0){
+                //System.out.println(" new spice ");
 
-        while(!(thequeue.isEmpty())){
+                SpiceCordoni spice = new SpiceCordoni();
 
-            currentvertex = thequeue.dequeue();
+                spice.setColor(spices[i][3]);
 
+                System.out.println(spices[i][9]);
+
+                spice.setPrice(Double.parseDouble(spices[i][7]));
+
+                spice.setQty(Integer.parseInt(spices[i][12]));
+                        
+                spicelist.add(spice);
+            }// if  
             
-            for(int i = 0 ; i < currentvertex.neighbors.size() ; i++){
+        }//for i
+         
+        
+        //print spice to check
+        //System.out.println(spicelist);
 
-                if ( currentvertex.neighbors.get(i).getProcessStatus() == true){
+        spiceUnitPrice(spicelist);
 
-                   thequeue.enqueue(currentvertex.neighbors.get(i));
-                   currentvertex.neighbors.get(i).setProcessStatus(false);
+    }//spiceitup
 
-                }//if
-            }//for
-            
+    //This method creates each spice's unit price
+    public static void spiceUnitPrice(ArrayList<SpiceCordoni> spicelist) {
+ 
+        //Create unit price for each spice
+        for(int i = 0; i < spicelist.size(); i++){
 
-        }//while
-
-    }//reboot
-
-    //this method preforms the depth traversal
-    public static void depthTraversal(VertexCordoni vertex) {
-
-        if((vertex.getProcessStatus() == false)){
-
-            System.out.println("Id: " + vertex.getId());
-            vertex.setProcessStatus(true);
-
-        }//if
-
-        //System.out.println("Size: " + vertex.neighbors.size());
-
-        for(int i = 0; i < vertex.neighbors.size(); i++){
-
-            if(vertex.neighbors.get(i).getProcessStatus() ==  false){
-                depthTraversal(vertex.neighbors.get(i));
-            }//if
+            spicelist.get(i).setUnitPrice(spicelist.get(i).getPrice()/spicelist.get(i).getQty());
 
         }//for
 
-    }//depth Traversal
+        sort(spicelist);
+    }//spiceUnitPrice
 
+    //This method sorts spices from high to low unit price
+    public static void sort(ArrayList<SpiceCordoni> spicelist)
+    {
 
-    
-    //lets make the trees!
+        Collections.reverse(spicelist);
 
-    //This method inserts the nodes into the tres
-    public static void insertTree(TreeCordoni tree, String word) {
+       //Create unit price for each spice
+       for(int i = 0; i < spicelist.size(); i++){
 
-        TreeCordoni newnode = new TreeCordoni();
+            System.out.println("Spice " + spicelist.get(i).getColor());
+            System.out.println("Price " + spicelist.get(i).getUnitPrice());
 
-        newnode.setData(word);
+       }//for
 
-        TreeCordoni trailing = null;
+    }//sort
 
-        //sets current to the tree root
-        TreeCordoni current = tree.getRoot();
+    //This method creates the knapsacks
+    public static void createKnapsack(String[][] spices) {
+ 
+        ArrayList <KnapsackCordoni> knapsacklist = new ArrayList <KnapsackCordoni>();
+        
+        //increment index to create spice array
+        for (int i = 0; i < spices.length; i++){
 
-        //while the root is not null continue down the tree
-        while (current != null){
+            if (spices[i][0].compareToIgnoreCase("knapsack")==0){
+                System.out.println(" new knapsack ");
 
-            trailing = current;
+                KnapsackCordoni knapsack = new KnapsackCordoni();
 
-            if(newnode.getData().compareToIgnoreCase(current.getData()) < 0){
-
-                current = current.getLeft();
-                //System.out.println("L ");
-
-
-            }//if
-
-            else{
-
-                current = current.getRight();
-                //System.out.println("R ");
-
-            }//else
-
-        }//while
-
-        newnode.setParent(trailing);
-
-        //if trailing is null then set the new node to the root
-        if(trailing == null){
-
-            tree.setRoot(newnode);
-            System.out.println("Root: " + newnode.getData());
-
-        }//if
-
-        //else we set the new node in the tree
-        else{
-
-            if(newnode.getData().compareToIgnoreCase(trailing.getData()) < 0){
-
-                trailing.setLeft(newnode);
-                System.out.println("L ");
-
-                //to print!
-                printTree(tree.getRoot());
-
-            }//if
-
-            else{
-
-                trailing.setRight(newnode);
-                System.out.println("R ");
                 
-                //to print!
-                printTree(tree.getRoot());
 
-            }//else
-        }//else
-
-
-    }//insertTree
-
-
-    //This method prints the tree (kind of)
-    public static void printTree(TreeCordoni root) {
-
-        if (root != null){
-
-            root.setRoot(root.getLeft());
-            printTree(root.getRoot());
-
-            System.out.println(root.getData() + " ");
+                knapsack.setCapacity(Integer.parseInt(spices[i][3]));
+                        
+                knapsacklist.add(knapsack);
+            }// if  
             
-            root.setRoot(root.getRight());
-            printTree(root.getRoot());
+        }//for i
+         
+        //Create unit price for each spice
+        for(int i = 0; i < knapsacklist.size(); i++){
 
-        }//id
+        System.out.println("Capacity " + knapsacklist.get(i).getCapacity());
 
-    }//print tree
+        }//for
 
-    //This method searches the tree for the 42 items
-    public static int searchTree(TreeCordoni root, String target, int comparisons) {
+        fillKnapsack(knapsacklist);
 
-        //if the root is null or equal to the target then return
-        if((root == null) || (root.getData().compareToIgnoreCase(target)==0)){
-            comparisons++;
-        }//if
+    }//createKnapsack
 
-        //else we continue down the tree recursively to find the target
-        else{
+    //This method fills the knapsacks
+    public static void fillKnapsack(ArrayList<KnapsackCordoni> knapsacklist) {
+ 
+        System.out.println("Knapsack of capacity");
 
-            if(target.compareToIgnoreCase(root.getData()) < 0){
 
-                comparisons++;
-                System.out.println("L");
-                searchTree(root.getLeft(), target, comparisons);
-                
-            }//if
 
-            else{
-                comparisons++;
-                System.out.println("R");
-                searchTree(root.getRight(), target, comparisons);
-                
-            }//else
-        }//else
 
-    //if you uncomment this line it does show different numbers for compare
-    //but i am not sure why it is not returning them correctly
-    //System.out.println(comparisons);
-    return comparisons;
-
-    }//searchTree
-    
+    }//fillKnapsack
 
 }//Assignment4Cordoni
