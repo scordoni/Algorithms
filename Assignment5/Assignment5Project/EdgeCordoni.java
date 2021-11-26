@@ -21,7 +21,7 @@ public class EdgeCordoni
     */
     private VertexCordoni myTo;
     private VertexCordoni myFrom;
-    private int myweight;
+    private int myWeight;
 
 
     /**
@@ -31,14 +31,14 @@ public class EdgeCordoni
    {
    myTo = null;
    myFrom = null;
-   myWeight = new Integer();
+   myWeight = 0;
    }//Edge Cordoni
 
     /**
     * The full constructor for NodeCordoni
     * @param newData the incoming data of the item
     */
-    public EdgeCordoni(VertexCordoni newTo, VertexCorodni newFrom, Integer newWeight)
+    public EdgeCordoni(VertexCordoni newTo, VertexCordoni newFrom, Integer newWeight)
     {
         myTo = newTo;
         myFrom = newFrom;

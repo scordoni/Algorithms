@@ -229,39 +229,12 @@ public class Assignment5Cordoni {
 
         spiceItUp(splitspicearray);
 
-        createKnapsack(splitspicearray);
-
-
     }//main
 
     //This method creates the linked objects of the undirected graph
-    public static VertexCordoni makeLinkedObjects(String[][] instructions) {
- 
-        int index = 0;
-        VertexCordoni[] vertexlist;
-        
-        //increment index to create vertex array
-        for (int i = 0; i < instructions.length; i++){
+    public static void makeLinkedObjects(String[][] instructions) {
 
-            if (instructions[i][0].compareToIgnoreCase("add")==0){
-
-                if(instructions[i][1].compareToIgnoreCase("vertex")==0){
-
-                    //System.out.println("Id: " + instructions[i][2]);
-                    //System.out.println("Id get: " + vertex.getId()); 
-                    index++;
-                }//if
-
-            }//else if  
-            
-        }//for i
-
-        //create vertex array
-        vertexlist = new VertexCordoni[index];
-
-        int j = 0;
-
-        //create neighbor array
+        //create 
         for (int i = 0; i < instructions.length; i++){
 
             if (instructions[i][0].compareToIgnoreCase("add")==0){
@@ -273,50 +246,41 @@ public class Assignment5Cordoni {
 
                     vertex.setId(instructions[i][2]);
                         
-                    vertexlist[j] = vertex;
-                    //System.out.println(vertexlist[j]);
-                    j++;
+                    GraphCordoni.vertexes.add(vertex);
                     
                     
                 }//if
                 
-                //add edge to neighbor array
+                //add edge 
                 else if(instructions[i][1].compareToIgnoreCase("edge")==0){
         
-                    for(int k = 0; k < vertexlist.length; k++){
-                       // System.out.println(vertexlist[k].getId());
+                    EdgeCordoni edge = new EdgeCordoni();
 
-                        //if the vertex is in the vertex array then add new edge
-                        if(vertexlist[k].getId().compareToIgnoreCase(instructions[i][2])==0){
-                            //System.out.println("hello1");
+                    for (int j = 0; j < GraphCordoni.vertexes.size(); i++){
 
-                            for(int l = 0; l < vertexlist.length; l++){
-                                //System.out.println("hello2");
-
-                                //if the 2nd vertex is in the vertex array then add the first vertex to their neighbor array
-                                if (vertexlist[l].getId().compareToIgnoreCase(instructions[i][4])==0){
-
-                                    vertexlist[k].neighbors.add(vertexlist[l]);
-                                    //System.out.println("k" + vertexlist[k].getId());
-
-                                    vertexlist[l].neighbors.add(vertexlist[k]);
-                                    //System.out.println("l" +vertexlist[l].getId());
-
-                                }//if                              
-                            }//for l
+                        if (GraphCordoni.vertexes.get(j).getId().compareToIgnoreCase(instructions[i][2])==0){
+                            edge.setFrom(GraphCordoni.vertexes.get(j));
                         }//if
-                    }//for k
+
+                        if (GraphCordoni.vertexes.get(j).getId().compareToIgnoreCase(instructions[i][4])==0){
+                            edge.setTo(GraphCordoni.vertexes.get(j));
+                        }//if
+                    
+                    }//for
+                    
+
+                    edge.setWeight(Integer.parseInt(instructions[i][5]));
+
+                    GraphCordoni.edges.add(edge);
+
                 }//else if
             }//if
         }//for i
 
-        //print neighbor array size to check
-        for(int i = 0; i < vertexlist.length; i++){
-            //System.out.println("size " + vertexlist[i].neighbors.size());
-        }
+            
+        System.out.println("Vertex " + GraphCordoni.vertexes.size());
+        System.out.println("Edge " + GraphCordoni.edges.size());
 
-        //return
-        return vertexlist[0];
 
     }//make linked objects 
 
@@ -379,12 +343,11 @@ public class Assignment5Cordoni {
         //print spice to check
         //System.out.println(spicelist);
 
-        spiceUnitPrice(spicelist);
-
+        spiceUnitPrice(spicelist, spices);
     }//spiceitup
 
     //This method creates each spice's unit price
-    public static void spiceUnitPrice(ArrayList<SpiceCordoni> spicelist) {
+    public static void spiceUnitPrice(ArrayList<SpiceCordoni> spicelist, String[][] spices) {
  
         //Create unit price for each spice
         for(int i = 0; i < spicelist.size(); i++){
@@ -393,27 +356,29 @@ public class Assignment5Cordoni {
 
         }//for
 
-        sort(spicelist);
+        sort(spicelist, spices);
     }//spiceUnitPrice
 
     //This method sorts spices from high to low unit price
-    public static void sort(ArrayList<SpiceCordoni> spicelist)
+    public static void sort(ArrayList<SpiceCordoni> spicelist, String[][] spices)
     {
 
         Collections.reverse(spicelist);
 
-       //Create unit price for each spice
-       for(int i = 0; i < spicelist.size(); i++){
+        //Check unit price for each spice
+        for(int i = 0; i < spicelist.size(); i++){
 
-            System.out.println("Spice " + spicelist.get(i).getColor());
-            System.out.println("Price " + spicelist.get(i).getUnitPrice());
+            //System.out.println("Spice " + spicelist.get(i).getColor());
+            //System.out.println("Price " + spicelist.get(i).getUnitPrice());
 
-       }//for
+        }//for
+
+        createKnapsack(spicelist, spices);
 
     }//sort
 
     //This method creates the knapsacks
-    public static void createKnapsack(String[][] spices) {
+    public static void createKnapsack(ArrayList<SpiceCordoni> spicelist, String[][] spices) {
  
         ArrayList <KnapsackCordoni> knapsacklist = new ArrayList <KnapsackCordoni>();
         
@@ -421,11 +386,9 @@ public class Assignment5Cordoni {
         for (int i = 0; i < spices.length; i++){
 
             if (spices[i][0].compareToIgnoreCase("knapsack")==0){
-                System.out.println(" new knapsack ");
+                //System.out.println(" new knapsack ");
 
                 KnapsackCordoni knapsack = new KnapsackCordoni();
-
-                
 
                 knapsack.setCapacity(Integer.parseInt(spices[i][3]));
                         
@@ -437,21 +400,37 @@ public class Assignment5Cordoni {
         //Create unit price for each spice
         for(int i = 0; i < knapsacklist.size(); i++){
 
-        System.out.println("Capacity " + knapsacklist.get(i).getCapacity());
+            //System.out.println("Capacity " + knapsacklist.get(i).getCapacity());
 
         }//for
 
-        fillKnapsack(knapsacklist);
+        fillKnapsack(spicelist, knapsacklist);
 
     }//createKnapsack
 
     //This method fills the knapsacks
-    public static void fillKnapsack(ArrayList<KnapsackCordoni> knapsacklist) {
+    public static void fillKnapsack( ArrayList<SpiceCordoni> spicelist, ArrayList<KnapsackCordoni> knapsacklist) {
  
-        System.out.println("Knapsack of capacity");
+        int capacity = 0 ;
+        double worth = 0;
+        int scoop = 0;
+        String color = "none";
+
+
+        for(int i = 0; i < knapsacklist.size(); i++){
+
+            capacity = knapsacklist.get(i).getCapacity();
+
+        }//for
 
 
 
+
+
+        //keep adding biggest one until we cant anymore
+
+
+        
 
     }//fillKnapsack
 

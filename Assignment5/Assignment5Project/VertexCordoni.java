@@ -16,36 +16,36 @@ import java.util.ArrayList;
 
 public class VertexCordoni
 {
-   /**
-    * Declare Variables 
-    */
-    private String myId;
-    private boolean myIsProcessed;
-    public  ArrayList <VertexCordoni> neighbors= new ArrayList <VertexCordoni>();
-    private VertexCordoni myNext;
-    
-
-    /**
-    * The default Constructor for VertexCordoni
-    */
-    public VertexCordoni()
-    {
-    myId = new String();
-    myIsProcessed = false;
-    myNext = null;
-    }//vertex Cordoni
+     /**
+      * Declare Variables 
+     */
+     private String myId;
+     private boolean myIsProcessed;
+     public  ArrayList <VertexCordoni> neighbors= new ArrayList <VertexCordoni>();
+     private VertexCordoni myNext;
+     
 
      /**
-    * The full constructor for VertexCordoni
-    * @param newData the incoming data 
-    */
-   public VertexCordoni(String newData)
-   {
-        myId = newData;
-        myIsProcessed = false;
-        myNext = null;
-        
-   }//NodeCordoni
+      * The default Constructor for VertexCordoni
+     */
+     public VertexCordoni()
+     {
+     myId = new String();
+     myIsProcessed = false;
+     myNext = null;
+     }//vertex Cordoni
+
+     /**
+     * The full constructor for VertexCordoni
+     * @param newData the incoming data 
+     */
+     public VertexCordoni(String newData)
+     {
+          myId = newData;
+          myIsProcessed = false;
+          myNext = null;
+          
+     }//NodeCordoni
 
     /**
      * 
