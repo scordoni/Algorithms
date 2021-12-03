@@ -142,11 +142,14 @@ public class SimulationCordoni {
                     numberOf2Tests = numberOf2Tests + 3;
                     case2occurences++;
 
+                    int subgroup1infection = 0;
+                    int subgroup2infection = 0 ;
+
                     //now we split into 2 groups of 4 and retest
                     for(int k = 0; k < groupSize/2; k++){
-
+                        
                         if(groupArrayCopy[i][k] == 1){
-                                
+                            subgroup1infection = 1;
                             //System.out.println("We have a sub-group 1 infection!"); 
                         }//if
     
@@ -155,12 +158,19 @@ public class SimulationCordoni {
                     for(int k = 4; k < groupSize; k++){
     
                         if(groupArrayCopy[i][k] == 1){
-                                
+                            subgroup2infection = 1;
                             //System.out.println("We have a sub-group 2 infection!"); 
                         }//if
     
                     }//for
 
+                    if(subgroup1infection == 1){
+                        numberOf2Tests = numberOf2Tests + 4; 
+                    }//if
+
+                    if(subgroup2infection == 1){
+                        numberOf2Tests = numberOf2Tests + 4; 
+                    }//if
                         
                 }// if
 
