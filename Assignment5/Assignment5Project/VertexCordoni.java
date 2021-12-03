@@ -21,8 +21,9 @@ public class VertexCordoni
      */
      private String myId;
      private boolean myIsProcessed;
-     public  ArrayList <VertexCordoni> neighbors= new ArrayList <VertexCordoni>();
+     public ArrayList <VertexCordoni> neighbors= new ArrayList <VertexCordoni>();
      private VertexCordoni myNext;
+     private Double myDistance;
      
 
      /**
@@ -33,6 +34,7 @@ public class VertexCordoni
      myId = new String();
      myIsProcessed = false;
      myNext = null;
+     myDistance = 0.0;
      }//vertex Cordoni
 
      /**
@@ -44,6 +46,7 @@ public class VertexCordoni
           myId = newData;
           myIsProcessed = false;
           myNext = null;
+          myDistance = 0.0;
           
      }//NodeCordoni
 
@@ -92,17 +95,19 @@ public class VertexCordoni
     public boolean getProcessStatus()
     { return myIsProcessed;}//get node 
 
-    //This checks to see if the neighbor array is empty
-	public boolean isEmpty()
-	{
-		boolean empty = false;
-		
-		if(neighbors == null)
-			{
-			empty = true;
-			}//if
-		return empty;
-	}//empty
+    /**
+    * The setter for the Distance
+    * @param newDistance the incoming Distance
+    */
+    public void setDistance(Double newDistance)
+    {myDistance = newDistance;}//set Distance
+
+    /**
+    * the getter for the process status
+    * @return the incoming process status
+    */
+    public Double getDistance()
+    { return myDistance;}//get node 
 
    
 }//Vertex Cordoni

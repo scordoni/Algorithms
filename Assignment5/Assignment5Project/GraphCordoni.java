@@ -15,7 +15,7 @@ public class GraphCordoni
     * Declare Variables 
     */
 
-    public static  ArrayList <VertexCordoni> vertexes = new ArrayList <VertexCordoni>();
-    public static  ArrayList <EdgeCordoni> edges = new ArrayList <EdgeCordoni>();
+    public  ArrayList <VertexCordoni> vertexes = new ArrayList <VertexCordoni>();
+    public  ArrayList <EdgeCordoni> edges = new ArrayList <EdgeCordoni>();
 
 }//Graph Cordoni

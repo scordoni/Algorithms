@@ -31,7 +31,8 @@ public class Assignment5Cordoni {
 
         //For binary search tree
         String[] spicearray = new String[14];
-        String[][] splitspicearray = new String[14][13];
+        String[][] splitspicearray1 = new String[14][13];
+        String[][] splitspicearray2 = new String[14][23];
        
         String[] instructionarray = new String[88];
         String[] graph1array = new String[17];
@@ -114,22 +115,35 @@ public class Assignment5Cordoni {
         }//for
 
         //split up into 2D array 
-        for (int i = 0; i < splitspicearray.length; i++){
-            for( int j = 0; j < splitspicearray[i].length; j++){
-            splitspicearray[i] = spicearray[i].split(" ");
+        for (int i = 0; i < splitspicearray1.length; i++){
+            for( int j = 0; j < splitspicearray1[i].length; j++){
+            splitspicearray1[i] = spicearray[i].split(";");
             }//for j 
         }//for
 
         //split up into 2D array 
-        for (int i = 0; i < splitspicearray.length; i++){
-            for( int j = 0; j < splitspicearray[i].length; j++){
-            //System.out.println(j + splitspicearray[i][j]);
+        for (int i = 0; i < splitspicearray1.length; i++){
+            for( int j = 0; j < splitspicearray1[i].length; j++){
+            System.out.println(splitspicearray1[i][j]);
+            }//for j 
+        }//for
+
+        //split up into 2D array 
+        for (int i = 0; i < splitspicearray1.length; i++){
+            for( int j = 0; j < splitspicearray1[i].length; j++){
+            splitspicearray2[i] = splitspicearray1[i][j].split(" ");
+            }//for j 
+        }//for
+
+        //split up into 2D array 
+        for (int i = 0; i < splitspicearray2.length; i++){
+            for( int j = 0; j < splitspicearray2[i].length; j++){
+            System.out.println(splitspicearray2[i][j]);
             }//for j 
         }//for
 
 
-        // i know this is not exactly how I was supposed to split up the text
-        //file, but this was the only way I could get it to work with everything 
+         
 
         //Print to check array 
         for (int i = 0; i < instructionarray.length; i++){
@@ -227,12 +241,14 @@ public class Assignment5Cordoni {
 
         //Spices!
 
-        spiceItUp(splitspicearray);
+        //spiceItUp(splitspicearray);
 
     }//main
 
     //This method creates the linked objects of the undirected graph
     public static void makeLinkedObjects(String[][] instructions) {
+
+        GraphCordoni graphCordoni = new GraphCordoni();
 
         //create 
         for (int i = 0; i < instructions.length; i++){
@@ -246,7 +262,7 @@ public class Assignment5Cordoni {
 
                     vertex.setId(instructions[i][2]);
                         
-                    GraphCordoni.vertexes.add(vertex);
+                    graphCordoni.vertexes.add(vertex);
                     
                     
                 }//if
@@ -256,55 +272,87 @@ public class Assignment5Cordoni {
         
                     EdgeCordoni edge = new EdgeCordoni();
 
-                    for (int j = 0; j < GraphCordoni.vertexes.size(); i++){
+                    for (int j = 0; j < graphCordoni.vertexes.size(); j++){
 
-                        if (GraphCordoni.vertexes.get(j).getId().compareToIgnoreCase(instructions[i][2])==0){
-                            edge.setFrom(GraphCordoni.vertexes.get(j));
+                        if (graphCordoni.vertexes.get(j).getId().compareToIgnoreCase(instructions[i][2])==0){
+                            edge.setFrom(graphCordoni.vertexes.get(j));
                         }//if
 
-                        if (GraphCordoni.vertexes.get(j).getId().compareToIgnoreCase(instructions[i][4])==0){
-                            edge.setTo(GraphCordoni.vertexes.get(j));
+                        if (graphCordoni.vertexes.get(j).getId().compareToIgnoreCase(instructions[i][4])==0){
+                            edge.setTo(graphCordoni.vertexes.get(j));
                         }//if
                     
                     }//for
                     
+                    
 
-                    edge.setWeight(Integer.parseInt(instructions[i][5]));
+                    if ((instructions[i][5].compareToIgnoreCase("") == 0)){
+                        edge.setWeight(Integer.parseInt(instructions[i][6]));
+                    }
+                    
+                    else{
+                        edge.setWeight(Integer.parseInt(instructions[i][5]));
+                    }//else
 
-                    GraphCordoni.edges.add(edge);
+                    graphCordoni.edges.add(edge);
 
                 }//else if
             }//if
         }//for i
 
             
-        System.out.println("Vertex " + GraphCordoni.vertexes.size());
-        System.out.println("Edge " + GraphCordoni.edges.size());
+        System.out.println("Vertex " + graphCordoni.vertexes.size());
+        System.out.println("Edge " + graphCordoni.edges.size());
 
 
+        bellmanFord(graphCordoni, graphCordoni.vertexes.get(0));
     }//make linked objects 
 
 
-    //This method 
-    public static void bellmanFord(VertexCordoni[] graph, Integer weightfunction, VertexCordoni source) {
+    //return weight 
+    public static void bellmanFord(GraphCordoni graph, VertexCordoni source) {
  
         singlesource(graph, source);
 
+        for (int i = 1; i < graph.vertexes.size() - 1; i++){
 
+            //graph.vertexes.setDistance(Double.POSITIVE_INFINITY);
+
+            for (int j = 0; j < graph.edges.size(); j++){
+
+                relax(graph.edges.get(j).getTo(), graph.edges.get(j).getFrom());  
+            
+            }//for
+        
+        }//for
+
+
+        for (int i = 1; i < graph.vertexes.size() - 1; i++){
+
+            
+        
+        }//for
 
 
     }//BellmanFord
 
     //This method 
-    public static void singlesource(VertexCordoni[] graph, VertexCordoni source) {
+    public static void singlesource(GraphCordoni graph, VertexCordoni source) {
  
+        for (int i = 0; i < graph.vertexes.size(); i++){
 
+            //graph.vertexes.setDistance(Double.POSITIVE_INFINITY);
+
+            //graph.pi?   
+        
+        }//for
+
+        source.setDistance(0.0);
     
-
     }//singlesource
 
     //This method 
-    public static void relax(VertexCordoni[] graph, VertexCordoni source) {
+    public static void relax(VertexCordoni vertexEdge1, VertexCordoni vertexEdge2) {
  
 
         
@@ -421,9 +469,27 @@ public class Assignment5Cordoni {
 
             capacity = knapsacklist.get(i).getCapacity();
 
+            for(int j = 0; j < spicelist.size(); j++){
+
+                //take spice and add it to knapsack
+    
+                spicelist.get(j).getColor();
+
+                spicelist.get(j).getPrice();
+
+                spicelist.get(j).getQty();
+
+                spicelist.get(j).getUnitPrice();
+
+
+    
+    
+            }//for
+
         }//for
 
 
+       
 
 
 
