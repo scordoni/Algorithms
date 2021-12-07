@@ -23,6 +23,7 @@ public class VertexCordoni
      private boolean myIsProcessed;
      public ArrayList <VertexCordoni> neighbors= new ArrayList <VertexCordoni>();
      private VertexCordoni myNext;
+     private VertexCordoni myPrevious;
      private Double myDistance;
      
 
@@ -34,6 +35,7 @@ public class VertexCordoni
      myId = new String();
      myIsProcessed = false;
      myNext = null;
+     myPrevious = null;
      myDistance = 0.0;
      }//vertex Cordoni
 
@@ -46,6 +48,7 @@ public class VertexCordoni
           myId = newData;
           myIsProcessed = false;
           myNext = null;
+          myPrevious = null;
           myDistance = 0.0;
           
      }//NodeCordoni
@@ -82,32 +85,47 @@ public class VertexCordoni
     {return myNext;}//get data
 
     /**
+    * 
+    * the setter for the Previous vertex 
+    * @param newPrevious the incoming data of the vertex
+    */
+    public void setPrevious(VertexCordoni newPrevious)
+    {myPrevious = newPrevious;} //set data
+
+    /**
+    * The getter for the vertex 
+    * @return the incoming data of the vertex
+    */
+    public VertexCordoni getPrevious()
+    {return myPrevious;}//get data
+
+    /**
     * The setter for the process status
     * @param newIsProcessed the incoming process status
     */
     public void setProcessStatus(boolean newIsProcessed)
-    {myIsProcessed = newIsProcessed;}//set Node
+    {myIsProcessed = newIsProcessed;}//set data
 
     /**
     * the getter for the process status
     * @return the incoming process status
     */
     public boolean getProcessStatus()
-    { return myIsProcessed;}//get node 
+    { return myIsProcessed;}//get data
 
     /**
     * The setter for the Distance
     * @param newDistance the incoming Distance
     */
     public void setDistance(Double newDistance)
-    {myDistance = newDistance;}//set Distance
+    {myDistance = newDistance;}//set data
 
     /**
     * the getter for the process status
     * @return the incoming process status
     */
     public Double getDistance()
-    { return myDistance;}//get node 
+    { return myDistance;}//get data
 
    
 }//Vertex Cordoni
