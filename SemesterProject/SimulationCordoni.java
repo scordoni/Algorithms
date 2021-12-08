@@ -61,6 +61,8 @@ public class SimulationCordoni {
 
         int numberOfSick = 0;
 
+        int popindex = 0;
+
         //we are going to let 1 be infected and let 0 be healthy
         //This method is going to randomly infect the population
 
@@ -72,7 +74,15 @@ public class SimulationCordoni {
 
         for (int i = 0; i < intNumberInfected ; i++){
 
-            population[getRandomInfection(population)] = 1;
+            if(population[getRandomInfection(population)] == 1){
+                System.out.println("Double Infection");
+                popindex = getRandomInfection(population) + 1;
+                population[popindex] = 1;
+            }//if
+
+            else{
+                population[getRandomInfection(population)] = 1;
+            }//else
 
         }//for
         
@@ -135,67 +145,64 @@ public class SimulationCordoni {
             //else we have an infection
             else{
 
-                //we have to test 2 groups of 4
-                if(findArraySum(groupArrayCopy[i]) == 1){
-
-                    //System.out.println("We have one infection!"); 
-                    numberOf2Tests = numberOf2Tests + 3;
-                    case2occurences++;
-
-                    int subgroup1infection = 0;
-                    int subgroup2infection = 0 ;
+                int subgroup1infection = 0;
+                int subgroup2infection = 0 ;
 
                     //now we split into 2 groups of 4 and retest
                     for(int k = 0; k < groupSize/2; k++){
-                        
+
+                        numberOf2Tests++;
+
                         if(groupArrayCopy[i][k] == 1){
+                           
                             subgroup1infection = 1;
-                            //System.out.println("We have a sub-group 1 infection!"); 
+
                         }//if
     
                     }//for
     
                     for(int k = 4; k < groupSize; k++){
-    
-                        if(groupArrayCopy[i][k] == 1){
-                            subgroup2infection = 1;
-                            //System.out.println("We have a sub-group 2 infection!"); 
-                        }//if
-    
-                    }//for
 
-                    if(subgroup1infection == 1){
-                        numberOf2Tests = numberOf2Tests + 4; 
-                    }//if
-
-                    if(subgroup2infection == 1){
-                        numberOf2Tests = numberOf2Tests + 4; 
-                    }//if
+                        numberOf2Tests++;
                         
-                }// if
-
-                //else more then one person is infected
-                else if(findArraySum(groupArrayCopy[i]) > 1){
-
-                    //System.out.println("We have more than one infection!"); 
-                    case3occurences++;
-                    numberOf3Tests = numberOf3Tests + 11;
-
-                    for(int k = 4; k < groupSize; k++){
-    
                         if(groupArrayCopy[i][k] == 1){
-                            numberOfSick++;
-                                
-                            //System.out.println("We have " + numberOfSick + " infections!"); 
+                            
+                            subgroup2infection = 1;
+
                         }//if
     
                     }//for
-                                   
-                }//else if
+
+                    if((subgroup1infection == 1) && (subgroup2infection == 1)){
+
+                        case3occurences++;
+                        numberOf3Tests = numberOf3Tests + 3;
+
+                        for(int j = 0; j < groupSize; j++){
+
+                            numberOf3Tests++;
+                            
+                        }//for
+
+                    }//if both subgroup
+
+
+                    else if(subgroup1infection == 1){
+
+                        case2occurences++;
+
+                    }//if subgroup 1
+
+                    else if(subgroup2infection == 1){
+
+                        case2occurences++;
+
+                    }//if subgroup 2
 
             }//else
 
         }//for i 
+
 
         System.out.println("Case 1 occurences: " +  case1occurences);
         System.out.println("Case 2 occurences: " +  case2occurences);
@@ -236,7 +243,5 @@ public class SimulationCordoni {
 
         return sum;
     }//find array sum
-
-
 
 }//semester cordoni
