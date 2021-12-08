@@ -1,6 +1,11 @@
 /*
  * 
  * Assignment 5
+ * Due Date and Time: 12/10/21 before 12:00am 
+ * Purpose: to implement directed graphs and greedy algorithm structures.
+ * Input: The user will be inputting a file containing a list of edges and vertices. 
+ * Output: The program will output direct graph shortest paths and greedy algorithms. 
+ * @author Shannon Cordoni 
  * 
  */
 

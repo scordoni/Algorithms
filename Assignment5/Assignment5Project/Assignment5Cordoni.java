@@ -1,10 +1,10 @@
 /*
  * 
- * Assignment 4
- * Due Date and Time: 11/19/21 before 12:00am 
- * Purpose: to implement graph and tree data structures, and to understand the performance of their traversals.
+ * Assignment 5
+ * Due Date and Time: 12/10/21 before 12:00am 
+ * Purpose: to implement directed graphs and greedy algorithm structures.
  * Input: The user will be inputting a file containing a list of edges and vertices. 
- * Output: The program will output graph and tree data structures. 
+ * Output: The program will output direct graph shortest paths and greedy algorithms. 
  * @author Shannon Cordoni 
  * 
  */
@@ -93,9 +93,8 @@ public class Assignment5Cordoni {
 
                 instructionarray[i] = input.nextLine();
                 i++;
-            }
+            }//while
   
-
             input.close();  
 
         }//try
@@ -107,43 +106,33 @@ public class Assignment5Cordoni {
             ex.printStackTrace();
         }//catch
 
+        //Spices!
 
         //Print to check array 
         for (int i = 0; i < spicearray.length; i++){
-            System.out.println(spicearray[i]);
+            //System.out.println(spicearray[i]);
         }//for
 
+        spiceItUp(spicearray);
 
         //Print to check array 
         for (int i = 0; i < instructionarray.length; i++){
-           // System.out.println(instructionarray[i]);
+           //System.out.println(instructionarray[i]);
         }//for
 
-        //Put instructions into graph 1 array
-        for (int i = 0; i < graph1array.length; i++){
-            graph1array[i] = instructionarray[i];
-        }//for
-
-        //Put instructions into graph 2 array
-        for (int i = 0; i < graph2array.length; i++){
-            graph2array[i] = instructionarray[i + 23];
-        }//for
-
-        //Put instructions into graph 3 array
-        for (int i = 0; i < graph3array.length; i++){
-            graph3array[i] = instructionarray[i + 45];
-        }//for
-
-        //Put instructions into graph 4 array
-        for (int i = 0; i < graph4array.length; i++){
-            graph4array[i] = instructionarray[i + 67];
-        }//for
-        
         //split up into 2D array 
         for (int i = 0; i < splitinstructionarray.length; i++){
             for( int j = 0; j < splitinstructionarray[i].length; j++){
             splitinstructionarray[i] = instructionarray[i].split(" ");
             }//for j 
+        }//for
+
+        //graphItUp(splitinstructionarray);
+
+        
+        //Put instructions into graph 1 array
+        for (int i = 0; i < graph1array.length; i++){
+            graph1array[i] = instructionarray[i];
         }//for
 
         //split up into 2D array for graph 1
@@ -152,73 +141,35 @@ public class Assignment5Cordoni {
             graph1splitarray[i] = graph1array[i].split(" ");
             }//for j 
         }//for
-
-        //split up into 2D array for graph 2
-        for (int i = 0; i < graph2splitarray.length; i++){
-            for( int j = 0; j < graph2splitarray[i].length; j++){
-            graph2splitarray[i] = graph2array[i].split(" ");
-            }//for j 
-        }//for
-
-        //split up into 2D array for graph 3
-        for (int i = 0; i < graph3splitarray.length; i++){
-            for( int j = 0; j < graph3splitarray[i].length; j++){
-            graph3splitarray[i] = graph3array[i].split(" ");
-            }//for j 
-        }//for
-
-        //split up into 2D array for graph 4
-        for (int i = 0; i < graph4splitarray.length; i++){
-            for( int j = 0; j < graph4splitarray[i].length; j++){
-            graph4splitarray[i] = graph4array[i].split(" ");
-            }//for j 
-        }//for
-
-
-        //Spices!
-
-        //spiceItUp(spicearray);
-
        
         //Graphs!!
-        System.out.println(" ");
-        System.out.println("Graph 1");
+        //System.out.println(" ");
+        //System.out.println("Graph 1");
 
         //make linked list
-        makeLinkedObjects(graph1splitarray);
-
-
-        System.out.println(" ");
-        System.out.println("Graph 2");
-
-        //make linked list
-        makeLinkedObjects(graph2splitarray);
-
-
-        System.out.println(" ");
-        System.out.println("Graph 3");
-
-        //make linked list
-        makeLinkedObjects(graph3splitarray);
-
-
-        System.out.println(" ");
-        System.out.println("Graph 4");
-
-        //make linked list
-        makeLinkedObjects(graph4splitarray);
-
+        //makeLinkedObjects(graph1splitarray);
+        
 
     }//main
 
-    //This method creates the linked objects of the undirected graph
+    //This method creates the linked objects of the directed graph
     public static void makeLinkedObjects(String[][] instructions) {
 
         GraphCordoni graphCordoni = new GraphCordoni();
+        int k = 0;
 
         //create 
-        for (int i = 0; i < instructions.length; i++){
+        for (int i = 0; i < instructions.length; i++){    
+            
+            if(instructions[i][0].compareToIgnoreCase("new")==0){
+                
+                //GraphCordoni graphCordoni = new GraphCordoni();
+                //System.out.println("Graph " + k);
+                k++;
 
+            }//if
+
+            //add
             if (instructions[i][0].compareToIgnoreCase("add")==0){
 
                 //create new vertex and set id to add to vertex array
@@ -233,7 +184,7 @@ public class Assignment5Cordoni {
                     
                 }//if
                 
-                //add edge 
+                //create new edge and set id to add to edge array
                 else if(instructions[i][1].compareToIgnoreCase("edge")==0){
         
                     EdgeCordoni edge = new EdgeCordoni();
@@ -266,10 +217,17 @@ public class Assignment5Cordoni {
             }//if
         }//for i
 
-            
-        System.out.println("Vertex " + graphCordoni.vertexes.size());
-        System.out.println("Edge " + graphCordoni.edges.size());
+        /*
+        for(int i = 0; i < graphCordoni.edges.size(); i++){
 
+            System.out.println(" ");
+            System.out.println("From: "  + graphCordoni.edges.get(i).getFrom().getId());
+            System.out.println("To: "  + graphCordoni.edges.get(i).getTo().getId());
+            System.out.println("Weight: "  + graphCordoni.edges.get(i).getWeight());
+            System.out.println(" ");
+
+        }//for
+        */
 
         bellmanFord(graphCordoni, graphCordoni.edges.get(0).getWeight(),  graphCordoni.vertexes.get(0));
     }//make linked objects 
@@ -277,9 +235,11 @@ public class Assignment5Cordoni {
 
     //This method preforms the bellman ford algorithm to find the shortest path
     public static boolean bellmanFord(GraphCordoni graph, int weight, VertexCordoni source) {
-
-        System.out.println("Bellman ford");
  
+        System.out.println("bellman ford");
+
+        ArrayList <String> path = new ArrayList <String>();
+
         singlesource(graph, source);
 
         boolean value = false;
@@ -288,28 +248,42 @@ public class Assignment5Cordoni {
 
             for (int j = 0; j < graph.edges.size(); j++){
 
+                //System.out.println("relax");
                 relax(graph.edges.get(j).getTo(), graph.edges.get(j).getFrom(), graph.edges.get(j).getWeight());  
             
-            }//for
-        
-        }//for
+                System.out.println(" ");
+                System.out.println("From: "  + graph.edges.get(j).getFrom().getId());
+                System.out.println("To: "  + graph.edges.get(j).getTo().getId());
+                System.out.println("Weight: "  + graph.edges.get(j).getWeight());
+                System.out.println(" ");
 
+                path.add(graph.edges.get(j).getFrom().getId());
+                
+            }//for 
+
+        }//for
 
         for (int i = 0; i < graph.edges.size(); i++){
 
-            if(graph.edges.get(i).getTo().getDistance() > ( graph.edges.get(i).getFrom().getDistance() + graph.edges.get(i).getWeight() ) ){
+            //System.out.println(" ");
+            //System.out.println("From Distance: "  + graph.edges.get(i).getFrom().getDistance());
+            //System.out.println("To Distance: "  + graph.edges.get(i).getTo().getDistance());
+            //System.out.println("Weight: "  + graph.edges.get(i).getWeight());
+            //System.out.println(" ");
+
+            
+            if(graph.edges.get(i).getTo().getDistance() > graph.edges.get(i).getFrom().getDistance() + graph.edges.get(i).getWeight() ){
                 value = false;
+                shortestPath(value, graph, path);
                 return value;
+            
             }//if
             
         }//for
-
-        
+   
         value = true;
 
-        System.out.println("value : " + value);
-
-        shortestPath(value, graph);
+        shortestPath(value, graph, path);
 
         return value;
 
@@ -317,8 +291,8 @@ public class Assignment5Cordoni {
 
     //This method sets the initial single source
     public static void singlesource(GraphCordoni graph, VertexCordoni source) {
- 
-        System.out.println("single source");
+
+        System.out.println("single source ");
 
         for (int i = 0; i < graph.vertexes.size(); i++){
 
@@ -332,10 +306,16 @@ public class Assignment5Cordoni {
     
     }//singlesource
 
-    //This method 
+    //This method "relaxs" the vertex distance to determine the shortest path
     public static void relax(VertexCordoni vertexEdge1, VertexCordoni vertexEdge2, Integer weight) {
-        
+
         System.out.println("relax");
+
+        System.out.println(" ");
+        System.out.println("Vertex 1 distance: "  + vertexEdge1.getDistance());
+        System.out.println("Vertex 2 distance: "  + vertexEdge2.getDistance());
+        System.out.println("Weight: "  + weight);
+        System.out.println(" ");
 
         if(vertexEdge1.getDistance() > vertexEdge2.getDistance() + weight){
 
@@ -347,41 +327,33 @@ public class Assignment5Cordoni {
 
     }//relax
 
-    //This method 
-    public static void shortestPath(boolean value, GraphCordoni graph) {
- 
-        System.out.println("shortest path");
+    //This method prints out the shortest path
+    public static void shortestPath(boolean value, GraphCordoni graph, ArrayList path) {
 
         VertexCordoni current = null;
 
-        if(value == true){
+        for(int i = 0; i < graph.vertexes.size(); i++){
 
-            for(int i = 1; i < graph.vertexes.size() - 1; i++){
+            current = graph.vertexes.get(i);
 
-                current = graph.vertexes.get(i);
+            System.out.println(" ");
+            System.out.println("From " + graph.vertexes.get(0).getId() + " to " + graph.vertexes.get(i).getId() +
+                                " the cost is " + graph.vertexes.get(i).getDistance());
 
-                System.out.println("From " + graph.vertexes.get(0).getId() + " to " + graph.vertexes.get(i).getId() +
-                                    " the cost is " + graph.vertexes.get(i).getDistance());
+            System.out.println("The path is ");
 
-                System.out.println("The path is " + graph.vertexes.get(0).getId() + " , " + graph.vertexes.get(i).getId());
+            for(int j = 0; j < path.size(); j++){
+
+                System.out.print(path.get(j) + ", ");
 
             }//for
 
-
-        }//if
-
-        else{
-
-            System.out.println("The shortest path was not determined");
-
-        }//else
-
+        }//for
         
 
     }//shortestPath
 
-
-
+    
     //Spices!
 
     //This method creates the spice object
@@ -390,83 +362,64 @@ public class Assignment5Cordoni {
         System.out.println(" spices ");
 
         String[][] splitspicearray = new String[14][13];
+        String[][] splitspicearray1 = new String[14][23];
         String[][] splitspicearray2 = new String[14][23];
 
         //Print to check array 
         for (int i = 0; i < spices.length; i++){
-            //System.out.println(spicearray[i]);
+            System.out.println(spices[i]);
         }//for
+
         //split up into 2D array 
         for (int i = 0; i < splitspicearray.length; i++){
             for( int j = 0; j < splitspicearray[i].length; j++){
-            splitspicearray[i] = spices[i].split(" ");
-            }//for j 
-        }//for
-        //split up into 2D array 
-        for (int i = 0; i < splitspicearray.length; i++){
-            for( int j = 0; j < splitspicearray[i].length; j++){
-            //System.out.println(j + splitspicearray[i][j]);
+            splitspicearray[i] = spices[i].split(";");
             }//for j 
         }//for
 
-        /*
         //split up into 2D array 
-        for (int i = 0; i < splitspicearray1.length; i++){
-            for( int j = 0; j < splitspicearray1[i].length; j++){
-            splitspicearray1[i] = spices[i].split(";");
+        for (int i = 0; i < splitspicearray.length; i++){
+            for( int j = 0; j < splitspicearray[i].length; j++){
+            System.out.println(splitspicearray[i][j]);
+            }//for j 
+        }//for
+
+        
+        //split up into 2D array 
+        for (int i = 0; i < splitspicearray.length; i++){
+            for( int j = 0; j < splitspicearray[i].length; j++){
+            splitspicearray1[i] = splitspicearray[i][j].split(" ");
             }//for j 
         }//for
         
         //split up into 2D array 
         for (int i = 0; i < splitspicearray1.length; i++){
             for( int j = 0; j < splitspicearray1[i].length; j++){
-            System.out.println("1 " + splitspicearray1[i][j]);
+            System.out.println(splitspicearray1[i][j]);
             }//for j 
         }//for
-
-        //split up into 2D array 
-        for (int i = 0; i < splitspicearray1.length; i++){
-            for( int j = 0; j < splitspicearray1[i].length; j++){
-            splitspicearray1[i][j] = splitspicearray1[i][j].trim();
-            }//for j 
-        }//for
-
-        //split up into 2D array 
-        for (int i = 0; i < splitspicearray1.length; i++){
-            for( int j = 0; j < splitspicearray1[i].length; j++){
-            splitspicearray2[i] = splitspicearray1[i][j].split(" ");
-            }//for j 
-        }//for
-
-        //split up into 2D array 
-        for (int i = 0; i < splitspicearray2.length; i++){
-            for( int j = 0; j < splitspicearray2[i].length; j++){
-            System.out.println("2 " + splitspicearray2[i][j]);
-            }//for j 
-        }//for
-
         
         //split up into 2D array 
-        for (int i = 0; i < splitspicearray2.length; i++){
-            for( int j = 0; j < splitspicearray2[i].length; j++){
+        for (int i = 0; i < splitspicearray1.length; i++){
+            for( int j = 0; j < splitspicearray1[i].length; j++){
             
-                if (splitspicearray2[i][j].compareToIgnoreCase("--")==0){
+                if (splitspicearray1[i][j].compareToIgnoreCase("--")==0){
                     System.out.println("hello");
                 }//if
 
-                else if (splitspicearray2[i][j].compareToIgnoreCase("spice")==0){
+                else if (splitspicearray1[i][j].compareToIgnoreCase("spice")==0){
                     System.out.println("spice");
                 }//if
 
-                else if (splitspicearray2[i][j].compareToIgnoreCase("knapsack")==0){
+                else if (splitspicearray1[i][j].compareToIgnoreCase("knapsack")==0){
                     System.out.println("knapsack");
                 }//if
 
             }//for j 
         }//for
-*/
 
-        createSpice(splitspicearray);
+
+        //createSpice(splitspicearray);
     }//spiceitup
 
     public static void createSpice(String[][] spices) {
