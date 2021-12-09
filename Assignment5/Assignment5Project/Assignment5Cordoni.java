@@ -113,7 +113,10 @@ public class Assignment5Cordoni {
             //System.out.println(spicearray[i]);
         }//for
 
-        spiceItUp(spicearray);
+        //spiceItUp(spicearray);
+
+
+        //Graphs
 
         //Print to check array 
         for (int i = 0; i < instructionarray.length; i++){
@@ -143,34 +146,34 @@ public class Assignment5Cordoni {
         }//for
        
         //Graphs!!
-        //System.out.println(" ");
-        //System.out.println("Graph 1");
+        System.out.println(" ");
+        System.out.println("Graph 1");
 
         //make linked list
-        //makeLinkedObjects(graph1splitarray);
+        graphItUp(graph1splitarray);
         
 
     }//main
 
     //This method creates the linked objects of the directed graph
-    public static void makeLinkedObjects(String[][] instructions) {
+    public static void graphItUp(String[][] instructions) {
 
         GraphCordoni graphCordoni = new GraphCordoni();
-        int k = 0;
+        int k = 1;
 
         //create 
         for (int i = 0; i < instructions.length; i++){    
             
             if(instructions[i][0].compareToIgnoreCase("new")==0){
                 
-                //GraphCordoni graphCordoni = new GraphCordoni();
+                //graphCordoni = new GraphCordoni();
                 //System.out.println("Graph " + k);
                 k++;
 
             }//if
 
             //add
-            if (instructions[i][0].compareToIgnoreCase("add")==0){
+            else if (instructions[i][0].compareToIgnoreCase("add")==0){
 
                 //create new vertex and set id to add to vertex array
                 if(instructions[i][1].compareToIgnoreCase("vertex")==0){
@@ -230,7 +233,7 @@ public class Assignment5Cordoni {
         */
 
         bellmanFord(graphCordoni, graphCordoni.edges.get(0).getWeight(),  graphCordoni.vertexes.get(0));
-    }//make linked objects 
+    }//graph it up 
 
 
     //This method preforms the bellman ford algorithm to find the shortest path
@@ -251,13 +254,17 @@ public class Assignment5Cordoni {
                 //System.out.println("relax");
                 relax(graph.edges.get(j).getTo(), graph.edges.get(j).getFrom(), graph.edges.get(j).getWeight());  
             
+                /*
                 System.out.println(" ");
                 System.out.println("From: "  + graph.edges.get(j).getFrom().getId());
                 System.out.println("To: "  + graph.edges.get(j).getTo().getId());
                 System.out.println("Weight: "  + graph.edges.get(j).getWeight());
                 System.out.println(" ");
 
+
                 path.add(graph.edges.get(j).getFrom().getId());
+
+                */
                 
             }//for 
 
@@ -311,11 +318,15 @@ public class Assignment5Cordoni {
 
         System.out.println("relax");
 
+        /*
+
         System.out.println(" ");
         System.out.println("Vertex 1 distance: "  + vertexEdge1.getDistance());
         System.out.println("Vertex 2 distance: "  + vertexEdge2.getDistance());
         System.out.println("Weight: "  + weight);
         System.out.println(" ");
+
+        */
 
         if(vertexEdge1.getDistance() > vertexEdge2.getDistance() + weight){
 
@@ -344,7 +355,7 @@ public class Assignment5Cordoni {
 
             for(int j = 0; j < path.size(); j++){
 
-                System.out.print(path.get(j) + ", ");
+                //System.out.print(path.get(j) + ", ");
 
             }//for
 
@@ -364,58 +375,28 @@ public class Assignment5Cordoni {
         String[][] splitspicearray = new String[14][13];
         String[][] splitspicearray1 = new String[14][23];
         String[][] splitspicearray2 = new String[14][23];
-
-        //Print to check array 
+        
+        
         for (int i = 0; i < spices.length; i++){
-            System.out.println(spices[i]);
-        }//for
-
-        //split up into 2D array 
-        for (int i = 0; i < splitspicearray.length; i++){
-            for( int j = 0; j < splitspicearray[i].length; j++){
-            splitspicearray[i] = spices[i].split(";");
-            }//for j 
-        }//for
-
-        //split up into 2D array 
-        for (int i = 0; i < splitspicearray.length; i++){
-            for( int j = 0; j < splitspicearray[i].length; j++){
-            System.out.println(splitspicearray[i][j]);
-            }//for j 
-        }//for
-
-        
-        //split up into 2D array 
-        for (int i = 0; i < splitspicearray.length; i++){
-            for( int j = 0; j < splitspicearray[i].length; j++){
-            splitspicearray1[i] = splitspicearray[i][j].split(" ");
-            }//for j 
-        }//for
-        
-        //split up into 2D array 
-        for (int i = 0; i < splitspicearray1.length; i++){
-            for( int j = 0; j < splitspicearray1[i].length; j++){
-            System.out.println(splitspicearray1[i][j]);
-            }//for j 
-        }//for
-        
-        //split up into 2D array 
-        for (int i = 0; i < splitspicearray1.length; i++){
-            for( int j = 0; j < splitspicearray1[i].length; j++){
             
-                if (splitspicearray1[i][j].compareToIgnoreCase("--")==0){
-                    System.out.println("hello");
-                }//if
+            System.out.println(spices[i]);
+            System.out.println(spices[i]==("--"));
+            System.out.println(spices[i].equalsIgnoreCase("spice"));
+            System.out.println(spices[i].compareToIgnoreCase("knapsack")==0);
 
-                else if (splitspicearray1[i][j].compareToIgnoreCase("spice")==0){
-                    System.out.println("spice");
-                }//if
+            if (spices[i].compareToIgnoreCase("--")==0){
+                System.out.println("hello");
+            }//if
 
-                else if (splitspicearray1[i][j].compareToIgnoreCase("knapsack")==0){
-                    System.out.println("knapsack");
-                }//if
+            else if (spices[i].compareToIgnoreCase("spice")==0){
+                System.out.println("spice");
+            }//if
 
-            }//for j 
+            else if (spices[i].compareToIgnoreCase("knapsack")==0){
+                System.out.println("knapsack");
+            }//if
+
+            
         }//for
 
 
@@ -520,7 +501,8 @@ public class Assignment5Cordoni {
     //This method fills the knapsacks
     public static void fillKnapsack( ArrayList<SpiceCordoni> spicelist, ArrayList<KnapsackCordoni> knapsacklist) {
  
-        int capacity = 0 ;
+        int knapsackcapacity = 0 ;
+        
         double worth = 0;
         int scoop = 0;
         String color = "none";
@@ -532,9 +514,7 @@ public class Assignment5Cordoni {
 
             for(int j = 0; j < spicelist.size(); j++){
 
-                //take spice and add it to knapsack
-                capacity++;
-
+                
                 worth = spicelist.get(j).getUnitPrice();
 
                 scoop++;
@@ -549,17 +529,7 @@ public class Assignment5Cordoni {
     
             }//for
 
-        }//for
-
-
-       
-
-
-
-        //keep adding biggest one until we cant anymore
-
-
-        
+        }//for        
 
     }//fillKnapsack
 
