@@ -31,8 +31,7 @@ public class Assignment5Cordoni {
 
         //For binary search tree
         String[] spicearray = new String[14];
-        String[][] splitspicearray1 = new String[14][13];
-        String[][] splitspicearray2 = new String[14][23];
+       
        
         String[] instructionarray = new String[88];
         String[] graph1array = new String[17];
@@ -113,10 +112,10 @@ public class Assignment5Cordoni {
             //System.out.println(spicearray[i]);
         }//for
 
-        //spiceItUp(spicearray);
+        spiceItUp(spicearray);
 
 
-        //Graphs
+        //Graphs!!
 
         //Print to check array 
         for (int i = 0; i < instructionarray.length; i++){
@@ -130,35 +129,14 @@ public class Assignment5Cordoni {
             }//for j 
         }//for
 
-        //graphItUp(splitinstructionarray);
-
-        
-        //Put instructions into graph 1 array
-        for (int i = 0; i < graph1array.length; i++){
-            graph1array[i] = instructionarray[i];
-        }//for
-
-        //split up into 2D array for graph 1
-        for (int i = 0; i < graph1splitarray.length; i++){
-            for( int j = 0; j < graph1splitarray[i].length; j++){
-            graph1splitarray[i] = graph1array[i].split(" ");
-            }//for j 
-        }//for
-       
-        //Graphs!!
-        System.out.println(" ");
-        System.out.println("Graph 1");
-
-        //make linked list
-        graphItUp(graph1splitarray);
-        
+        graphItUp(splitinstructionarray);
 
     }//main
 
     //This method creates the linked objects of the directed graph
     public static void graphItUp(String[][] instructions) {
 
-        GraphCordoni graphCordoni = new GraphCordoni();
+        GraphCordoni graphCordoni  = null; // new GraphCordoni();
         int k = 1;
 
         //create 
@@ -166,14 +144,32 @@ public class Assignment5Cordoni {
             
             if(instructions[i][0].compareToIgnoreCase("new")==0){
                 
-                //graphCordoni = new GraphCordoni();
-                //System.out.println("Graph " + k);
-                k++;
+                if (graphCordoni == null){
+                    graphCordoni = new GraphCordoni();
+                    System.out.println("  ");
+                    System.out.println("  ");
+                    System.out.println("Graph " + k);
+                    k++;
+                }
+                
+                else{
+
+                    bellmanFord(graphCordoni, graphCordoni.edges.get(0).getWeight(),  graphCordoni.vertexes.get(0));
+
+                    graphCordoni = new GraphCordoni();
+                    System.out.println("  ");
+                    System.out.println("  ");
+                    System.out.println("Graph " + k);
+                    k++;
+
+                }//else
 
             }//if
 
             //add
             else if (instructions[i][0].compareToIgnoreCase("add")==0){
+
+                
 
                 //create new vertex and set id to add to vertex array
                 if(instructions[i][1].compareToIgnoreCase("vertex")==0){
@@ -217,7 +213,7 @@ public class Assignment5Cordoni {
                     graphCordoni.edges.add(edge);
 
                 }//else if
-            }//if
+            }//else if
         }//for i
 
         /*
@@ -230,7 +226,7 @@ public class Assignment5Cordoni {
             System.out.println(" ");
 
         }//for
-        */
+        // */
 
         bellmanFord(graphCordoni, graphCordoni.edges.get(0).getWeight(),  graphCordoni.vertexes.get(0));
     }//graph it up 
@@ -239,7 +235,7 @@ public class Assignment5Cordoni {
     //This method preforms the bellman ford algorithm to find the shortest path
     public static boolean bellmanFord(GraphCordoni graph, int weight, VertexCordoni source) {
  
-        System.out.println("bellman ford");
+        //System.out.println("bellman ford");
 
         ArrayList <String> path = new ArrayList <String>();
 
@@ -247,12 +243,12 @@ public class Assignment5Cordoni {
 
         boolean value = false;
 
-        for (int i = 1; i < graph.vertexes.size() - 1; i++){
+        for (int i = 0; i < graph.vertexes.size() - 1; i++){
 
             for (int j = 0; j < graph.edges.size(); j++){
 
                 //System.out.println("relax");
-                relax(graph.edges.get(j).getTo(), graph.edges.get(j).getFrom(), graph.edges.get(j).getWeight());  
+                relax(graph.edges.get(j).getFrom(), graph.edges.get(j).getTo(), graph.edges.get(j).getWeight());  
             
                 /*
                 System.out.println(" ");
@@ -260,9 +256,6 @@ public class Assignment5Cordoni {
                 System.out.println("To: "  + graph.edges.get(j).getTo().getId());
                 System.out.println("Weight: "  + graph.edges.get(j).getWeight());
                 System.out.println(" ");
-
-
-                path.add(graph.edges.get(j).getFrom().getId());
 
                 */
                 
@@ -279,9 +272,9 @@ public class Assignment5Cordoni {
             //System.out.println(" ");
 
             
-            if(graph.edges.get(i).getTo().getDistance() > graph.edges.get(i).getFrom().getDistance() + graph.edges.get(i).getWeight() ){
+            if(graph.edges.get(i).getFrom().getDistance() > graph.edges.get(i).getTo().getDistance() + graph.edges.get(i).getWeight() ){
                 value = false;
-                shortestPath(value, graph, path);
+                shortestPath(value, graph);
                 return value;
             
             }//if
@@ -290,7 +283,7 @@ public class Assignment5Cordoni {
    
         value = true;
 
-        shortestPath(value, graph, path);
+        shortestPath(value, graph);
 
         return value;
 
@@ -299,7 +292,7 @@ public class Assignment5Cordoni {
     //This method sets the initial single source
     public static void singlesource(GraphCordoni graph, VertexCordoni source) {
 
-        System.out.println("single source ");
+        //System.out.println("single source ");
 
         for (int i = 0; i < graph.vertexes.size(); i++){
 
@@ -314,53 +307,97 @@ public class Assignment5Cordoni {
     }//singlesource
 
     //This method "relaxs" the vertex distance to determine the shortest path
-    public static void relax(VertexCordoni vertexEdge1, VertexCordoni vertexEdge2, Integer weight) {
+    public static void relax(VertexCordoni vertexEdgeFrom, VertexCordoni vertexEdgeTo, Integer weight) {
 
-        System.out.println("relax");
+        //System.out.println("relax");
 
-        /*
+        
 
-        System.out.println(" ");
-        System.out.println("Vertex 1 distance: "  + vertexEdge1.getDistance());
-        System.out.println("Vertex 2 distance: "  + vertexEdge2.getDistance());
-        System.out.println("Weight: "  + weight);
-        System.out.println(" ");
+        //System.out.println(" ");
+        //System.out.println("Vertex " + vertexEdgeFrom.getId() + " distance: "  + vertexEdgeFrom.getDistance());
+        //System.out.println("Vertex " + vertexEdgeTo.getId() + " distance: "  + vertexEdgeTo.getDistance());
+        //System.out.println("Weight: "  + weight);
+        //System.out.println(" ");
 
-        */
+        
 
-        if(vertexEdge1.getDistance() > vertexEdge2.getDistance() + weight){
+        if(vertexEdgeTo.getDistance() > vertexEdgeFrom.getDistance() + weight){
 
-            vertexEdge1.setDistance(vertexEdge2.getDistance() + weight);
+            vertexEdgeTo.setDistance(vertexEdgeFrom.getDistance() + weight);
 
-            vertexEdge1.setPrevious(vertexEdge2);
+            vertexEdgeTo.setPrevious(vertexEdgeFrom);
+
+            //System.out.println("Relax vertex " + vertexEdgeTo.getId() + " to " + vertexEdgeTo.getDistance());
 
         }//if
 
     }//relax
+    
+
+    //while previous is not equl to source using -  (string reverse)
 
     //This method prints out the shortest path
-    public static void shortestPath(boolean value, GraphCordoni graph, ArrayList path) {
+    public static void shortestPath(boolean value, GraphCordoni graph) {
 
-        VertexCordoni current = null;
 
         for(int i = 0; i < graph.vertexes.size(); i++){
 
+            VertexCordoni current = null;
+
+            ArrayList <String> path = new ArrayList <String>();
+
             current = graph.vertexes.get(i);
 
+            System.out.println(" ");
             System.out.println(" ");
             System.out.println("From " + graph.vertexes.get(0).getId() + " to " + graph.vertexes.get(i).getId() +
                                 " the cost is " + graph.vertexes.get(i).getDistance());
 
             System.out.println("The path is ");
 
-            for(int j = 0; j < path.size(); j++){
+            
+            if(graph.vertexes.get(i).getPrevious() == null){
 
-                //System.out.print(path.get(j) + ", ");
+                System.out.print(graph.vertexes.get(i).getId());
 
-            }//for
+            
+            }//if
+
+            else{
+
+                int j  = i;
+
+                path.add(graph.vertexes.get(j).getId());
+                //System.out.println(graph.vertexes.get(j).getId());
+
+                while(graph.vertexes.get(j).getPrevious().getId() != graph.vertexes.get(0).getId()){
+                    
+ 
+                    //System.out.println(graph.vertexes.get(j).getPrevious().getId());
+                    path.add(graph.vertexes.get(j).getPrevious().getId());
+                    j++;
+                    
+                    //paths are correct besides last path for each graph
+                    if(j == graph.vertexes.size()){
+                        break;
+                    }//if
+
+                    
+                }//while
+
+                //System.out.println(graph.vertexes.get(0).getId());
+                path.add(graph.vertexes.get(0).getId());
+
+                Collections.reverse(path);
+
+                for(int k = 0; k < path.size(); k++){
+
+                    System.out.print(path.get(k));
+                }//for k
+                
+            }//else
 
         }//for
-        
 
     }//shortestPath
 
@@ -370,37 +407,46 @@ public class Assignment5Cordoni {
     //This method creates the spice object
     public static void spiceItUp(String[] spices) {
 
-        System.out.println(" spices ");
+        System.out.println("Spice Hesit!");
+        System.out.println(" ");
 
-        String[][] splitspicearray = new String[14][13];
-        String[][] splitspicearray1 = new String[14][23];
-        String[][] splitspicearray2 = new String[14][23];
+        String[][] splitspicearray = new String[9][9];
         
-        
+        int j = 0;
+
         for (int i = 0; i < spices.length; i++){
+
+            if (spices[i].startsWith("spice")){
+                
+                //System.out.println(Arrays.toString(spices[i].split(";| ")));
+
+                splitspicearray[j] = spices[i].split(";| ");
+                j++;
+
+            }//if
+
+            else if (spices[i].startsWith("knapsack")){
+
+                //System.out.println(Arrays.toString(spices[i].split(";| ")));
+
+                splitspicearray[j] = spices[i].split(";| ");
+                j++;
+
+            }//if
             
-            System.out.println(spices[i]);
-            System.out.println(spices[i]==("--"));
-            System.out.println(spices[i].equalsIgnoreCase("spice"));
-            System.out.println(spices[i].compareToIgnoreCase("knapsack")==0);
-
-            if (spices[i].compareToIgnoreCase("--")==0){
-                System.out.println("hello");
-            }//if
-
-            else if (spices[i].compareToIgnoreCase("spice")==0){
-                System.out.println("spice");
-            }//if
-
-            else if (spices[i].compareToIgnoreCase("knapsack")==0){
-                System.out.println("knapsack");
-            }//if
-
             
         }//for
 
+        for(int i  = 0; i < splitspicearray.length; i++){
+            for(int k = 0; k < splitspicearray[i].length; k++){
 
-        //createSpice(splitspicearray);
+                //System.out.println(splitspicearray[i][k]);
+
+            }//for j
+        }//for i
+
+
+        createSpice(splitspicearray);
     }//spiceitup
 
     public static void createSpice(String[][] spices) {
@@ -415,13 +461,51 @@ public class Assignment5Cordoni {
 
                 SpiceCordoni spice = new SpiceCordoni();
 
+                //System.out.println("color: " + spices[i][3]);
+
                 spice.setColor(spices[i][3]);
 
-                System.out.println(spices[i][11]);
+                if(spices[i][8].trim().startsWith("total_price")){
+                    
+                    //System.out.println("price 1: " + spices[i][11].trim());
 
-                spice.setPrice(Double.parseDouble(spices[i][8]));
+                    spice.setPrice(Double.parseDouble(spices[i][11].trim()));
 
-                spice.setQty(Integer.parseInt(spices[i][12]));
+                    //System.out.println("qty 1: " + spices[i][16]);
+
+                    spice.setQty(Integer.parseInt(spices[i][16]));
+
+                }//if
+
+                else if(spices[i][6].trim().startsWith("total_price")){
+                    //System.out.println("price 2: " + spices[i][8].trim());
+
+                    spice.setPrice(Double.parseDouble(spices[i][8].trim()));
+
+                    //System.out.println("qty 2: " + spices[i][13]);
+                    spice.setQty(Integer.parseInt(spices[i][13]));
+
+                }//else
+
+                else if(spices[i][7].trim().startsWith("total_price")){
+                    //System.out.println("price 3: " + spices[i][9].trim());
+
+                    spice.setPrice(Double.parseDouble(spices[i][9].trim()));
+
+                    //System.out.println("qty 3: " + spices[i][14]);
+                    spice.setQty(Integer.parseInt(spices[i][14]));
+                }//else
+
+                else if(spices[i][5].trim().startsWith("total_price")){
+                    //System.out.println("price 4: " + spices[i][7].trim());
+
+                    spice.setPrice(Double.parseDouble(spices[i][7].trim()));
+
+                    //System.out.println("qty 4: " + spices[i][12]);
+                    spice.setQty(Integer.parseInt(spices[i][12]));
+                }//else
+
+                
                         
                 spicelist.add(spice);
             }// if  
@@ -430,7 +514,7 @@ public class Assignment5Cordoni {
          
         
         //print spice to check
-        //System.out.println(spicelist);
+        //System.out.println(spicelist.toString());
 
         spiceUnitPrice(spicelist, spices);
 
@@ -480,10 +564,23 @@ public class Assignment5Cordoni {
 
                 KnapsackCordoni knapsack = new KnapsackCordoni();
 
-                knapsack.setCapacity(Integer.parseInt(spices[i][3]));
+
+                if (spices[i][3].trim().compareToIgnoreCase("")==0){
+
+                    knapsack.setCapacity(Integer.parseInt(spices[i][4].trim()));
+                            
+                    knapsacklist.add(knapsack);
+
+                }//if
+
+                else{
+
+                    knapsack.setCapacity(Integer.parseInt(spices[i][3].trim()));
                         
-                knapsacklist.add(knapsack);
-            }// if  
+                    knapsacklist.add(knapsack);
+
+                }//else
+            }//if  
             
         }//for i
          
@@ -502,34 +599,127 @@ public class Assignment5Cordoni {
     public static void fillKnapsack( ArrayList<SpiceCordoni> spicelist, ArrayList<KnapsackCordoni> knapsacklist) {
  
         int knapsackcapacity = 0 ;
-        
-        double worth = 0;
-        int scoop = 0;
-        String color = "none";
-
 
         for(int i = 0; i < knapsacklist.size(); i++){
 
-            capacity = knapsacklist.get(i).getCapacity();
+            knapsackcapacity = knapsacklist.get(i).getCapacity();
 
+            double worth = 0;
+            int quantity = 0;
+            int scoop = 0;
+            String[] color = new String[20];
+            int orangescoops = 0;
+            int bluescoops = 0;
+            int greenscoops = 0;
+            int redscoops = 0;
+            
+            int k = 0;
             for(int j = 0; j < spicelist.size(); j++){
 
-                
-                worth = spicelist.get(j).getUnitPrice();
+                quantity = spicelist.get(j).getQty();
 
-                scoop++;
+                //int k = 0;
+                while((quantity != 0)&&(scoop < knapsackcapacity)){
+                       
+                    quantity = quantity - 1;
+                    worth = worth + spicelist.get(j).getUnitPrice();
+                    color[k] = spicelist.get(j).getColor();
+                    //System.out.println(color[k]);
+                    scoop++;
 
-                color = spicelist.get(j).getColor();
-    
-                System.out.println("Knapsack of capacity " + capacity + " is worth " + worth + " quatloos and contains "
-                                    + scoop + " scoop(s) of " + color + ".");
+                    k++;
+
+                    //System.out.println("k " + k);
+
+                }//while
+
+            }//for j
 
 
-    
-    
+            System.out.println("Knapsack of capacity " + knapsackcapacity + " is worth " + worth + " quatloos and contains ");
+            
+            for(int l = 0; l < color.length; l++){
+                //System.out.println(color[l]);
+            }
+
+
+            for(int l = 0; l < color.length; l++){
+
+                if((color[l] !=null)&&(color[l].compareToIgnoreCase("orange")==0)){
+                    orangescoops++;
+                }
+                else if((color[l] !=null)&&(color[l].startsWith("blue"))){
+                    bluescoops++;
+                }
+                if((color[l] !=null)&&(color[l].startsWith("green"))){
+                    greenscoops++;
+                }
+                if((color[l] !=null)&&(color[l].startsWith("red"))){
+                    redscoops++;
+                }
+
             }//for
 
-        }//for        
+            for(int l = 0; l < color.length; l++){
+
+                //System.out.println("orange scoops: " + orangescoops);
+
+                //System.out.println("blue scoops: " + bluescoops);
+
+                //System.out.println("green scoops: " + greenscoops);
+
+                //System.out.println("red scoops: " + redscoops);
+
+                if(orangescoops != 0){
+                    System.out.println(orangescoops + " scoop(s) of orange");
+
+                    if(bluescoops != 0){
+                        System.out.println(bluescoops + " scoop(s) of blue");
+                        
+                        if(greenscoops != 0){
+                            System.out.println(greenscoops + " scoop(s) of green");
+
+                            if(redscoops != 0){
+                                System.out.println(redscoops + " scoop(s) of red");
+                                
+                            }//if
+                        }//if
+                    }//if
+
+                    break;
+                }//if
+                else if(bluescoops != 0){
+                    System.out.println(bluescoops + " scoop(s) of blue");
+
+                    if(greenscoops != 0){
+                        System.out.println(greenscoops + " scoop(s) of green");
+
+                        if(redscoops != 0){
+                            System.out.println(redscoops + " scoop(s) of red");
+                            
+                        }//if
+                    }//if
+
+                    break;
+                }
+                if(greenscoops != 0){
+                    System.out.println(greenscoops + " scoop(s) of green");
+
+                    if(redscoops != 0){
+                        System.out.println(redscoops + " scoop(s) of red");
+                        
+                    }//if
+
+                    break;
+                }
+                if(redscoops != 0){
+                    System.out.println(redscoops + " scoop(s) of red");
+                    break;
+                }
+
+            }//for
+           
+        }//for i   
 
     }//fillKnapsack
 
