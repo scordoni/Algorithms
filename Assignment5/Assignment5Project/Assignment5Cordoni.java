@@ -29,21 +29,11 @@ public class Assignment5Cordoni {
         //Declare and initialize variables 
         String line;
 
-        //For binary search tree
+       
         String[] spicearray = new String[14];
        
-       
         String[] instructionarray = new String[88];
-        String[] graph1array = new String[17];
-        String[] graph2array = new String[21];
-        String[] graph3array = new String[21];
-        String[] graph4array = new String[21];
-
         String[][] splitinstructionarray = new String[88][17];
-        String[][] graph1splitarray = new String[17][17];
-        String[][] graph2splitarray = new String[21][17];
-        String[][] graph3splitarray = new String[21][17];
-        String[][] graph4splitarray = new String[21][17];
 
 
         //Reads in the spice items 
