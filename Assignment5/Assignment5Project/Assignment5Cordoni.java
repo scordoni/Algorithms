@@ -58,7 +58,7 @@ public class Assignment5Cordoni {
             
             int i = 0;
 
-            //while there are more lines in the file it inputs them into a word array
+            //while there are more lines in the file it inputs them into a spice array
             while(input.hasNext())
             {  
                 spicearray[i] = input.nextLine();       
@@ -88,6 +88,7 @@ public class Assignment5Cordoni {
             
             int i = 0;
 
+            //while there are more lines in the file it inputs them into an instruction array
             while(input.hasNext()){
 
                 instructionarray[i] = input.nextLine();
@@ -112,6 +113,7 @@ public class Assignment5Cordoni {
             //System.out.println(spicearray[i]);
         }//for
 
+        //pass the spice array to the spiceItUp method to create the spice objects
         spiceItUp(spicearray);
 
 
@@ -129,11 +131,14 @@ public class Assignment5Cordoni {
             }//for j 
         }//for
 
+        //pass the instruction array to the graphItUp method to create the vertex and edge objects for each graph
         graphItUp(splitinstructionarray);
 
     }//main
 
     //This method creates the linked objects of the directed graph
+    //This also includes making a new graph object for each graph in the file
+    //along with creating the edges and vertexes for each of these graphs
     public static void graphItUp(String[][] instructions) {
 
         GraphCordoni graphCordoni  = null; // new GraphCordoni();
@@ -142,16 +147,20 @@ public class Assignment5Cordoni {
         //create 
         for (int i = 0; i < instructions.length; i++){    
             
+            //if the line reads new we create a new graph
             if(instructions[i][0].compareToIgnoreCase("new")==0){
                 
+                //if the graph is null we know its the first graph in the file
                 if (graphCordoni == null){
                     graphCordoni = new GraphCordoni();
                     System.out.println("  ");
                     System.out.println("  ");
                     System.out.println("Graph " + k);
                     k++;
-                }
+                }//if
                 
+                //else we know that we need to clear the graph object so we run the bellman ford method and reset graphCordoni
+                //to hold the new graph
                 else{
 
                     bellmanFord(graphCordoni, graphCordoni.edges.get(0).getWeight(),  graphCordoni.vertexes.get(0));
@@ -166,7 +175,7 @@ public class Assignment5Cordoni {
 
             }//if
 
-            //add
+            //here we add the vertexes and edges
             else if (instructions[i][0].compareToIgnoreCase("add")==0){
 
                 
@@ -178,6 +187,7 @@ public class Assignment5Cordoni {
 
                     vertex.setId(instructions[i][2]);
                         
+                    //add the vertex to the vertex array list
                     graphCordoni.vertexes.add(vertex);
                     
                     
@@ -190,10 +200,12 @@ public class Assignment5Cordoni {
 
                     for (int j = 0; j < graphCordoni.vertexes.size(); j++){
 
+                        //set the "from" of the edge 
                         if (graphCordoni.vertexes.get(j).getId().compareToIgnoreCase(instructions[i][2])==0){
                             edge.setFrom(graphCordoni.vertexes.get(j));
                         }//if
 
+                        //set the "to" of the edge 
                         if (graphCordoni.vertexes.get(j).getId().compareToIgnoreCase(instructions[i][4])==0){
                             edge.setTo(graphCordoni.vertexes.get(j));
                         }//if
@@ -201,7 +213,7 @@ public class Assignment5Cordoni {
                     }//for
                     
                     
-
+                    //set the weight of the edge
                     if ((instructions[i][5].compareToIgnoreCase("") == 0)){
                         edge.setWeight(Integer.parseInt(instructions[i][6]));
                     }
@@ -210,6 +222,7 @@ public class Assignment5Cordoni {
                         edge.setWeight(Integer.parseInt(instructions[i][5]));
                     }//else
 
+                    //add the edge to the edge array list
                     graphCordoni.edges.add(edge);
 
                 }//else if
@@ -228,6 +241,7 @@ public class Assignment5Cordoni {
         }//for
         // */
 
+        //call the bellman ford algorithm
         bellmanFord(graphCordoni, graphCordoni.edges.get(0).getWeight(),  graphCordoni.vertexes.get(0));
     }//graph it up 
 
@@ -237,17 +251,19 @@ public class Assignment5Cordoni {
  
         //System.out.println("bellman ford");
 
-        ArrayList <String> path = new ArrayList <String>();
-
+        //call the single source method to set the distances to positive infinity
         singlesource(graph, source);
 
         boolean value = false;
 
+        //for each vertex we loop through the edges to relax them
         for (int i = 0; i < graph.vertexes.size() - 1; i++){
 
             for (int j = 0; j < graph.edges.size(); j++){
 
                 //System.out.println("relax");
+
+                //here we call relax to "relax" each of the vertex distances down to their lowest possible distance
                 relax(graph.edges.get(j).getFrom(), graph.edges.get(j).getTo(), graph.edges.get(j).getWeight());  
             
                 /*
@@ -263,6 +279,7 @@ public class Assignment5Cordoni {
 
         }//for
 
+        //here we loop through each edge to see if the from distance is greated than the to distances plus the weight.
         for (int i = 0; i < graph.edges.size(); i++){
 
             //System.out.println(" ");
@@ -294,6 +311,7 @@ public class Assignment5Cordoni {
 
         //System.out.println("single source ");
 
+        //here we loop through each of the vertexes setting their distance to positive infinity
         for (int i = 0; i < graph.vertexes.size(); i++){
 
             graph.vertexes.get(i).setDistance(Double.POSITIVE_INFINITY);
@@ -302,6 +320,7 @@ public class Assignment5Cordoni {
         
         }//for
 
+        //set the distance of the source vertex to 0
         source.setDistance(0.0);
     
     }//singlesource
@@ -311,16 +330,14 @@ public class Assignment5Cordoni {
 
         //System.out.println("relax");
 
-        
-
         //System.out.println(" ");
         //System.out.println("Vertex " + vertexEdgeFrom.getId() + " distance: "  + vertexEdgeFrom.getDistance());
         //System.out.println("Vertex " + vertexEdgeTo.getId() + " distance: "  + vertexEdgeTo.getDistance());
         //System.out.println("Weight: "  + weight);
         //System.out.println(" ");
 
-        
-
+        //if the to vertex distance is greater than the from vertex distance then we set the to distance to 
+        //be the from vertex distance plus the weight
         if(vertexEdgeTo.getDistance() > vertexEdgeFrom.getDistance() + weight){
 
             vertexEdgeTo.setDistance(vertexEdgeFrom.getDistance() + weight);
@@ -332,14 +349,12 @@ public class Assignment5Cordoni {
         }//if
 
     }//relax
-    
-
-    //while previous is not equl to source using -  (string reverse)
 
     //This method prints out the shortest path
     public static void shortestPath(boolean value, GraphCordoni graph) {
 
-
+        //here we loop through the vertexes and print out the shortest path from the source vertex to the 
+        //desired vertex
         for(int i = 0; i < graph.vertexes.size(); i++){
 
             VertexCordoni current = null;
@@ -356,6 +371,7 @@ public class Assignment5Cordoni {
             System.out.println("The path is ");
 
             
+            //if the previous is set to null then we are at the source vertex
             if(graph.vertexes.get(i).getPrevious() == null){
 
                 System.out.print(graph.vertexes.get(i).getId());
@@ -363,6 +379,9 @@ public class Assignment5Cordoni {
             
             }//if
 
+            //else we start at the desired vertex and work our way backwards to determine our shortest path.
+            //basing this off of the answers for graph 1 I was able to get this working for all the paths 
+            //except for the last vertex in each graph
             else{
 
                 int j  = i;
@@ -416,6 +435,7 @@ public class Assignment5Cordoni {
 
         for (int i = 0; i < spices.length; i++){
 
+            //if the line starts with spice then we split by ; and then by space
             if (spices[i].startsWith("spice")){
                 
                 //System.out.println(Arrays.toString(spices[i].split(";| ")));
@@ -425,6 +445,7 @@ public class Assignment5Cordoni {
 
             }//if
 
+            //if the line starts with knapsack then we split by ; and then by space
             else if (spices[i].startsWith("knapsack")){
 
                 //System.out.println(Arrays.toString(spices[i].split(";| ")));
@@ -437,6 +458,7 @@ public class Assignment5Cordoni {
             
         }//for
 
+        //print to check array
         for(int i  = 0; i < splitspicearray.length; i++){
             for(int k = 0; k < splitspicearray[i].length; k++){
 
@@ -445,10 +467,11 @@ public class Assignment5Cordoni {
             }//for j
         }//for i
 
-
+        //pass the created array to the create spice method to create the spice objects
         createSpice(splitspicearray);
     }//spiceitup
 
+    //this method creates the spice objects
     public static void createSpice(String[][] spices) {
 
         ArrayList <SpiceCordoni> spicelist = new ArrayList <SpiceCordoni>();
@@ -456,6 +479,7 @@ public class Assignment5Cordoni {
         //increment index to create spice array
         for (int i = 0; i < spices.length; i++){
 
+            //if the line starts with spice then we create a new spice object
             if (spices[i][0].compareToIgnoreCase("spice")==0){
                 //System.out.println(" new spice ");
 
@@ -465,6 +489,8 @@ public class Assignment5Cordoni {
 
                 spice.setColor(spices[i][3]);
 
+                //if the line starts with total price then we set the total price of the spice object
+                //along with the qty of the spice object
                 if(spices[i][8].trim().startsWith("total_price")){
                     
                     //System.out.println("price 1: " + spices[i][11].trim());
@@ -504,9 +530,8 @@ public class Assignment5Cordoni {
                     //System.out.println("qty 4: " + spices[i][12]);
                     spice.setQty(Integer.parseInt(spices[i][12]));
                 }//else
-
-                
-                        
+ 
+                //here we dd the spice object to the spice list array
                 spicelist.add(spice);
             }// if  
             
@@ -516,6 +541,7 @@ public class Assignment5Cordoni {
         //print spice to check
         //System.out.println(spicelist.toString());
 
+        //pass the spicelist and spices array to the spice unit price method
         spiceUnitPrice(spicelist, spices);
 
     }//createSpice
@@ -530,6 +556,7 @@ public class Assignment5Cordoni {
 
         }//for
 
+        //pass the spice list and spices array to the sort method
         sort(spicelist, spices);
     }//spiceUnitPrice
 
@@ -537,6 +564,7 @@ public class Assignment5Cordoni {
     public static void sort(ArrayList<SpiceCordoni> spicelist, String[][] spices)
     {
 
+        //reverse the spicelist to put them in order from highest to lowest unit price
         Collections.reverse(spicelist);
 
         //Check unit price for each spice
@@ -547,6 +575,7 @@ public class Assignment5Cordoni {
 
         }//for
 
+        //pass the spicelist and spices array to the create knapsack method
         createKnapsack(spicelist, spices);
 
     }//sort
@@ -554,17 +583,20 @@ public class Assignment5Cordoni {
     //This method creates the knapsacks
     public static void createKnapsack(ArrayList<SpiceCordoni> spicelist, String[][] spices) {
  
+        //create a knapsack arraylist
         ArrayList <KnapsackCordoni> knapsacklist = new ArrayList <KnapsackCordoni>();
         
         //increment index to create spice array
         for (int i = 0; i < spices.length; i++){
 
+            //if the line starts with knapsack then we create a new knapsack object
             if (spices[i][0].compareToIgnoreCase("knapsack")==0){
                 //System.out.println(" new knapsack ");
 
                 KnapsackCordoni knapsack = new KnapsackCordoni();
 
 
+                //set the capcity of the knapsack
                 if (spices[i][3].trim().compareToIgnoreCase("")==0){
 
                     knapsack.setCapacity(Integer.parseInt(spices[i][4].trim()));
@@ -591,6 +623,7 @@ public class Assignment5Cordoni {
 
         }//for
 
+        //pass the spicelist and knapsack list to the fill knapsack method
         fillKnapsack(spicelist, knapsacklist);
 
     }//createKnapsack
@@ -600,10 +633,13 @@ public class Assignment5Cordoni {
  
         int knapsackcapacity = 0 ;
 
+        //for each knapsack in the list we fill it according to the greedy algorithm method
         for(int i = 0; i < knapsacklist.size(); i++){
 
+            //get the knapsack capacity 
             knapsackcapacity = knapsacklist.get(i).getCapacity();
 
+            //initialize variables so that they reset for each knapsack
             double worth = 0;
             int quantity = 0;
             int scoop = 0;
@@ -614,6 +650,9 @@ public class Assignment5Cordoni {
             int redscoops = 0;
             
             int k = 0;
+
+            //for each spice in the spice list we get the qty and while the quantity is not 0 and the scoop count
+            //if less than the knapsack capacity then we add the spice and it's specific quantity to the knapsack
             for(int j = 0; j < spicelist.size(); j++){
 
                 quantity = spicelist.get(j).getQty();
@@ -635,14 +674,16 @@ public class Assignment5Cordoni {
 
             }//for j
 
-
+            //print out each knapsack and what its worth
             System.out.println("Knapsack of capacity " + knapsackcapacity + " is worth " + worth + " quatloos and contains ");
             
+            //loop through the color array to see which colors (spices) are in each knapsack
             for(int l = 0; l < color.length; l++){
                 //System.out.println(color[l]);
             }
 
-
+            //if a color appears in the knapsack then we up the scoopcount for that color to determine
+            //how many scoops of each spice are in the knapsack
             for(int l = 0; l < color.length; l++){
 
                 if((color[l] !=null)&&(color[l].compareToIgnoreCase("orange")==0)){
@@ -660,6 +701,7 @@ public class Assignment5Cordoni {
 
             }//for
 
+            //here we print out each color and the amount of scoops they have in each knapsack.
             for(int l = 0; l < color.length; l++){
 
                 //System.out.println("orange scoops: " + orangescoops);
@@ -670,6 +712,8 @@ public class Assignment5Cordoni {
 
                 //System.out.println("red scoops: " + redscoops);
 
+                //we go through each color like this beacuse this way we get ahold of every color that appears
+                //in each knapsack
                 if(orangescoops != 0){
                     System.out.println(orangescoops + " scoop(s) of orange");
 
@@ -723,4 +767,4 @@ public class Assignment5Cordoni {
 
     }//fillKnapsack
 
-}//Assignment4Cordoni
+}//Assignment5Cordoni
